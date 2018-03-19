@@ -1,4 +1,4 @@
-import {JsonForm} from "vue-json-form";
+import {JsonForm} from "@aquarelle/json-form";
 import SelectParser from "../Select/Parser";
 import Control from "../Select/control";
 

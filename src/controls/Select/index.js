@@ -1,5 +1,5 @@
 import {default as Control} from "./control.vue";
-import {JsonForm} from "vue-json-form";
+import {JsonForm} from "@aquarelle/json-form";
 import Parser from "./Parser";
 
 Control.install = function (Vue) {

@@ -40,7 +40,7 @@
     </div>
 </template>
 <script>
-    import {JsonFormGroup} from "vue-json-form";
+    import {JsonFormGroup} from "@aquarelle/json-form";
 
     export default {
         name: 'dialog-forms',

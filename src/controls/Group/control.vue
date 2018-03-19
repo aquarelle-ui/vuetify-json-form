@@ -25,7 +25,7 @@
     </div>
 </template>
 <script>
-    import {JsonFormElementMixin} from "vue-json-form";
+    import {JsonFormElementMixin} from "@aquarelle/json-form";
 
     export default {
         name: 'group-control',

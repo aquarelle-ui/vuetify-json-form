@@ -1,5 +1,5 @@
 import {default as Control} from "./control.vue";
-import {ArrayControlParser, JsonForm, setConfigUsingValidation} from "vue-json-form";
+import {ArrayControlParser, JsonForm, setConfigUsingValidation} from "@aquarelle/json-form";
 
 class Parser extends ArrayControlParser {
 

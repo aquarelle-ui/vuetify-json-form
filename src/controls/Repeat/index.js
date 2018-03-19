@@ -1,5 +1,5 @@
 import {default as Control} from "./control.vue";
-import {ArrayControlParser, JsonForm} from "vue-json-form";
+import {ArrayControlParser, JsonForm} from "@aquarelle/json-form";
 
 class Parser extends ArrayControlParser {
 

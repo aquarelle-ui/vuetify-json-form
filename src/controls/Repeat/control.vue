@@ -44,7 +44,7 @@
     </v-list>
 </template>
 <script>
-    import {JsonFormElementMixin} from "vue-json-form";
+    import {JsonFormElementMixin} from "@aquarelle/json-form";
     import draggable from 'vuedraggable'
     import ControlLabel from "../../components/ControlLabel.vue";
     import ListError from "../../components/Error/List.vue";

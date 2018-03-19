@@ -39,7 +39,7 @@
     </v-tabs>
 </template>
 <script>
-    import {JsonFormElementMixin, JsonFormGroup} from "vue-json-form";
+    import {JsonFormElementMixin, JsonFormGroup} from "@aquarelle/json-form";
 
     export default {
         components: {JsonFormGroup},

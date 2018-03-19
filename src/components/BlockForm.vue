@@ -31,7 +31,7 @@
     </v-card>
 </template>
 <script>
-    import {JsonFormGroup} from "vue-json-form";
+    import {JsonFormGroup} from "@aquarelle/json-form";
     import DialogForms from "./DialogForms.vue";
 
     export default {

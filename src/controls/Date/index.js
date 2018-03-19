@@ -1,5 +1,5 @@
 import {default as Control} from "./control.vue";
-import {DateControlParser as Parser, JsonForm} from "vue-json-form";
+import {DateControlParser as Parser, JsonForm} from "@aquarelle/json-form";
 
 Control.install = function (Vue) {
     Vue.component(Control.name, Control);

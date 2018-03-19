@@ -1,4 +1,4 @@
-import {setConfigUsingValidation, ControlParser} from "vue-json-form";
+import {setConfigUsingValidation, ControlParser} from "@aquarelle/json-form";
 
 export default class extends ControlParser {
 

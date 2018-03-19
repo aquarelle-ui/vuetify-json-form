@@ -18,7 +18,7 @@
     </v-radio-group>
 </template>
 <script>
-    import {JsonFormElementMixin} from "vue-json-form";
+    import {JsonFormElementMixin} from "@aquarelle/json-form";
     import VRadioGroupFixed from "../../components/VRadioGroupFixed";
     import ControlLabel from "../../components/ControlLabel.vue";
 

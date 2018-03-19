@@ -11,7 +11,7 @@
     </div>
 </template>
 <script>
-    import {JsonFormElementMixin} from "vue-json-form";
+    import {JsonFormElementMixin} from "@aquarelle/json-form";
     import QuillEditor from '../../components/QuillEditor.vue';
     import BlockError from "../../components/Error/Block.vue";
     import ControlLabel from "../../components/ControlLabel.vue";

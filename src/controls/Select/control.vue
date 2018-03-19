@@ -61,7 +61,7 @@
     </v-select>
 </template>
 <script>
-    import {JsonFormElementMixin} from "vue-json-form";
+    import {JsonFormElementMixin} from "@aquarelle/json-form";
     import VSelectFixed from "../../components/VSelectFixed";
 
     export default {
