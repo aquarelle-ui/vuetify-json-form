@@ -1,0 +1,7 @@
+.sortable-ghost {
+    outline: gold 2px dashed;
+}
+
+.sortable-ghost + .sortable-empty-list-item {
+    display: none;
+}
