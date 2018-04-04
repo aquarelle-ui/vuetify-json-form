@@ -52,7 +52,7 @@
         },
         mounted() {
             this.timeModel = this.modelProxy;
-            this.updateValue();
+            this.updateValue(false);
         },
         methods: {
             handleClear() {
@@ -67,9 +67,9 @@
                 this.showDialog = false;
                 this.timeModel = this.modelProxy || '00:00';
             },
-            updateValue() {
+            updateValue(validate = true) {
                 this.$set(this.model, this.name, this.timeModel);
-                this.validate();
+                validate && this.validate();
             }
         }
     }

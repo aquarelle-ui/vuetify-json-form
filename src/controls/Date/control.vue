@@ -62,7 +62,7 @@
         },
         mounted() {
             this.dateModel = this.modelProxy;
-            this.updateValue();
+            this.updateValue(false);
         },
         methods: {
             handleClear() {
@@ -79,10 +79,10 @@
                     this.dateModel = this.modelProxy;
                 }
             },
-            updateValue() {
+            updateValue(validate = true) {
                 this.$set(this.model, this.name, this.dateModel);
                 this.dateFormatted = this.formatDate(this.dateModel);
-                this.validate();
+                validate && this.validate();
             },
             formatDate(date) {
                 if (!date) {

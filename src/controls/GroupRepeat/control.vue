@@ -93,13 +93,13 @@
                 }
                 return this.$intl.translate(title, val);
             },
-            itemHasError(region, index) {
+            itemHasError(region, index, dirty = false) {
                 const v = this.validatorProxy;
                 if (!v || !v.hasOwnProperty(region.name) || !v[region.name]) {
                     return false;
                 }
 
-                if (!v[region.name].$invalid) {
+                if (!v[region.name].$invalid || (!dirty && !v[region.name].$dirty)) {
                     return false;
                 }
 
