@@ -40,11 +40,12 @@
     </div>
 </template>
 <script>
-    import {JsonFormGroup} from "@aquarelle/json-form";
+    import {JsonFormGroup, validationMixin} from "@aquarelle/json-form";
 
     export default {
         name: 'dialog-forms',
         components: {JsonFormGroup},
+        mixins: [validationMixin],
         props: {
             pushDelay: {
                 type: Number,

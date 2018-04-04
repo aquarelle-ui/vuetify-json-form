@@ -19,7 +19,7 @@ class Parser extends StringControlParser
                     if (!data.$component || !data.$component.$refs || !data.$component.$refs.control) {
                         return false;
                     }
-                    return !!data.$component.$refs.control.hasSyntaxError;
+                    return !data.$component.$refs.control.hasSyntaxError;
                 };
             }
         }

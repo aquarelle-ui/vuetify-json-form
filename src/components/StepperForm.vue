@@ -43,7 +43,7 @@
     }
 </style>
 <script>
-    import {JsonFormGroup} from "@aquarelle/json-form";
+    import {JsonFormGroup, validationMixin} from "@aquarelle/json-form";
     import DialogForms from "./DialogForms.vue";
 
     const invalidStep = [() => false];
@@ -51,6 +51,7 @@
     export default {
         name: 'stepper-form',
         components: {DialogForms, JsonFormGroup},
+        mixins: [validationMixin],
         props: {
             steps: {
                 type: Array,

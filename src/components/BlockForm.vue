@@ -31,12 +31,13 @@
     </v-card>
 </template>
 <script>
-    import {JsonFormGroup} from "@aquarelle/json-form";
+    import {JsonFormGroup, validationMixin} from "@aquarelle/json-form";
     import DialogForms from "./DialogForms.vue";
 
     export default {
         name: 'block-form',
         components: {JsonFormGroup, DialogForms},
+        mixins: [validationMixin],
         props: {
             value: {
                 type: [Object, Array],
