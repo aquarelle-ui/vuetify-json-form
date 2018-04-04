@@ -65,8 +65,13 @@
         computed: {
             canAddItem()
             {
+                const max = this.config.maxItems;
+                if (!max || max < 0) {
+                    return true;
+                }
+
                 const value = this.modelProxy;
-                return !this.config.maxItems || !value || value.length < this.config.maxItems;
+                return !value || value.length < max;
             }
         },
         methods: {
@@ -81,12 +86,17 @@
                 }
                 return this.$intl.translate(title, val);
             },
-            itemHasError(index)
+            itemHasError(index, dirty = false)
             {
                 const v = this.validatorProxy;
                 if (!v || !v.$each || !v.$each[index]) {
                     return false;
                 }
+
+                if (!dirty && !v.$each[index].$dirty) {
+                    return false;
+                }
+
                 return v.$each[index].$invalid;
             },
             addItem()
@@ -100,6 +110,7 @@
                     actions: {
                         submit: (original, copy) => {
                             this.modelProxy.push(copy);
+                            this.validate();
                             return true;
                         }
                     }
@@ -108,7 +119,10 @@
             removeItem(val)
             {
                 let index = this.modelProxy.indexOf(val);
-                this.modelProxy.splice(index, 1);
+                if (index >= 0) {
+                    this.modelProxy.splice(index, 1);
+                    this.validate();
+                }
             },
             editItem(val)
             {
@@ -122,6 +136,7 @@
                     actions: {
                         submit: (original, copy) => {
                             this.$set(this.modelProxy, index, copy);
+                            this.validate();
                             return true;
                         }
                     }

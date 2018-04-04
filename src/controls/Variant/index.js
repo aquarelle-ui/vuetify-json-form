@@ -29,9 +29,16 @@ class Parser extends ControlParser
 
     getValidation(definition, form, data, validator)
     {
-        return {
-            [data.config.variantField]: super.getValidation(definition, form, data, validator)
-        };
+        const v = super.getValidation(definition, form, data, validator);
+
+        if (data.name !== null) {
+            return {
+                [data.config.variantField]: v
+            };
+        }
+
+        validator[data.config.variantField] = v;
+        return validator;
     }
 
     getItems(definition, form)

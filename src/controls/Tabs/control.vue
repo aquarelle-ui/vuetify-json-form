@@ -52,15 +52,24 @@
             }
         },
         methods: {
-            tabHasError(tab)
+            tabHasError(tab, dirty = false)
             {
                 if (tab.name) {
-                    return this.validatorProxy[tab.name].$invalid;
+                    const v = this.validatorProxy[tab.name];
+                    if (!v || !dirty && !v.$dirty) {
+                        return false;
+                    }
+                    return v.$invalid;
                 }
+
                 const f = (item, validator) => {
                     if (item.config && Array.isArray(item.config.regions)) {
                         return item.config.some(region => {
-                            return validator[region.name].$invalid;
+                            const v = validator[region.name];
+                            if (!v || !dirty && !v.$dirty) {
+                                return false;
+                            }
+                            return v.$invalid;
                         });
                     }
                     if (!Array.isArray(item.items)) {
@@ -68,11 +77,15 @@
                     }
                     return item.items.some(subitem => {
                         if (subitem.name !== null) {
+                            if (!dirty && !validator.$dirty) {
+                                return false;
+                            }
                             return validator.$invalid;
                         }
                         return f(subitem, validator);
                     });
                 };
+
                 return f(tab, this.validatorProxy);
             }
         },

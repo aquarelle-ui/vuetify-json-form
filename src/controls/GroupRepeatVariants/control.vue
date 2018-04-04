@@ -6,7 +6,7 @@
         </v-subheader>
         <v-list v-for="region in config.regions" :key="region.name" subheader dense>
             <v-subheader>
-                <control-label :text="$intl.translate(region.title)" :has-error="getAllErrors(region.name).length > 0"
+                <control-label :text="$intl.translate(region.title)" :has-error="hasErrors(region.name)"
                                :required="region.config.required"></control-label>
                 <v-spacer></v-spacer>
                 <v-menu offset-y :disabled="!canAddItem(region)">
@@ -48,15 +48,15 @@
                         </v-btn>
                     </v-list-tile-action>
                 </v-list-tile>
-
-                <v-list-tile class="sortable-empty-list-item" v-show="modelProxy[region.name].length === 0">
-                    <v-list-tile-content>
-                        {{$intl.translate(display.placeholder || {key: 'ui:common.empty_list', text: 'No items'})}}
-                    </v-list-tile-content>
-                </v-list-tile>
             </draggable>
 
-            <template v-if="getAllErrors(region.name).length > 0">
+            <v-list-tile class="sortable-empty-list-item" v-show="modelProxy[region.name].length === 0">
+                <v-list-tile-content>
+                    {{$intl.translate(display.placeholder || {key: 'ui:common.empty_list', text: 'No items'})}}
+                </v-list-tile-content>
+            </v-list-tile>
+
+            <template v-if="hasErrors(region.name)">
                 <v-divider></v-divider>
                 <list-error :error="getAllErrors(region.name)[0]"></list-error>
             </template>
@@ -140,13 +140,22 @@
             },
             canAddItem(region)
             {
+                const max = region.config.maxItems;
+                if (!max || max < 0) {
+                    return true;
+                }
+
                 const value = this.modelProxy[region.name];
-                return !region.config.maxItems || !value || value.length < region.config.maxItems;
+                return !value || value.length < max;
             },
-            itemHasError(region, index)
+            itemHasError(region, index, dirty = false)
             {
                 const v = this.validatorProxy;
                 if (!v || !v[region.name] || !v[region.name][index]) {
+                    return false;
+                }
+
+                if (!dirty && !v[region.name][index].$dirty) {
                     return false;
                 }
 
@@ -174,6 +183,7 @@
                     actions: {
                         submit: (original, copy) => {
                             this.modelProxy[region.name].push(copy);
+                            this.validate();
                             return true;
                         }
                     }
@@ -182,7 +192,10 @@
             removeItem(region, val)
             {
                 let index = this.modelProxy[region.name].indexOf(val);
-                this.modelProxy[region.name].splice(index, 1);
+                if (index >= 0) {
+                    this.modelProxy[region.name].splice(index, 1);
+                    this.validate();
+                }
             },
             editItem(region, val)
             {
@@ -197,6 +210,7 @@
                     actions: {
                         submit: (original, copy) => {
                             this.$set(this.modelProxy[region.name], index, copy);
+                            this.validate();
                             return true;
                         }
                     }

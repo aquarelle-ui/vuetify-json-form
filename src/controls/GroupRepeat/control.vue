@@ -6,7 +6,7 @@
         </v-subheader>
         <v-list v-for="region in config.regions" :key="region.name" subheader dense>
             <v-subheader>
-                <control-label :text="$intl.translate(region.title)" :has-error="getAllErrors(region.name).length > 0"
+                <control-label :text="$intl.translate(region.title)" :has-error="hasErrors(region.name)"
                                :required="region.config.required"></control-label>
                 <v-spacer></v-spacer>
                 <v-btn :disabled="!canAddItem(region)" small flat ripple @click.stop="addItem(region)">
@@ -39,15 +39,15 @@
                         </v-btn>
                     </v-list-tile-action>
                 </v-list-tile>
-
-                <v-list-tile class="sortable-empty-list-item" v-show="modelProxy[region.name].length === 0">
-                    <v-list-tile-content>
-                        {{$intl.translate(display.placeholder || {key: 'ui:common.empty_list', text: 'No items'})}}
-                    </v-list-tile-content>
-                </v-list-tile>
             </draggable>
 
-            <template v-if="getAllErrors(region.name).length > 0">
+            <v-list-tile class="sortable-empty-list-item" v-show="modelProxy[region.name].length === 0">
+                <v-list-tile-content>
+                    {{$intl.translate(display.placeholder || {key: 'ui:common.empty_list', text: 'No items'})}}
+                </v-list-tile-content>
+            </v-list-tile>
+
+            <template v-if="hasErrors(region.name)">
                 <v-divider></v-divider>
                 <list-error :error="getAllErrors(region.name)[0]"></list-error>
             </template>
@@ -100,11 +100,11 @@
             itemHasError(region, index, dirty = false)
             {
                 const v = this.validatorProxy;
-                if (!v || !v.hasOwnProperty(region.name) || !v[region.name]) {
+                if (!v || !v[region.name]) {
                     return false;
                 }
 
-                if (!v[region.name].$invalid || (!dirty && !v[region.name].$dirty)) {
+                if (!v[region.name].$invalid) {
                     return false;
                 }
 
@@ -112,11 +112,25 @@
                     return false;
                 }
 
+                if (!dirty && !v[region.name].$each[index].$dirty) {
+                    return false;
+                }
+
                 return v[region.name].$each[index].$invalid;
             },
             canAddItem(region)
             {
-                return !region.config.maxItems || this.modelProxy[region.name].length < region.config.maxItems;
+                const max = region.config.maxItems;
+                if (!max || max < 0) {
+                    return true;
+                }
+
+                const model = this.modelProxy;
+                if (!model[region.name]) {
+                    return true;
+                }
+
+                return model[region.name].length < max;
             },
             addItem(region)
             {
@@ -129,6 +143,7 @@
                     actions: {
                         submit: (original, copy) => {
                             this.modelProxy[region.name].push(copy);
+                            this.validate();
                             return true;
                         }
                     }
@@ -137,7 +152,10 @@
             removeItem(region, val)
             {
                 let index = this.modelProxy[region.name].indexOf(val);
-                this.modelProxy[region.name].splice(index, 1);
+                if (index >= 0) {
+                    this.modelProxy[region.name].splice(index, 1);
+                    this.validate();
+                }
             },
             editItem(region, val)
             {
@@ -151,6 +169,7 @@
                     actions: {
                         submit: (original, copy) => {
                             this.$set(this.modelProxy[region.name], index, copy);
+                            this.validate();
                             return true;
                         }
                     }
