@@ -1,8 +1,15 @@
 import {default as Control} from "./control.vue";
 import {ControlParser, JsonForm, setConfigUsingValidation} from "@aquarelle/json-form";
 
-class Parser extends ControlParser {
-    getDefault(definition, form) {
+class Parser extends ControlParser
+{
+    getSubValidationProperty(definition, form, data, validator)
+    {
+        return 'regionVariantValidations';
+    }
+
+    getDefault(definition, form)
+    {
         let def = null;
         if (typeof definition.default === 'object') {
             def = {...definition.default};
@@ -20,69 +27,49 @@ class Parser extends ControlParser {
         return def;
     }
 
-    getConfig(definition, form) {
+    getConfig(definition, form)
+    {
         if (!definition.config.variantField) {
             definition.config.variantField = 'variant_name';
         }
         return definition.config;
     }
 
-    _isComponentValid(c, prop, name) {
-        if (!c || !c[prop]) {
-            return true;
-        }
-        const r = c.$v[prop][name];
-        const m = c[prop][name];
-        if (!Array.isArray(m)) {
-            return false;
-        }
-        for (let i = 0; i < m.length; i++) {
-            if (r[i] && r[i].$invalid) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    getValidation(definition, form, data, validator) {
+    getValidation(definition, form, data, validator)
+    {
         const validation = super.getValidation(definition, form, data, validator);
 
-        data.config.regions.map(item => {
-            if (!validation[item.name]) {
-                validation[item.name] = {};
+        data.config.regions.map(region => {
+            if (!validation[region.name]) {
+                validation[region.name] = {};
             }
-            validation[item.name] = {
-                ...validation[item.name],
-                subvalidator: form.validator.get('subvalidator', {
-                    value: () => {
-                        return this._isComponentValid(this.getComponentFromData(data), 'modelProxy', item.name);
-                    },
-                    key: 'ui:validation.subvalidator_group-repeat-variants',
-                    text: 'Some items have errors'
-                })
-            };
+
             let v = null;
-            if (typeof item.validation === 'object') {
-                v = form.validator.getMultiple(item.validation);
+            if (typeof region.validation === 'object') {
+                v = form.validator.getMultiple(region.validation, false);
             }
             else {
                 v = {};
-                item.validation = {};
+                region.validation = {};
             }
-            item.config = {};
-            setConfigUsingValidation(item.config, item.validation, ['required', 'minItems', 'maxItems']);
-            if (validation.hasOwnProperty(item.name)) {
-                validation[item.name] = {...validation[item.name], ...v};
+
+            region.config = {};
+
+            setConfigUsingValidation(region.config, region.validation, ['required', 'minItems', 'maxItems']);
+
+            if (validation.hasOwnProperty(region.name)) {
+                validation[region.name] = {...validation[region.name], ...v};
             }
             else {
-                validation[item.name] = v;
+                validation[region.name] = v;
             }
         });
 
         return validation;
     }
 
-    getItems(definition, form, data, validator) {
+    getItems(definition, form, data, validator)
+    {
         if (!definition.items || !Array.isArray(definition.items)) {
             return [];
         }
@@ -100,7 +87,8 @@ class Parser extends ControlParser {
         });
     }
 
-    parse(definition, form, validator) {
+    parse(definition, form, validator)
+    {
         const data = super.parse(definition, form, validator);
         setConfigUsingValidation(data.config, definition.validation, ['required']);
         return data;

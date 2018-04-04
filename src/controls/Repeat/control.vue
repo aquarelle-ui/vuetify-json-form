@@ -1,7 +1,8 @@
 <template>
     <v-list subheader dense>
         <v-subheader>
-            <control-label :text="$intl.translate(display.title)" :has-error="allErrors.length > 0" :required="config.required"></control-label>
+            <control-label :text="$intl.translate(display.title)" :has-error="allErrors.length > 0"
+                           :required="config.required"></control-label>
             <v-spacer></v-spacer>
             <v-btn :disabled="!canAddItem" small flat ripple @click.stop="addItem()">
                 <v-icon>add</v-icon>
@@ -53,7 +54,8 @@
         name: 'repeat-control',
         mixins: [JsonFormElementMixin],
         components: {draggable, ControlLabel, ListError},
-        data() {
+        data()
+        {
             return {
                 dragOptions: {
                     handle: '.drag-handle'
@@ -61,13 +63,15 @@
             };
         },
         computed: {
-            canAddItem() {
+            canAddItem()
+            {
                 const value = this.modelProxy;
                 return !this.config.maxItems || !value || value.length < this.config.maxItems;
             }
         },
         methods: {
-            itemTitle(val) {
+            itemTitle(val)
+            {
                 let title = this.display.itemTitle;
                 if (!title) {
                     return null;
@@ -77,14 +81,16 @@
                 }
                 return this.$intl.translate(title, val);
             },
-            itemHasError(index) {
+            itemHasError(index)
+            {
                 const v = this.validatorProxy;
                 if (!v || !v.$each || !v.$each[index]) {
                     return false;
                 }
                 return v.$each[index].$invalid;
             },
-            addItem() {
+            addItem()
+            {
                 this.jsonFormWrapper.pushForm({
                     title: this.display.addTitle || {key: 'ui:common.addItemTitle', text: 'Create new item'},
                     button: this.display.addSubmitButtom || {key: 'ui:common.addSubmitButton', text: 'Add'},
@@ -99,11 +105,13 @@
                     }
                 });
             },
-            removeItem(val) {
+            removeItem(val)
+            {
                 let index = this.modelProxy.indexOf(val);
                 this.modelProxy.splice(index, 1);
             },
-            editItem(val) {
+            editItem(val)
+            {
                 let index = this.modelProxy.indexOf(val);
                 this.jsonFormWrapper.pushForm({
                     title: this.display.editTitle || {key: 'ui:common.editItemTitle', text: 'Edit item'},

@@ -22,7 +22,8 @@
                     :required="config.required"
                     readonly
             ></v-text-field>
-            <v-icon class="date-time-icon ml-2 mr-2" @click.stop="timePick = true; showDialog = true">access_time</v-icon>
+            <v-icon class="date-time-icon ml-2 mr-2" @click.stop="timePick = true; showDialog = true">access_time
+            </v-icon>
         </v-layout>
 
         <v-time-picker v-show="timePick"
@@ -50,7 +51,7 @@
                        :first-day-of-week="firstDayOfWeek"
                        scrollable>
             <v-btn icon flat @click="timePick = true">
-                <v-icon >access_time</v-icon>
+                <v-icon>access_time</v-icon>
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn flat icon color="red" @click.stop="onCancel()">
@@ -74,7 +75,8 @@
     export default {
         name: 'date-time-control',
         mixins: [JsonFormElementMixin],
-        data() {
+        data()
+        {
             return {
                 timePick: false,
                 showDialog: false,
@@ -85,13 +87,16 @@
             }
         },
         computed: {
-            locale() {
+            locale()
+            {
                 return this.config.locale || this.$intl.language;
             },
-            firstDayOfWeek() {
+            firstDayOfWeek()
+            {
                 return this.config.firstDayOfWeek || this.$intl.firstDayOfWeek;
             },
-            allowedDates() {
+            allowedDates()
+            {
                 const obj = {min: undefined, max: undefined};
                 if (this.config.minDateTime) {
                     obj.min = this.config.minDateTime.split('T')[0];
@@ -101,7 +106,8 @@
                 }
                 return obj;
             },
-            allowedTimes() {
+            allowedTimes()
+            {
                 const obj = {min: undefined, max: undefined};
                 if (!this.dateModel) {
                     return obj;
@@ -126,7 +132,8 @@
                 return obj;
             }
         },
-        mounted() {
+        mounted()
+        {
             let d = this.modelProxy;
             if (!d) {
                 return;
@@ -141,23 +148,27 @@
             this.updateValue();
         },
         methods: {
-            onSave() {
+            onSave()
+            {
                 this.showDialog = false;
                 this.updateValue();
             },
-            onCancel() {
+            onCancel()
+            {
                 this.showDialog = false;
                 if (this.modelProxy) {
                     [this.dateModel, this.timeModel] = this.modelProxy.split('T');
                 }
             },
-            handleClear() {
+            handleClear()
+            {
                 this.timePick = false;
                 this.dateModel = null;
                 this.timeModel = '00:00';
                 this.$delete(this.model, this.name);
             },
-            parseDateTime(date) {
+            parseDateTime(date)
+            {
                 date = date.split('T');
                 const t = date[1] || '00:00';
                 let obj = this.parseTime(t);
@@ -165,7 +176,8 @@
                 obj.d = date[0];
                 return obj;
             },
-            parseTime(time) {
+            parseTime(time)
+            {
                 time = time.split(':');
                 time = {
                     h: Number(time[0] || 0),
@@ -173,7 +185,8 @@
                 };
                 return time;
             },
-            updateValue() {
+            updateValue()
+            {
                 if (this.dateModel === null) {
                     this.dateModel = (new Date()).toISOString().split('T')[0];
                 }
@@ -181,13 +194,15 @@
                 this.dateFormatted = this.formatDate(this.dateModel) + ' ' + this.formatTime(this.timeModel);
                 this.validate();
             },
-            formatDate(date) {
+            formatDate(date)
+            {
                 if (!date) {
                     return null;
                 }
                 return (new Date(date)).toLocaleDateString(this.locale);
             },
-            formatTime(time) {
+            formatTime(time)
+            {
                 if (!time) {
                     return '';
                 }

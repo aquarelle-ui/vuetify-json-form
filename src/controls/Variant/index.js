@@ -1,9 +1,15 @@
 import {default as Control} from "./control.vue";
 import {ControlParser, JsonForm, setConfigUsingValidation} from "@aquarelle/json-form";
 
-class Parser extends ControlParser {
+class Parser extends ControlParser
+{
+    getSubValidationProperty(definition, form, data, validator)
+    {
+        return 'currentVariantValidations';
+    }
 
-    getDefault(definition) {
+    getDefault(definition)
+    {
         let f = definition.config && definition.config.variantField ? definition.config.variantField : 'variant_name';
         if (typeof definition.default === 'object') {
             return {[f]: null, ...definition.default};
@@ -13,34 +19,23 @@ class Parser extends ControlParser {
         };
     }
 
-    getConfig(definition, form) {
+    getConfig(definition, form)
+    {
         if (!definition.config.variantField) {
             definition.config.variantField = 'variant_name';
         }
         return definition.config;
     }
 
-    getValidation(definition, form, data, validator) {
-
-        definition.validation.subvalidator_control = {
-            value: () => data,
-            key: 'ui:validation.subvalidator_variant',
-            text: 'Variant fields have errors'
+    getValidation(definition, form, data, validator)
+    {
+        return {
+            [data.config.variantField]: super.getValidation(definition, form, data, validator)
         };
-
-        const v = super.getValidation(definition, form, data, validator);
-        if (data.name === null) {
-            validator[data.config.variantField] = v;
-        }
-        else {
-            validator[data.name] = {
-                [data.config.variantField]: v
-            };
-        }
-        return {};
     }
 
-    getItems(definition, form) {
+    getItems(definition, form)
+    {
         if (!Array.isArray(definition.items)) {
             return [];
         }
@@ -57,7 +52,8 @@ class Parser extends ControlParser {
         });
     }
 
-    parse(definition, form, validator) {
+    parse(definition, form, validator)
+    {
         const data = super.parse(definition, form, validator);
         setConfigUsingValidation(data.config, definition.validation, ['required']);
         return data;

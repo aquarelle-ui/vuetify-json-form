@@ -6,14 +6,15 @@ export default {
     props: {
         valueComparator: {type: Function, default: () => ((a, b) => a === b)}
     },
-    mounted: function(){
+    mounted: function () {
         let val = this.inputValue;
         this.radios.forEach(radio => {
             radio.isActive = this.valueComparator(val, radio.value)
         })
     },
     methods: {
-        toggleRadio (value) {
+        toggleRadio(value)
+        {
             if (this.disabled) {
                 return
             }
@@ -28,7 +29,8 @@ export default {
         }
     },
     watch: {
-        inputValue (val) {
+        inputValue(val)
+        {
             this.radios.forEach(radio => {
                 radio.isActive = this.valueComparator(val, radio.value)
             })

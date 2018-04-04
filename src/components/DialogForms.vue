@@ -59,13 +59,15 @@
                 default: () => (['blue', 'indigo', 'deep-purple', 'purple'])
             },
         },
-        data() {
+        data()
+        {
             return {
                 me: this,
                 dialogs: []
             };
         },
-        validations() {
+        validations()
+        {
             const v = {};
             this.dialogs.map((dialog, index) => {
                 const m = {model: dialog.validator};
@@ -74,13 +76,15 @@
             return {dialogs: v};
         },
         methods: {
-            getColor(index) {
+            getColor(index)
+            {
                 if (this.colors.length === 0) {
                     return undefined;
                 }
                 return this.colors[index % this.colors.length];
             },
-            pushUnparsedForm(form, model) {
+            pushUnparsedForm(form, model)
+            {
                 form = {...form};
                 form.validator = {};
                 form.items = this.$jsonForm.parseControlList(form.items || [], form.validator);
@@ -89,7 +93,8 @@
                 }
                 this.pushForm(form);
             },
-            pushForm(options) {
+            pushForm(options)
+            {
                 const dialog = {
                     active: false,
                     form: options.items || [],
@@ -109,7 +114,8 @@
                     dialog.active = true;
                 }, this.pushDelay);
             },
-            popForm() {
+            popForm()
+            {
                 const len = this.dialogs.length;
                 if (len === 0) {
                     return;
@@ -121,10 +127,12 @@
                     this.dialogs.pop();
                 }, this.popDelay);
             },
-            clearForms() {
+            clearForms()
+            {
                 this.dialogs.splice(0, this.dialogs.length);
             },
-            onCancel(dialog) {
+            onCancel(dialog)
+            {
                 if (typeof dialog.actions.cancel === 'function') {
                     if (dialog.actions.cancel(dialog.model) === false) {
                         // Prevent cancel
@@ -134,12 +142,14 @@
                 this.popForm();
                 return true;
             },
-            onSubmit(dialog) {
+            onSubmit(dialog)
+            {
                 const index = this.dialogs.indexOf(dialog);
                 if (index < 0) {
                     return false;
                 }
                 const v = this.$v.dialogs[index].model;
+                v.$touch();
                 if (v.$invalid || v.$pending) {
                     return false;
                 }
@@ -154,7 +164,8 @@
                 return true;
             }
         },
-        beforeRouteLeave(to, from, next) {
+        beforeRouteLeave(to, from, next)
+        {
             const length = this.dialogs.length;
             if (length > 0) {
                 this.onCancel(this.dialogs[length - 1]);

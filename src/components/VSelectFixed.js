@@ -10,19 +10,25 @@ export default {
         }
     },
     methods: {
-        getValue(item){
-            if(this.itemValue instanceof Function){
+        getValue(item)
+        {
+            if (this.itemValue instanceof Function) {
                 return this.itemValue(item);
             }
             return this.getPropertyFromItem(item, this.itemValue)
         },
-        genSelectedItems (val = this.inputValue) {
+        genSelectedItems(val = this.inputValue)
+        {
             // If we are using tags, don't filter results
-            if (this.tags) return (this.selectedItems = val)
+            if (this.tags) {
+                return (this.selectedItems = val)
+            }
 
             // Combobox is the single version
             // of a taggable select element
-            if (this.combobox) return (this.selectedItems = val != null ? [val] : [])
+            if (this.combobox) {
+                return (this.selectedItems = val != null ? [val] : [])
+            }
 
             let selectedItems = this.computedItems.filter(i => {
                 if (!this.isMultiple) {

@@ -4,7 +4,8 @@ export default {
     name: 'component-control',
     mixins: [JsonFormElementMixin],
     computed: {
-        form() {
+        form()
+        {
             return {
                 name: this.name,
                 validator: this.validator,
@@ -15,7 +16,8 @@ export default {
             }
         }
     },
-    render(h) {
+    render(h)
+    {
         const component = this.config.component;
         const data = this.config.data || {};
         const alias = this.config.alias || 'form';

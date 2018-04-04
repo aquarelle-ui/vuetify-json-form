@@ -49,14 +49,16 @@
             theme: {type: String, default: 'chrome', required: false},
             options: {type: Object, default: () => ({minLines: 5, maxLines: 20}), required: false}
         },
-        data() {
+        data()
+        {
             return {
                 editor: null,
                 hasSyntaxError: false
             };
         },
 
-        mounted() {
+        mounted()
+        {
             const editor = this.editor = ace.edit(this.$el);
             editor.$blockScrolling = Infinity;
             editor.getSession().setMode('ace/mode/' + this.lang);
@@ -77,7 +79,8 @@
         },
 
         watch: {
-            theme(theme) {
+            theme(theme)
+            {
                 this.theme = theme;
                 this.editor.setTheme('ace/theme/' + theme);
             }

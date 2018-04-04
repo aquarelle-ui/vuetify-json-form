@@ -67,7 +67,8 @@
                 default: false
             }
         },
-        data() {
+        data()
+        {
             return {
                 me: this,
                 submitProps: {
@@ -79,7 +80,9 @@
                         this.$v.$reset();
                     },
                     submit: () => {
-                        if (!this.$v.$invalid && !this.$v.$pending) {
+                        const v = this.$v;
+                        v.$touch();
+                        if (!v.$invalid && !v.$pending) {
                             this.$emit('submit', this.value);
                         }
                     },
@@ -88,15 +91,20 @@
                     },
                     pending: () => {
                         return this.$v.$pending;
+                    },
+                    dirty: () => {
+                        return this.$v.$dirty;
                     }
                 }
             };
         },
         computed: {
-            heightStyle() {
+            heightStyle()
+            {
                 return this.fillHeight ? {height: '100%'} : undefined;
             },
-            parsed() {
+            parsed()
+            {
                 if (this.items === null) {
                     return null;
                 }
@@ -108,20 +116,24 @@
                 };
             },
         },
-        validations() {
+        validations()
+        {
             if (this.value === null || this.items === null) {
                 return true;
             }
             return {value: this.parsed.validator};
         },
         methods: {
-            pushUnparsedForm(options, model) {
+            pushUnparsedForm(options, model)
+            {
                 this.$refs.dialogs.pushUnparsedForm(options, model);
             },
-            pushForm(options) {
+            pushForm(options)
+            {
                 this.$refs.dialogs.pushForm(options);
             },
-            popForm() {
+            popForm()
+            {
                 this.$refs.dialogs.popForm();
                 if (this.$v) {
                     this.$v.$touch();

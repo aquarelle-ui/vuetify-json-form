@@ -2,12 +2,15 @@ import {JsonForm} from "@aquarelle/json-form";
 import SelectParser from "../Select/Parser";
 import Control from "../Select/control";
 
-class Parser extends SelectParser {
-    constructor(name) {
+class Parser extends SelectParser
+{
+    constructor(name)
+    {
         super(name, false)
     }
 
-    parse(definition, form, validator) {
+    parse(definition, form, validator)
+    {
         definition.items = [
             {
                 title: 'Phone',
@@ -56,7 +59,8 @@ class Parser extends SelectParser {
 }
 
 export default {
-    install(Vue) {
+    install(Vue)
+    {
         JsonForm.addControl('display', new Parser(Control.name));
     }
 };

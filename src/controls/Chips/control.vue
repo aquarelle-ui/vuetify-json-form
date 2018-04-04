@@ -32,7 +32,8 @@
         name: 'chips-control',
         mixins: [JsonFormElementMixin],
         methods: {
-            remove(item) {
+            remove(item)
+            {
                 this.modelProxy.splice(this.modelProxy.indexOf(item), 1)
             }
         }

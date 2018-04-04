@@ -3,10 +3,10 @@
         <v-expansion-panel-content :value="true">
             <div slot="header">{{$intl.translate(display.title)}}</div>
             <json-form-group
-                             :model="modelProxy"
-                             :validator="validatorProxy"
-                             :items="items"
-                             :json-form-wrapper="jsonFormWrapper"
+                    :model="modelProxy"
+                    :validator="validatorProxy"
+                    :items="items"
+                    :json-form-wrapper="jsonFormWrapper"
             >
             </json-form-group>
         </v-expansion-panel-content>
@@ -16,10 +16,10 @@
             <control-label :text="$intl.translate(display.title)"></control-label>
         </v-subheader>
         <json-form-group
-                         :model="modelProxy"
-                         :validator="validatorProxy"
-                         :items="items"
-                         :json-form-wrapper="jsonFormWrapper"
+                :model="modelProxy"
+                :validator="validatorProxy"
+                :items="items"
+                :json-form-wrapper="jsonFormWrapper"
         >
         </json-form-group>
     </div>

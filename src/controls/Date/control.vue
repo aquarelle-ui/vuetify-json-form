@@ -45,7 +45,8 @@
     export default {
         name: 'date-control',
         mixins: [JsonFormElementMixin],
-        data() {
+        data()
+        {
             return {
                 showDialog: false,
                 dateFormatted: null,
@@ -53,38 +54,46 @@
             }
         },
         computed: {
-            locale() {
+            locale()
+            {
                 return this.config.locale || this.$intl.language;
             },
-            firstDayOfWeek() {
+            firstDayOfWeek()
+            {
                 return this.config.firstDayOfWeek || this.$intl.firstDayOfWeek;
             }
         },
-        mounted() {
+        mounted()
+        {
             this.dateModel = this.modelProxy;
             this.updateValue(false);
         },
         methods: {
-            handleClear() {
+            handleClear()
+            {
                 this.dateModel = null;
                 this.$delete(this.model, this.name);
             },
-            onSave() {
+            onSave()
+            {
                 this.showDialog = false;
                 this.updateValue();
             },
-            onCancel() {
+            onCancel()
+            {
                 this.showDialog = false;
                 if (this.modelProxy) {
                     this.dateModel = this.modelProxy;
                 }
             },
-            updateValue(validate = true) {
+            updateValue(validate = true)
+            {
                 this.$set(this.model, this.name, this.dateModel);
                 this.dateFormatted = this.formatDate(this.dateModel);
                 validate && this.validate();
             },
-            formatDate(date) {
+            formatDate(date)
+            {
                 if (!date) {
                     return null;
                 }

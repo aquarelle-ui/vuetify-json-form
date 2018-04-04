@@ -1,7 +1,8 @@
 <template>
     <div>
         <v-subheader v-if="Boolean(translatedTitle)">
-            <control-label :text="$intl.translate(display.title)" :has-error="allErrors.length > 0" :required="config.required"></control-label>
+            <control-label :text="$intl.translate(display.title)" :has-error="allErrors.length > 0"
+                           :required="config.required"></control-label>
         </v-subheader>
         <v-list v-for="region in config.regions" :key="region.name" subheader dense>
             <v-subheader>
@@ -64,7 +65,8 @@
         name: 'group-repeat-control',
         mixins: [JsonFormElementMixin],
         components: {draggable, ControlLabel, ListError},
-        data() {
+        data()
+        {
             return {
                 dragOptions: {
                     draggable: '.drag-item',
@@ -75,7 +77,8 @@
             };
         },
         computed: {
-            translatedTitle() {
+            translatedTitle()
+            {
                 if (!this.display.title) {
                     return null;
                 }
@@ -83,7 +86,8 @@
             }
         },
         methods: {
-            itemTitle(val) {
+            itemTitle(val)
+            {
                 let title = this.display.itemTitle;
                 if (!title) {
                     return null;
@@ -93,7 +97,8 @@
                 }
                 return this.$intl.translate(title, val);
             },
-            itemHasError(region, index, dirty = false) {
+            itemHasError(region, index, dirty = false)
+            {
                 const v = this.validatorProxy;
                 if (!v || !v.hasOwnProperty(region.name) || !v[region.name]) {
                     return false;
@@ -109,10 +114,12 @@
 
                 return v[region.name].$each[index].$invalid;
             },
-            canAddItem(region) {
+            canAddItem(region)
+            {
                 return !region.config.maxItems || this.modelProxy[region.name].length < region.config.maxItems;
             },
-            addItem(region) {
+            addItem(region)
+            {
                 this.jsonFormWrapper.pushForm({
                     title: this.display.addTitle || {key: 'ui:common.addItemTitle', text: 'Create new item'},
                     button: this.display.addSubmitButtom || {key: 'ui:common.addSubmitButton', text: 'Add'},
@@ -127,11 +134,13 @@
                     }
                 });
             },
-            removeItem(region, val) {
+            removeItem(region, val)
+            {
                 let index = this.modelProxy[region.name].indexOf(val);
                 this.modelProxy[region.name].splice(index, 1);
             },
-            editItem(region, val) {
+            editItem(region, val)
+            {
                 let index = this.modelProxy[region.name].indexOf(val);
                 this.jsonFormWrapper.pushForm({
                     title: this.display.editTitle || {key: 'ui:common.editItemTitle', text: 'Edit item'},
@@ -148,14 +157,16 @@
                 });
             }
         },
-        created() {
+        created()
+        {
             this.config.regions.map(item => {
                 if (!this.modelProxy.hasOwnProperty(item.name)) {
                     this.$set(this.modelProxy, item.name, []);
                 }
             });
         },
-        destroyed() {
+        destroyed()
+        {
             this.config.regions.map(item => {
                 this.$delete(this.modelProxy, item.name);
             });

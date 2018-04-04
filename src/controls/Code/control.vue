@@ -1,6 +1,7 @@
 <template>
     <div>
-        <control-label :text="$intl.translate(display.title)" :has-error="allErrors.length > 0" :required="config.required"></control-label>
+        <control-label :text="$intl.translate(display.title)" :has-error="allErrors.length > 0"
+                       :required="config.required"></control-label>
         <ace-editor ref="editor" v-model="model[name]" :options="config.editor" :lang="config.lang"></ace-editor>
         <block-error :error="allErrors.length > 0 ? allErrors[0] : undefined"></block-error>
     </div>
@@ -16,7 +17,8 @@
         components: {AceEditor, BlockError, ControlLabel},
         mixins: [JsonFormElementMixin],
         computed: {
-            hasSyntaxError() {
+            hasSyntaxError()
+            {
                 return this.$refs.editor.hasSyntaxError;
             }
         }

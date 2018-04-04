@@ -34,7 +34,8 @@
         name: 'number-control',
         mixins: [JsonFormElementMixin],
         methods: {
-            formatValue(val) {
+            formatValue(val)
+            {
                 this.$set(this.model, this.name, Number(val));
             }
         }

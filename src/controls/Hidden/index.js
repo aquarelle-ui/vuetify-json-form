@@ -1,11 +1,15 @@
 import {default as Control} from "./control.vue";
 import {ControlParser, JsonForm, setConfigUsingValidation} from "@aquarelle/json-form";
 
-class Parser extends ControlParser {
-    getDefault(definition) {
+class Parser extends ControlParser
+{
+    getDefault(definition)
+    {
         return definition.hasOwnProperty('default') ? definition.default : undefined;
     }
-    parse(definition, form, validator) {
+
+    parse(definition, form, validator)
+    {
         const data = super.parse(definition, form, validator);
         setConfigUsingValidation(data.config, definition.validation, ['required']);
         return data;

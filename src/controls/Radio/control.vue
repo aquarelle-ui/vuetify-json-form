@@ -29,7 +29,8 @@
             'v-radio-group': VRadioGroupFixed
         },
         mixins: [JsonFormElementMixin],
-        mounted() {
+        mounted()
+        {
             if (this.model.hasOwnProperty(this.name)) {
                 const exists = this.items.some(item => this.$equals(this.modelProxy, item.value));
                 if (!exists) {

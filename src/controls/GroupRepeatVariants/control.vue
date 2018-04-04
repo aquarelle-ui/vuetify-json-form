@@ -1,11 +1,13 @@
 <template>
     <div>
         <v-subheader v-if="Boolean(translatedTitle)">
-            <control-label :text="translatedTitle" :has-error="allErrors.length > 0" :required="config.required"></control-label>
+            <control-label :text="translatedTitle" :has-error="allErrors.length > 0"
+                           :required="config.required"></control-label>
         </v-subheader>
         <v-list v-for="region in config.regions" :key="region.name" subheader dense>
             <v-subheader>
-                <control-label :text="$intl.translate(region.title)" :has-error="getAllErrors(region.name).length > 0" :required="region.config.required"></control-label>
+                <control-label :text="$intl.translate(region.title)" :has-error="getAllErrors(region.name).length > 0"
+                               :required="region.config.required"></control-label>
                 <v-spacer></v-spacer>
                 <v-menu offset-y :disabled="!canAddItem(region)">
                     <v-btn :disabled="!canAddItem(region)" small flat ripple slot="activator">
@@ -35,7 +37,8 @@
 
                     <v-list-tile-content>
                         <v-list-tile-title>{{itemTitle(val)}}</v-list-tile-title>
-                        <v-list-tile-sub-title>{{$intl.translate(variantTitle(getVariantByName(val[config.variantField])))}}
+                        <v-list-tile-sub-title>
+                            {{$intl.translate(variantTitle(getVariantByName(val[config.variantField])))}}
                         </v-list-tile-sub-title>
                     </v-list-tile-content>
 
@@ -71,26 +74,8 @@
         name: 'group-repeat-variants-control',
         mixins: [JsonFormElementMixin],
         components: {draggable, ControlLabel, ListError},
-        validations() {
-            if (!this.modelProxy) {
-                return true;
-            }
-            let v = {};
-            const p = this.config.variantField;
-            this.config.regions.map(region => {
-                v[region.name] = {};
-                if (!Array.isArray(this.modelProxy[region.name])) {
-                    return;
-                }
-                this.modelProxy[region.name].map((item, index) => {
-                    v[region.name][index] = this.getVariantByName(item[p]).validations;
-                });
-            });
-            return {
-                modelProxy: v
-            };
-        },
-        data() {
+        data()
+        {
             return {
                 dragOptions: {
                     draggable: '.drag-item',
@@ -101,7 +86,32 @@
             };
         },
         computed: {
-            translatedTitle() {
+            regionVariantValidations()
+            {
+                const model = this.modelProxy;
+                if (!model) {
+                    return null;
+                }
+
+                const v = {};
+                const p = this.config.variantField;
+
+                this.config.regions.map(region => {
+                    v[region.name] = {};
+
+                    if (!Array.isArray(model[region.name])) {
+                        return;
+                    }
+
+                    model[region.name].map((item, index) => {
+                        v[region.name][index] = this.getVariantByName(item[p]).validations;
+                    });
+                });
+
+                return v;
+            },
+            translatedTitle()
+            {
                 if (!this.display.title) {
                     return null;
                 }
@@ -109,13 +119,15 @@
             }
         },
         methods: {
-            variantTitle(variant) {
+            variantTitle(variant)
+            {
                 if (variant.display && variant.display.title) {
                     return variant.display.title;
                 }
                 return variant.title;
             },
-            itemTitle(val) {
+            itemTitle(val)
+            {
                 const v = this.getVariantByName(val[this.config.variantField]);
                 let title = v.itemTitle || this.display.itemTitle;
                 if (!title) {
@@ -126,21 +138,22 @@
                 }
                 return this.$intl.translate(title, val);
             },
-            canAddItem(region) {
+            canAddItem(region)
+            {
                 const value = this.modelProxy[region.name];
                 return !region.config.maxItems || !value || value.length < region.config.maxItems;
             },
-            itemHasError(region, index) {
-                if (!this.$v || !this.$v.modelProxy) {
+            itemHasError(region, index)
+            {
+                const v = this.$v;
+                if (!v || !v[region.name] || !v[region.name][index]) {
                     return false;
                 }
-                const v = this.$v.modelProxy[region.name];
-                if (!v || !v[index]) {
-                    return false;
-                }
-                return v[index].$invalid;
+
+                return v[region.name][index].$invalid;
             },
-            getVariantByName(name) {
+            getVariantByName(name)
+            {
                 for (let i = 0, m = this.items.length; i < m; i++) {
                     if (this.items[i].name === name) {
                         return this.items[i];
@@ -148,7 +161,8 @@
                 }
                 return null;
             },
-            addItem(region, variant) {
+            addItem(region, variant)
+            {
                 this.jsonFormWrapper.pushForm({
                     title: this.display.addTitle || {key: 'ui:common.addItemTitle', text: 'Create new item'},
                     button: this.display.addSubmitButtom || {key: 'ui:common.addSubmitButton', text: 'Add'},
@@ -165,11 +179,13 @@
                     }
                 });
             },
-            removeItem(region, val) {
+            removeItem(region, val)
+            {
                 let index = this.modelProxy[region.name].indexOf(val);
                 this.modelProxy[region.name].splice(index, 1);
             },
-            editItem(region, val) {
+            editItem(region, val)
+            {
                 let index = this.modelProxy[region.name].indexOf(val);
                 const variant = this.getVariantByName(val[this.config.variantField]);
                 this.jsonFormWrapper.pushForm({
@@ -187,14 +203,16 @@
                 });
             }
         },
-        created() {
+        created()
+        {
             this.config.regions.map(item => {
                 if (!this.modelProxy.hasOwnProperty(item.name)) {
                     this.$set(this.modelProxy, item.name, []);
                 }
             });
         },
-        destroyed() {
+        destroyed()
+        {
             this.config.regions.map(item => {
                 this.$delete(this.modelProxy, item.name);
             });

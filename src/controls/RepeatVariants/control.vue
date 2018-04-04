@@ -1,7 +1,8 @@
 <template>
     <v-list subheader dense>
         <v-subheader>
-            <control-label :text="$intl.translate(display.title)" :has-error="allErrors.length > 0" :required="config.required"></control-label>
+            <control-label :text="$intl.translate(display.title)" :has-error="allErrors.length > 0"
+                           :required="config.required"></control-label>
             <v-spacer></v-spacer>
             <v-menu offset-y :disabled="!canAddItem">
                 <v-btn :disabled="!canAddItem" small flat ripple slot="activator">
@@ -62,20 +63,8 @@
         name: 'repeat-variants-control',
         mixins: [JsonFormElementMixin],
         components: {draggable, ControlLabel, ListError},
-        validations() {
-            if (!Array.isArray(this.modelProxy)) {
-                return true;
-            }
-            let v = {};
-            const p = this.config.variantField;
-            this.modelProxy.map((item, index) => {
-                v[index] = this.getVariantByName(item[p]).validations;
-            });
-            return {
-                modelProxy: v
-            };
-        },
-        data() {
+        data()
+        {
             return {
                 dragOptions: {
                     handle: '.drag-handle'
@@ -83,19 +72,37 @@
             };
         },
         computed: {
-            canAddItem() {
+            variantValidations()
+            {
+                const model = this.modelProxy;
+                if (!Array.isArray(model)) {
+                    return null;
+                }
+
+                const v = {};
+                const p = this.config.variantField;
+                model.map((item, index) => {
+                    v[index] = this.getVariantByName(item[p]).validations;
+                });
+
+                return v;
+            },
+            canAddItem()
+            {
                 const value = this.modelProxy;
                 return !this.config.maxItems || !value || value.length < this.config.maxItems;
             }
         },
         methods: {
-            variantTitle(variant) {
+            variantTitle(variant)
+            {
                 if (variant.display && variant.display.title) {
                     return variant.display.title;
                 }
                 return variant.title;
             },
-            itemTitle(val) {
+            itemTitle(val)
+            {
                 const v = this.getVariantByName(val[this.config.variantField]);
                 let title = v.itemTitle || this.display.itemTitle;
                 if (!title) {
@@ -106,13 +113,16 @@
                 }
                 return this.$intl.translate(title, val);
             },
-            itemHasError(index) {
-                if (!this.$v.modelProxy || !this.$v.modelProxy[index]) {
+            itemHasError(index)
+            {
+                const v = this.$v;
+                if (!v || !v[index]) {
                     return false;
                 }
-                return this.$v.modelProxy[index].$invalid;
+                return v[index].$invalid;
             },
-            getVariantByName(name) {
+            getVariantByName(name)
+            {
                 for (let i = 0, m = this.items.length; i < m; i++) {
                     if (this.items[i].name === name) {
                         return this.items[i];
@@ -120,7 +130,8 @@
                 }
                 return null;
             },
-            addItem(variant) {
+            addItem(variant)
+            {
                 this.jsonFormWrapper.pushForm({
                     title: this.display.addTitle || {key: 'ui:common.addItemTitle', text: 'Create new item'},
                     button: this.display.addSubmitButtom || {key: 'ui:common.addSubmitButton', text: 'Add'},
@@ -137,11 +148,13 @@
                     }
                 });
             },
-            removeItem(val) {
+            removeItem(val)
+            {
                 let index = this.modelProxy.indexOf(val);
                 this.modelProxy.splice(index, 1);
             },
-            editItem(val) {
+            editItem(val)
+            {
                 let index = this.modelProxy.indexOf(val);
                 const variant = this.getVariantByName(val[this.config.variantField]);
                 this.jsonFormWrapper.pushForm({

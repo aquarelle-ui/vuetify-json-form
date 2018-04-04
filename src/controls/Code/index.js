@@ -1,22 +1,25 @@
 import {default as Control} from "./control.vue";
 import {StringControlParser, JsonForm, ValidatorItem} from "@aquarelle/json-form";
 
-class Parser extends StringControlParser {
-
-    getDefault(definition) {
+class Parser extends StringControlParser
+{
+    getDefault(definition)
+    {
         return typeof definition.default === 'string' ? definition.default : '';
     }
 
-    getValidation(definition, form, data, validator) {
-
+    getValidation(definition, form, data, validator)
+    {
         if (definition.validation.hasOwnProperty('syntax')) {
             if (definition.validation.syntax === true) {
                 definition.validation.syntax = {value: true};
             }
             if (typeof definition.validation.syntax === 'object' && definition.validation.syntax.value === true) {
                 definition.validation.syntax.value = () => {
-                    let c = this.getComponentFromData(data);
-                    return !c || !c.hasSyntaxError;
+                    if (!data.$component || !data.$component.$refs || !data.$component.$refs.control) {
+                        return false;
+                    }
+                    return !!data.$component.$refs.control.hasSyntaxError;
                 };
             }
         }

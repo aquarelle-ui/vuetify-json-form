@@ -1,8 +1,10 @@
 import {default as Control} from "./control.vue";
 import {ControlParser, JsonForm, setConfigUsingValidation} from "@aquarelle/json-form";
 
-class Parser extends ControlParser {
-    getDefault(definition, form) {
+class Parser extends ControlParser
+{
+    getDefault(definition, form)
+    {
         let def = {};
         if (Array.isArray(definition.items)) {
             definition.items.map(item => {
@@ -14,7 +16,8 @@ class Parser extends ControlParser {
         return def;
     }
 
-    _copyProps(from, to) {
+    _copyProps(from, to)
+    {
         for (let p in from) {
             if (from.hasOwnProperty(p)) {
                 to[p] = from[p];
@@ -22,7 +25,8 @@ class Parser extends ControlParser {
         }
     }
 
-    getItems(definition, form, data, validator) {
+    getItems(definition, form, data, validator)
+    {
         if (!Array.isArray(definition.items)) {
             return [];
         }

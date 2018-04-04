@@ -18,7 +18,8 @@
         name: 'col-control',
         mixins: [JsonFormElementMixin],
         computed: {
-            colProps() {
+            colProps()
+            {
                 let p = {};
                 if (this.display.size) {
                     this.setDeviceProps(p, this.display.size, '', 'md');
@@ -30,7 +31,8 @@
             }
         },
         methods: {
-            setDeviceProps(container, props, prefix, default_prefix = null) {
+            setDeviceProps(container, props, prefix, default_prefix = null)
+            {
                 if (typeof props === 'object') {
                     DEVICES.map(d => {
                         if (props.hasOwnProperty(d)) {
@@ -38,8 +40,10 @@
                         }
                     });
                 }
-                else if (props && default_prefix) {
-                    container[default_prefix + props] = true;
+                else {
+                    if (props && default_prefix) {
+                        container[default_prefix + props] = true;
+                    }
                 }
             }
         }

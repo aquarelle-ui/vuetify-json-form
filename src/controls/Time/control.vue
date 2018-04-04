@@ -44,30 +44,36 @@
     export default {
         name: 'time-control',
         mixins: [JsonFormElementMixin],
-        data() {
+        data()
+        {
             return {
                 showDialog: false,
                 timeModel: '00:00'
             }
         },
-        mounted() {
+        mounted()
+        {
             this.timeModel = this.modelProxy;
             this.updateValue(false);
         },
         methods: {
-            handleClear() {
+            handleClear()
+            {
                 this.timeModel = '00:00';
                 this.$delete(this.model, this.name);
             },
-            onSave() {
+            onSave()
+            {
                 this.showDialog = false;
                 this.updateValue();
             },
-            onCancel() {
+            onCancel()
+            {
                 this.showDialog = false;
                 this.timeModel = this.modelProxy || '00:00';
             },
-            updateValue(validate = true) {
+            updateValue(validate = true)
+            {
                 this.$set(this.model, this.name, this.timeModel);
                 validate && this.validate();
             }

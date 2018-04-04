@@ -38,7 +38,9 @@
                 {{data.item[titleProp]}}
             </v-chip>
             <template v-else>
-                <v-icon v-if="display.icons && !!data.item[iconProp]" class="mr-1">{{$controlIcon(data.item[iconProp])}}</v-icon>
+                <v-icon v-if="display.icons && !!data.item[iconProp]" class="mr-1">
+                    {{$controlIcon(data.item[iconProp])}}
+                </v-icon>
                 <span class="grey--text text--darken-4">{{data.item[titleProp]}}</span>
             </template>
         </template>
@@ -70,16 +72,19 @@
         components: {
             'v-select': VSelectFixed
         },
-        data() {
+        data()
+        {
             return {
                 translatedItems: []
             };
         },
-        created() {
+        created()
+        {
             this.translatedItems = this.translateItems(this.items);
         },
         methods: {
-            removeChip(data) {
+            removeChip(data)
+            {
                 if (this.config.multiple) {
                     data.parent.selectItem(data.item);
                 }
@@ -87,13 +92,15 @@
                     this.$delete(this.model, this.name);
                 }
             },
-            isItemSelected(data) {
+            isItemSelected(data)
+            {
                 if (this.config.multiple) {
                     return data.parent.selectedItems.indexOf(data.item) > -1;
                 }
                 return data.parent.selectedItem === data.item;
             },
-            translateItems(items) {
+            translateItems(items)
+            {
                 return items.map(item => {
                     if (!item.hasOwnProperty(this.valueProp)) {
                         if (item.hasOwnProperty('header')) {
@@ -112,19 +119,24 @@
             }
         },
         computed: {
-            titleProp() {
+            titleProp()
+            {
                 return this.config.titleProp || 'title';
             },
-            valueProp() {
+            valueProp()
+            {
                 return this.config.valueProp || 'value';
             },
-            descriptionProp() {
+            descriptionProp()
+            {
                 return this.config.descriptionProp || 'description';
             },
-            iconProp() {
+            iconProp()
+            {
                 return this.config.iconProp || 'icon';
             },
-            itemsProp() {
+            itemsProp()
+            {
                 return this.config.itemsProp || 'items';
             }
         }

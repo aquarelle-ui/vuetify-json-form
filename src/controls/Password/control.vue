@@ -31,11 +31,13 @@
     export default {
         name: 'password-control',
         mixins: [JsonFormElementMixin],
-        data() {
+        data()
+        {
             return {visible: false}
         },
         methods: {
-            toggle() {
+            toggle()
+            {
                 this.visible = !this.visible;
             }
         }

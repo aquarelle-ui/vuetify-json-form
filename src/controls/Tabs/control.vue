@@ -45,13 +45,15 @@
         components: {JsonFormGroup},
         name: 'tabs-control',
         mixins: [JsonFormElementMixin],
-        data() {
+        data()
+        {
             return {
                 tabPrefix: this.$uniqueObjectId(this)
             }
         },
         methods: {
-            tabHasError(tab) {
+            tabHasError(tab)
+            {
                 if (tab.name) {
                     return this.validatorProxy[tab.name].$invalid;
                 }
@@ -74,14 +76,16 @@
                 return f(tab, this.validatorProxy);
             }
         },
-        created() {
+        created()
+        {
             this.items.map(item => {
                 if (item.name && !this.modelProxy.hasOwnProperty(item.name)) {
                     this.$set(this.modelProxy, item.name, {});
                 }
             });
         },
-        destroyed() {
+        destroyed()
+        {
             this.items.map(item => {
                 if (item.name) {
                     this.$delete(this.modelProxy, item.name);

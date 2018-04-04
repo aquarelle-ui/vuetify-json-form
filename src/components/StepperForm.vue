@@ -22,7 +22,7 @@
                     <v-btn color="primary"
                            :disabled="processing || isButtonDisabled(step, index)"
                            :loading="processing || isButtonLoading(step, index)"
-                           @click.stop="nextStep(step)">
+                           @click.stop="nextStep(step, index)">
                         {{$intl.translate(getButtonText(step, index))}}
                     </v-btn>
                 </v-stepper-content>
@@ -33,10 +33,11 @@
     </v-form>
 </template>
 <style>
-    /* Fixed invalid stpper style */
+    /* Fixed invalid stepper style */
     .stepper__content .list__tile__action .btn--icon {
         margin-top: 8px;
     }
+
     .stepper__content .json-form-group .btn {
         margin-top: 8px;
     }
@@ -76,7 +77,8 @@
                 default: false
             }
         },
-        data() {
+        data()
+        {
             return {
                 me: this,
                 invalidStep: invalidStep,
@@ -86,7 +88,8 @@
                 mapTracker: 0
             }
         },
-        validations() {
+        validations()
+        {
             const dataSteps = this.dataSteps;
             // Use mapTracker to make map reactive
             if (!this.steps || !dataSteps.length || this.mapTracker <= 0) {
@@ -97,11 +100,13 @@
                 if (!step.parsed || !step.validator) {
                     v[index] = {};
                 }
-                else if (step.name) {
-                    v[index] = {[step.name]: step.validator};
-                }
                 else {
-                    v[index] = step.validator;
+                    if (step.name) {
+                        v[index] = {[step.name]: step.validator};
+                    }
+                    else {
+                        v[index] = step.validator;
+                    }
                 }
             });
             return {
@@ -109,18 +114,22 @@
             };
         },
         watch: {
-            steps() {
+            steps()
+            {
                 this.setupStepper();
             }
         },
-        mounted() {
+        mounted()
+        {
             this.setupStepper();
         },
         computed: {
-            heightStyle() {
+            heightStyle()
+            {
                 return this.fillHeight ? {height: '100%'} : undefined;
             },
-            dataSteps() {
+            dataSteps()
+            {
                 if (!this.steps) {
                     return [];
                 }
@@ -150,7 +159,8 @@
                     return this.map.get(step);
                 });
             },
-            dataValue() {
+            dataValue()
+            {
                 // Use mapTracker to make map reactive
                 if (this.mapTracker <= 0) {
                     return [];
@@ -165,7 +175,8 @@
             }
         },
         methods: {
-            setupStepper() {
+            setupStepper()
+            {
                 const ds = this.dataSteps;
                 if (ds.length > 0) {
                     if (!ds[0].parsed) {
@@ -176,25 +187,30 @@
                     }
                 }
             },
-            pushUnparsedForm(options, model) {
+            pushUnparsedForm(options, model)
+            {
                 this.$refs.dialogs.pushUnparsedForm(options, model);
             },
-            pushForm(options) {
+            pushForm(options)
+            {
                 this.$refs.dialogs.pushForm(options);
             },
-            popForm() {
+            popForm()
+            {
                 this.$refs.dialogs.popForm();
                 if (this.$v) {
                     this.$v.$touch();
                 }
             },
-            getButtonText(step, index) {
+            getButtonText(step, index)
+            {
                 if (step.nextButton) {
                     return step.nextButton;
                 }
                 return index + 1 === this.dataSteps.length ? this.finishButtonText : this.nextButtonText;
             },
-            gotoNextStep(currentStep) {
+            gotoNextStep(currentStep)
+            {
                 this.$set(currentStep, 'complete', true);
 
                 const length = this.dataSteps.length;
@@ -237,7 +253,8 @@
                 this.currentStep = index + 1;
                 next.touched = true;
             },
-            parseStep(step, callback) {
+            parseStep(step, callback)
+            {
                 if (typeof step.items === 'function') {
                     let result = step.items(this.value, step, this);
                     if (typeof result.then === 'function') {
@@ -256,12 +273,14 @@
                 this.markAsParsed(step);
                 callback && callback(step);
             },
-            markAsParsed(step, parsed = true) {
+            markAsParsed(step, parsed = true)
+            {
                 this.$set(step, 'parsed', parsed);
                 // Makes map reactive
                 this.mapTracker++;
             },
-            setupStepForm(step, items, validator = null) {
+            setupStepForm(step, items, validator = null)
+            {
                 if (validator === null) {
                     validator = {};
                     items = this.$jsonForm.parseControlList(items, validator);
@@ -270,31 +289,43 @@
                 this.$set(step, 'validator', validator);
                 this.$set(step, 'form', items);
             },
-            nextStep(currentStep) {
+            nextStep(currentStep, index)
+            {
+                const v = this.$v.dataValue;
+                if (v && v[index]) {
+                    v[index].$touch();
+                    if (v[index].$error) {
+                        return;
+                    }
+                }
                 this.loadingStep = this.currentStep;
                 if (typeof currentStep.callback === 'function') {
                     let result = currentStep.callback(this.value, currentStep, this);
                     if (result === true) {
                         this.gotoNextStep(currentStep);
                     }
-                    else if (result && typeof result.then === 'function') {
-                        // Promises
-                        result.then(() => {
-                            this.gotoNextStep(currentStep);
-                        });
-                    }
                     else {
-                        this.loadingStep = 0;
+                        if (result && typeof result.then === 'function') {
+                            // Promises
+                            result.then(() => {
+                                this.gotoNextStep(currentStep);
+                            });
+                        }
+                        else {
+                            this.loadingStep = 0;
+                        }
                     }
                 }
                 else {
                     this.gotoNextStep(currentStep);
                 }
             },
-            stepHasError(step, index) {
+            stepHasError(step, index)
+            {
                 return step.parsed && this.$v.dataValue && this.$v.dataValue[index].$invalid;
             },
-            isButtonDisabled(step, index) {
+            isButtonDisabled(step, index)
+            {
                 if (this.isButtonLoading(step, index)) {
                     return true;
                 }
@@ -302,17 +333,20 @@
                     return true;
                 }
                 if (this.dataSteps.length === index + 1) {
+                    this.$v.$touch();
                     return this.$v.$invalid;
                 }
                 return false;
             },
-            isButtonLoading(step, index) {
+            isButtonLoading(step, index)
+            {
                 if (this.loadingStep === index + 1) {
                     return true;
                 }
                 return step.parsed && this.$v.dataValue[index].$pending;
             },
-            submitSteps() {
+            submitSteps()
+            {
                 this.$v.$touch();
                 if (this.$v.$invalid || this.$v.$pending) {
                     return;

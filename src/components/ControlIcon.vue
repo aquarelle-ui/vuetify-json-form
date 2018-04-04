@@ -5,7 +5,8 @@
     export default {
         name: 'control-icon',
         computed: {
-            icon() {
+            icon()
+            {
                 const d = this.$slots.default;
                 if (!d || !d[0]) {
                     return undefined;

@@ -396,7 +396,8 @@
     ];
 
     const syntax = {
-        highlight(text) {
+        highlight(text)
+        {
             return hljs.highlightAuto(text).value;
         }
     };
@@ -515,14 +516,16 @@
             editorTheme: {type: String, default: 'snow', required: false}
         },
 
-        data() {
+        data()
+        {
             return {
                 quill: null,
                 editor: null
             }
         },
 
-        mounted() {
+        mounted()
+        {
             let modules = MODES.full;
             if (this.editorModules) {
                 if (typeof this.editorModules === 'string') {
@@ -566,18 +569,21 @@
         },
 
         watch: {
-            value(val) {
+            value(val)
+            {
                 if (val !== this.editor.innerHTML && !this.quill.hasFocus()) {
                     this.editor.innerHTML = val;
                 }
             },
-            disabled(status) {
+            disabled(status)
+            {
                 this.quill.enable(!status);
             }
         },
 
         methods: {
-            emitImageInfo($event) {
+            emitImageInfo($event)
+            {
                 let file = $event.target.files[0];
                 let Editor = this.quill;
                 let range = Editor.getSelection();

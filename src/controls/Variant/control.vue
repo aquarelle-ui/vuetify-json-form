@@ -24,10 +24,10 @@
         </v-select>
         <json-form-group v-if="currentVariant !== null"
                          :model="modelProxy"
-                         :validator="$v.modelProxy"
+                         :validator="validatorProxy"
                          :items="variant.items"
                          :json-form-wrapper="jsonFormWrapper"
-                         >
+        >
         </json-form-group>
     </div>
 </template>
@@ -38,30 +38,37 @@
         components: {JsonFormGroup},
         name: 'variant-control',
         mixins: [JsonFormElementMixin],
-        validations() {
-            if (this.currentVariant === null) {
-                return true;
-            }
-            return {
-                modelProxy: this.getVariantByName(this.currentVariant).validations,
-            };
-        },
+
         computed: {
-            allErrors() {
+            currentVariantValidations()
+            {
+                const currentVariant = this.currentVariant;
+                if (currentVariant === null) {
+                    return null;
+                }
+
+                return this.getVariantByName(currentVariant).validations;
+            },
+            allErrors()
+            {
                 return this.getAllErrors(this.variantProp);
             },
-            currentVariant() {
+            currentVariant()
+            {
                 return this.modelProxy[this.variantProp] || null;
             },
-            variantProp() {
+            variantProp()
+            {
                 return this.config.variantField || 'variant_name';
             },
-            variant() {
+            variant()
+            {
                 return this.getVariantByName(this.currentVariant);
             }
         },
         methods: {
-            getVariantByName(name) {
+            getVariantByName(name)
+            {
                 for (let i = 0, m = this.items.length; i < m; i++) {
                     if (this.items[i].name === name) {
                         return this.items[i];
@@ -70,7 +77,8 @@
                 return null;
             }
         },
-        destroyed() {
+        destroyed()
+        {
             this.$delete(this.modelProxy, this.variantProp);
         }
     }

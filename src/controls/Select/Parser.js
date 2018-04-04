@@ -1,20 +1,24 @@
 import {setConfigUsingValidation, ControlParser} from "@aquarelle/json-form";
 
-export default class extends ControlParser {
+export default class extends ControlParser
+{
 
-    constructor(element, group) {
+    constructor(element, group)
+    {
         super(element);
         this._group = group;
     }
 
-    getDefault(definition) {
+    getDefault(definition)
+    {
         if (definition.config && definition.config.multiple) {
             return Array.isArray(definition.default) ? definition.default : [];
         }
         return definition.default || undefined;
     }
 
-    getConfig(definition) {
+    getConfig(definition)
+    {
         return {
             titleProp: 'title',
             groupTitleProp: 'title',
@@ -28,7 +32,8 @@ export default class extends ControlParser {
         };
     }
 
-    getItems(definition, form, data, validator) {
+    getItems(definition, form, data, validator)
+    {
         if (!definition.items || !Array.isArray(definition.items)) {
             return [];
         }
@@ -64,7 +69,8 @@ export default class extends ControlParser {
         return items;
     }
 
-    parse(definition, form, validator) {
+    parse(definition, form, validator)
+    {
         const data = super.parse(definition, form, validator);
         if (data.config.multiple) {
             setConfigUsingValidation(data.config, definition.validation, ['required', 'minItems', 'maxItems']);
