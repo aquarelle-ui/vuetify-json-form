@@ -1,5 +1,13 @@
 import {default as Control} from "./control";
-import {ControlParser as Parser, JsonForm} from "@aquarelle/json-form";
+import {ControlParser, JsonForm} from "@aquarelle/json-form";
+
+class Parser extends ControlParser
+{
+    getSubValidationProperty(definition, form, data, validator)
+    {
+        return definition.validatorProp || null;
+    }
+}
 
 Control.install = function (Vue) {
     Vue.component(Control.name, Control);
