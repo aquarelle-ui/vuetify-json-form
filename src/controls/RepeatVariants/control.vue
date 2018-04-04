@@ -115,7 +115,7 @@
             },
             itemHasError(index)
             {
-                const v = this.$v;
+                const v = this.validatorProxy;
                 if (!v || !v[index]) {
                     return false;
                 }

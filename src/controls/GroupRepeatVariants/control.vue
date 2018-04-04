@@ -145,7 +145,7 @@
             },
             itemHasError(region, index)
             {
-                const v = this.$v;
+                const v = this.validatorProxy;
                 if (!v || !v[region.name] || !v[region.name][index]) {
                     return false;
                 }
