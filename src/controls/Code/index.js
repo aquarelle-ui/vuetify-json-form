@@ -11,17 +11,20 @@ class Parser extends StringControlParser
     getValidation(definition, form, data, validator)
     {
         if (definition.validation.hasOwnProperty('syntax')) {
-            if (definition.validation.syntax === true) {
-                definition.validation.syntax = {value: true};
+            definition = {...definition};
+            const validation = {...definition.validation};
+            if (validation.syntax === true) {
+                validation.syntax = {value: true};
             }
-            if (typeof definition.validation.syntax === 'object' && definition.validation.syntax.value === true) {
-                definition.validation.syntax.value = () => {
+            if (typeof validation.syntax === 'object' && validation.syntax.value === true) {
+                validation.syntax.value = () => {
                     if (!data.$component) {
                         return false;
                     }
                     return !data.$component.hasSyntaxError;
                 };
             }
+            definition.validation = validation;
         }
 
         return super.getValidation(definition, form, data, validator);

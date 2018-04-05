@@ -53,7 +53,15 @@
         {
             return {
                 editor: null,
-                hasSyntaxError: false
+                hasSyntaxError: false,
+                check: () => {
+                    this.hasSyntaxError = this.editor.getSession().getAnnotations().some(annot => {
+                        return annot.type === 'error';
+                    });
+                },
+                onChange: () => {
+                    this.$emit('input', this.editor.getValue());
+                }
             };
         },
 
@@ -66,28 +74,39 @@
             editor.setOptions(this.options);
             editor.setValue(this.value || '', 1);
 
-            const check = () => {
-                this.hasSyntaxError = editor.getSession().getAnnotations().some(annot => {
-                    return annot.type === 'error';
-                });
-            };
-            editor.on("blur", check);
-            editor.getSession().on('changeAnnotation', check);
-            editor.on('change', () => {
-                this.$emit('input', editor.getValue());
-            });
+            editor.on('change', this.onChange);
+            editor.on('blur', this.check);
+            editor.getSession().on('changeAnnotation', this.check);
         },
 
         beforeDestroy()
         {
-            // todo: destroy ace
+            const editor = this.editor;
+
+            editor.getSession().off('changeAnnotation', this.check);
+            editor.off('blur', this.check);
+            editor.off('change', this.onChange);
+
+            editor.getSession().destroy();
+            editor.destroy();
+
+            const el = this.$el;
+
+            while (el.firstChild) {
+                el.removeChild(el.firstChild);
+            }
+
+            this.hasSyntaxError = false;
+            this.editor = null;
         },
 
         watch: {
             theme(theme)
             {
-                this.theme = theme;
-                this.editor.setTheme('ace/theme/' + theme);
+                const editor = this.editor;
+                if (editor) {
+                    this.editor.setTheme('ace/theme/' + theme);
+                }
             }
         }
     };

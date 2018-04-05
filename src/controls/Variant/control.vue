@@ -22,10 +22,10 @@
                 item-avatar="icon"
         >
         </v-select>
-        <json-form-group v-if="currentVariant !== null"
+        <json-form-group v-if="currentItems !== null"
                          :model="modelProxy"
                          :validator="validatorProxy"
-                         :items="variant.items"
+                         :items="currentItems"
                          :json-form-wrapper="jsonFormWrapper"
         >
         </json-form-group>
@@ -38,24 +38,32 @@
         components: {JsonFormGroup},
         name: 'variant-control',
         mixins: [JsonFormElementMixin],
-
         watch: {
-            currentVariant() {
+            currentVariant(variant) {
                 const v = this.validatorProxy;
                 if (v && v[this.variantProp]) {
                     v[this.variantProp].$touch();
                 }
+                this.buildItems(variant);
+            }
+        },
+        data() {
+            return {
+                currentItems: null,
+                currentValidations: null,
+            };
+        },
+        created()
+        {
+            const model = this.modelProxy;
+            if (model && model[this.variantProp] !== null) {
+                this.buildItems(model[this.variantProp]);
             }
         },
         computed: {
             currentVariantValidations()
             {
-                const currentVariant = this.currentVariant;
-                if (currentVariant === null) {
-                    return null;
-                }
-
-                return this.getVariantByName(currentVariant).validations;
+                return this.currentValidations;
             },
             allErrors()
             {
@@ -68,21 +76,41 @@
             variantProp()
             {
                 return this.config.variantField || 'variant_name';
-            },
-            variant()
-            {
-                return this.getVariantByName(this.currentVariant);
             }
         },
         methods: {
             getVariantByName(name)
             {
+                if (name === null) {
+                    return null;
+                }
                 for (let i = 0, m = this.items.length; i < m; i++) {
                     if (this.items[i].name === name) {
                         return this.items[i];
                     }
                 }
                 return null;
+            },
+            buildItems(name)
+            {
+                if (name === null) {
+                    this.currentItems.splice(0, this.currentItems.length);
+                    this.currentValidations = null;
+                    this.$nextTick(() => {
+                        this.currentItems = null;
+                    });
+                    return;
+                }
+
+                const variant = this.getVariantByName(name);
+
+                const validations = {};
+                const items = this.$jsonForm.parseControlList(variant.items, validations);
+
+                this.$nextTick(() => {
+                    this.currentItems = items;
+                    this.currentValidations = validations;
+                });
             }
         },
         beforeDestroy()
