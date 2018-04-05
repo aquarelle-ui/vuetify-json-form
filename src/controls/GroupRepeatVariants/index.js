@@ -78,7 +78,7 @@ class Parser extends ControlParser
             item = {...item};
             item.validations = {};
             if (Array.isArray(item.items)) {
-                item.items = form.parseControlList(item.items, item.validations);
+                form.parseControlList(item.items, item.validations);
             }
             else {
                 item.items = [];

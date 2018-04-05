@@ -16,10 +16,10 @@ class Parser extends StringControlParser
             }
             if (typeof definition.validation.syntax === 'object' && definition.validation.syntax.value === true) {
                 definition.validation.syntax.value = () => {
-                    if (!data.$component || !data.$component.$refs || !data.$component.$refs.control) {
+                    if (!data.$component) {
                         return false;
                     }
-                    return !data.$component.$refs.control.hasSyntaxError;
+                    return !data.$component.hasSyntaxError;
                 };
             }
         }

@@ -172,14 +172,13 @@
             },
             addItem(region, variant)
             {
-                this.jsonFormWrapper.pushForm({
+                this.jsonFormWrapper.pushUnparsedForm({
                     title: this.display.addTitle || {key: 'ui:common.addItemTitle', text: 'Create new item'},
                     button: this.display.addSubmitButtom || {key: 'ui:common.addSubmitButton', text: 'Add'},
                     model: {
                         [this.config.variantField]: variant.name
                     },
                     items: variant.items,
-                    validator: variant.validations,
                     actions: {
                         submit: (original, copy) => {
                             this.modelProxy[region.name].push(copy);
@@ -201,12 +200,11 @@
             {
                 let index = this.modelProxy[region.name].indexOf(val);
                 const variant = this.getVariantByName(val[this.config.variantField]);
-                this.jsonFormWrapper.pushForm({
+                this.jsonFormWrapper.pushUnparsedForm({
                     title: this.display.editTitle || {key: 'ui:common.editItemTitle', text: 'Edit item'},
                     button: this.display.editSubmitButtom || {key: 'ui:common.editSubmitButton', text: 'Save changes'},
                     model: this.$clone(val),
                     items: variant.items,
-                    validator: variant.validations,
                     actions: {
                         submit: (original, copy) => {
                             this.$set(this.modelProxy[region.name], index, copy);

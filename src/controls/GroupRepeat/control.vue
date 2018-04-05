@@ -134,12 +134,11 @@
             },
             addItem(region)
             {
-                this.jsonFormWrapper.pushForm({
+                this.jsonFormWrapper.pushUnparsedForm({
                     title: this.display.addTitle || {key: 'ui:common.addItemTitle', text: 'Create new item'},
                     button: this.display.addSubmitButtom || {key: 'ui:common.addSubmitButton', text: 'Add'},
                     model: {},
                     items: this.items,
-                    validator: this.config.itemValidator,
                     actions: {
                         submit: (original, copy) => {
                             this.modelProxy[region.name].push(copy);
@@ -160,12 +159,11 @@
             editItem(region, val)
             {
                 let index = this.modelProxy[region.name].indexOf(val);
-                this.jsonFormWrapper.pushForm({
+                this.jsonFormWrapper.pushUnparsedForm({
                     title: this.display.editTitle || {key: 'ui:common.editItemTitle', text: 'Edit item'},
                     button: this.display.editSubmitButtom || {key: 'ui:common.editSubmitButton', text: 'Save changes'},
                     model: this.$clone(val),
                     items: this.items,
-                    validator: this.config.itemValidator,
                     actions: {
                         submit: (original, copy) => {
                             this.$set(this.modelProxy[region.name], index, copy);

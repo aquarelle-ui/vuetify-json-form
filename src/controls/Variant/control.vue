@@ -2,7 +2,7 @@
     <div>
         <v-select
                 v-model="modelProxy[variantProp]"
-                :error-messages="allErrors"
+                :error-messages="getAllErrors(variantProp)"
 
                 :label="$intl.translate(display.title)"
                 :hint="$intl.translate(display.hint)"
@@ -39,6 +39,14 @@
         name: 'variant-control',
         mixins: [JsonFormElementMixin],
 
+        watch: {
+            currentVariant() {
+                const v = this.validatorProxy;
+                if (v && v[this.variantProp]) {
+                    v[this.variantProp].$touch();
+                }
+            }
+        },
         computed: {
             currentVariantValidations()
             {
@@ -77,7 +85,7 @@
                 return null;
             }
         },
-        destroyed()
+        beforeDestroy()
         {
             this.$delete(this.modelProxy, this.variantProp);
         }

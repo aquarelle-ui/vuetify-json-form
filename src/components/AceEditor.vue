@@ -78,6 +78,11 @@
             });
         },
 
+        beforeDestroy()
+        {
+            // todo: destroy ace
+        },
+
         watch: {
             theme(theme)
             {
