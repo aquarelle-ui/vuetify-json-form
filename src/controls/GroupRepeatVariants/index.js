@@ -76,7 +76,7 @@ class Parser extends ControlParser
 
         return definition.items.map(item => {
             item = {...item};
-            if (Array.isArray(item.items)) {
+            if (!Array.isArray(item.items)) {
                 item.items = [];
             }
             return item;
