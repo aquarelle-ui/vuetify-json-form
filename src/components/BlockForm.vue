@@ -16,10 +16,10 @@
             ></json-form-group>
         </v-card-text>
         <v-card-actions>
-            <slot v-bind="submitProps" :submit-disabled="$v.$invalid || $v.$pending || processing">
+            <slot v-bind="submitProps" :submit-disabled="processing || $v.$pending || ($v.$dirty && $v.$invalid)">
                 <v-spacer></v-spacer>
                 <v-btn color="primary"
-                       :disabled="$v.$invalid || $v.$pending || processing"
+                       :disabled="processing || $v.$pending || ($v.$dirty && $v.$invalid)"
                        :loading="processing"
                        @click.stop="submitProps.submit()">
                     {{submitButton}}

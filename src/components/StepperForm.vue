@@ -295,7 +295,7 @@
                 const v = this.$v.dataValue;
                 if (v && v[index]) {
                     v[index].$touch();
-                    if (v[index].$error) {
+                    if (v[index].$pending || v[index].$invalid) {
                         return;
                     }
                 }
@@ -321,22 +321,24 @@
                     this.gotoNextStep(currentStep);
                 }
             },
-            stepHasError(step, index)
+            stepHasError(step, index, dirty = false)
             {
-                return step.parsed && this.$v.dataValue && this.$v.dataValue[index].$invalid;
+                if (!step.parsed || !this.$v.dataValue) {
+                    return false;
+                }
+                const v = this.$v.dataValue;
+                if (!v[index] || (!dirty && !v[index].$dirty)) {
+                    return false;
+                }
+
+                return v[index].$invalid;
             },
             isButtonDisabled(step, index)
             {
-                if (this.isButtonLoading(step, index)) {
+                if (this.isButtonLoading(step, index) || this.stepHasError(step, index)) {
                     return true;
                 }
-                if (step.parsed === true && this.stepHasError(step, index)) {
-                    return true;
-                }
-                if (this.dataSteps.length === index + 1) {
-                    this.$v.$touch();
-                    return this.$v.$invalid;
-                }
+
                 return false;
             },
             isButtonLoading(step, index)

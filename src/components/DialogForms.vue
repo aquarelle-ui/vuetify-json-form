@@ -19,8 +19,8 @@
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark flat
-                               :disabled="$v.dialogs[index].model.$invalid || $v.dialogs[index].model.$pending"
-                               :loading="$v.dialogs[index].model.$pending"
+                               :disabled="$v.dialogs[index].$pending || ($v.dialogs[index].$dirty && $v.dialogs[index].$invalid)"
+                               :loading="$v.dialogs[index].$pending"
                                @click.native="onSubmit(dialog)">
                             {{$intl.translate(dialog.button, dialog.model)}}
                         </v-btn>
@@ -112,6 +112,7 @@
                 this.dialogs.push(dialog);
                 // open a dialog
                 setTimeout(() => {
+                    this.$v.dialogs[this.dialogs.length - 1].$reset();
                     dialog.active = true;
                 }, this.pushDelay);
             },
