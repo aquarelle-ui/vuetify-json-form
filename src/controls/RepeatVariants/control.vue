@@ -75,14 +75,16 @@
             variantValidations()
             {
                 const model = this.modelProxy;
-                if (!Array.isArray(model)) {
+                if (!Array.isArray(model) || model.length === 0) {
                     return null;
                 }
 
                 const v = {};
                 const p = this.config.variantField;
+                const parser = this.$jsonForm;
                 model.map((item, index) => {
-                    v[index] = this.getVariantByName(item[p]).validations;
+                    v[index] = {};
+                    parser.parseControlList(this.getVariantByName(item[p]).items, v[index]);
                 });
 
                 return v;
@@ -121,11 +123,7 @@
             itemHasError(index, dirty = false)
             {
                 const v = this.validatorProxy;
-                if (!v || !v[index]) {
-                    return false;
-                }
-
-                if (!dirty && !v[index].$dirty) {
+                if (!v || !v[index] || (!dirty && !v[index].$dirty)) {
                     return false;
                 }
 
@@ -142,14 +140,13 @@
             },
             addItem(variant)
             {
-                this.jsonFormWrapper.pushForm({
+                this.jsonFormWrapper.pushUnparsedForm({
                     title: this.display.addTitle || {key: 'ui:common.addItemTitle', text: 'Create new item'},
                     button: this.display.addSubmitButtom || {key: 'ui:common.addSubmitButton', text: 'Add'},
                     model: {
                         [this.config.variantField]: variant.name
                     },
                     items: variant.items,
-                    validator: variant.validations,
                     actions: {
                         submit: (original, copy) => {
                             this.modelProxy.push(copy);
@@ -171,12 +168,11 @@
             {
                 let index = this.modelProxy.indexOf(val);
                 const variant = this.getVariantByName(val[this.config.variantField]);
-                this.jsonFormWrapper.pushForm({
+                this.jsonFormWrapper.pushUnparsedForm({
                     title: this.display.editTitle || {key: 'ui:common.editItemTitle', text: 'Edit item'},
                     button: this.display.editSubmitButtom || {key: 'ui:common.editSubmitButton', text: 'Save changes'},
                     model: this.$clone(val),
                     items: variant.items,
-                    validator: variant.validations,
                     actions: {
                         submit: (original, copy) => {
                             this.$set(this.modelProxy, index, copy);

@@ -3,6 +3,11 @@ import {ControlParser, JsonForm, setConfigUsingValidation} from "@aquarelle/json
 
 class Parser extends ControlParser
 {
+
+    getSubValidationProperty(definition, form, data, validator) {
+        return 'validations';
+    }
+
     getDefault(definition, form)
     {
         let def = null;
@@ -25,8 +30,6 @@ class Parser extends ControlParser
     getValidation(definition, form, data, validator)
     {
         const validation = super.getValidation(definition, form, data, validator);
-
-        data.config.itemValidator = {};
 
         data.config.regions.map(region => {
             if (!validation[region.name]) {
@@ -51,8 +54,6 @@ class Parser extends ControlParser
             else {
                 validation[region.name] = v;
             }
-
-            validation[region.name].$each = data.config.itemValidator;
         });
 
         return validation;
@@ -63,7 +64,7 @@ class Parser extends ControlParser
         if (!definition.items || !Array.isArray(definition.items)) {
             return [];
         }
-        return form.parseControlList(definition.items, data.config.itemValidator);
+        return definition.items;
     }
 
     parse(definition, form, validator)

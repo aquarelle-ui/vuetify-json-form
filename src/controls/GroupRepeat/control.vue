@@ -77,6 +77,33 @@
             };
         },
         computed: {
+            validations()
+            {
+                const model = this.modelProxy;
+                if (!model || model.length === 0) {
+                    return null;
+                }
+
+                const v = {};
+                const p = this.config.variantField;
+
+                const items = this.items;
+                const parser = this.$jsonForm;
+                this.config.regions.map(region => {
+                    v[region.name] = {};
+
+                    if (!Array.isArray(model[region.name])) {
+                        return;
+                    }
+
+                    model[region.name].map((item, index) => {
+                        v[region.name][index] = {};
+                        parser.parseControlList(items, v[region.name][index]);
+                    });
+                });
+
+                return v;
+            },
             translatedTitle()
             {
                 if (!this.display.title) {
@@ -104,19 +131,15 @@
                     return false;
                 }
 
-                if (!v[region.name].$invalid) {
+                if (!v[region.name].$invalid || !v[region.name][index]) {
                     return false;
                 }
 
-                if (!v[region.name].$each || !v[region.name].$each[index]) {
+                if (!dirty && !v[region.name][index].$dirty) {
                     return false;
                 }
 
-                if (!dirty && !v[region.name].$each[index].$dirty) {
-                    return false;
-                }
-
-                return v[region.name].$each[index].$invalid;
+                return v[region.name][index].$invalid;
             },
             canAddItem(region)
             {
@@ -182,7 +205,7 @@
                 }
             });
         },
-        destroyed()
+        beforeDestroy()
         {
             this.config.regions.map(item => {
                 this.$delete(this.modelProxy, item.name);

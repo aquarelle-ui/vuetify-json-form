@@ -72,6 +72,22 @@
 
                 const value = this.modelProxy;
                 return !value || value.length < max;
+            },
+            validations()
+            {
+                const model = this.modelProxy;
+                if (!model || model.length === 0) {
+                    return null;
+                }
+                const v = {};
+                const length = model.length;
+                const parser = this.$jsonForm;
+                const items = this.items;
+                for (let i = 0; i < length; i++) {
+                    v[i] = {};
+                    parser.parseControlList(items, v[i]);
+                }
+                return v;
             }
         },
         methods: {
@@ -89,24 +105,23 @@
             itemHasError(index, dirty = false)
             {
                 const v = this.validatorProxy;
-                if (!v || !v.$each || !v.$each[index]) {
+                if (!v || !v[index]) {
                     return false;
                 }
 
-                if (!dirty && !v.$each[index].$dirty) {
+                if (!dirty && !v[index].$dirty) {
                     return false;
                 }
 
-                return v.$each[index].$invalid;
+                return v[index].$invalid;
             },
             addItem()
             {
-                this.jsonFormWrapper.pushForm({
+                this.jsonFormWrapper.pushUnparsedForm({
                     title: this.display.addTitle || {key: 'ui:common.addItemTitle', text: 'Create new item'},
                     button: this.display.addSubmitButtom || {key: 'ui:common.addSubmitButton', text: 'Add'},
                     model: {},
                     items: this.items,
-                    validator: this.config.itemValidator,
                     actions: {
                         submit: (original, copy) => {
                             this.modelProxy.push(copy);
@@ -127,12 +142,11 @@
             editItem(val)
             {
                 let index = this.modelProxy.indexOf(val);
-                this.jsonFormWrapper.pushForm({
+                this.jsonFormWrapper.pushUnparsedForm({
                     title: this.display.editTitle || {key: 'ui:common.editItemTitle', text: 'Edit item'},
                     button: this.display.editSubmitButtom || {key: 'ui:common.editSubmitButton', text: 'Save changes'},
                     model: this.$clone(val),
                     items: this.items,
-                    validator: this.config.itemValidator,
                     actions: {
                         submit: (original, copy) => {
                             this.$set(this.modelProxy, index, copy);

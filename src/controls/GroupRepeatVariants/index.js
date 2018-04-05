@@ -76,11 +76,7 @@ class Parser extends ControlParser
 
         return definition.items.map(item => {
             item = {...item};
-            item.validations = {};
             if (Array.isArray(item.items)) {
-                form.parseControlList(item.items, item.validations);
-            }
-            else {
                 item.items = [];
             }
             return item;

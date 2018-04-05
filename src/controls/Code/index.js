@@ -19,7 +19,7 @@ class Parser extends StringControlParser
             if (typeof validation.syntax === 'object' && validation.syntax.value === true) {
                 validation.syntax.value = () => {
                     if (!data.$component) {
-                        return false;
+                        return true;
                     }
                     return !data.$component.hasSyntaxError;
                 };

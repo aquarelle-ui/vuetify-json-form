@@ -89,13 +89,14 @@
             regionVariantValidations()
             {
                 const model = this.modelProxy;
-                if (!model) {
+                if (!model || model.length === 0) {
                     return null;
                 }
 
                 const v = {};
                 const p = this.config.variantField;
 
+                const parser = this.$jsonForm;
                 this.config.regions.map(region => {
                     v[region.name] = {};
 
@@ -104,7 +105,8 @@
                     }
 
                     model[region.name].map((item, index) => {
-                        v[region.name][index] = this.getVariantByName(item[p]).validations;
+                        v[region.name][index] = {};
+                        parser.parseControlList(this.getVariantByName(item[p]).items, v[region.name][index]);
                     });
                 });
 
@@ -223,7 +225,7 @@
                 }
             });
         },
-        destroyed()
+        beforeDestroy()
         {
             this.config.regions.map(item => {
                 this.$delete(this.modelProxy, item.name);
