@@ -16,16 +16,7 @@
                     :key="$uniqueObjectId(item, key)"
                     :id="tabPrefix + '-tab-' + (item.name || key)"
             >
-                <json-form-group v-if="name !== null"
-                                 :model="modelProxy[name]"
-                                 :validator="validatorProxy[name]"
-
-                                 :items="item.items"
-                                 :json-form-wrapper="jsonFormWrapper"
-                                 :name="item.name"
-                >
-                </json-form-group>
-                <json-form-group v-else
+                <json-form-group
                                  :model="modelProxy"
                                  :validator="validatorProxy"
 
