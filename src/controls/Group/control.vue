@@ -1,8 +1,9 @@
 <template>
-    <v-expansion-panel v-if="display.panel === true" class="px-2">
+    <v-expansion-panel v-if="display.panel === true">
         <v-expansion-panel-content :value="true">
             <div slot="header">{{$intl.translate(display.title)}}</div>
             <json-form-group
+                    class="px-2"
                     :model="modelProxy"
                     :validator="validatorProxy"
                     :items="items"
