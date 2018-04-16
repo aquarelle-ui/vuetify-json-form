@@ -5,7 +5,10 @@ class Parser extends ControlParser
 {
     getSubValidationProperty(definition, form, data, validator)
     {
-        return definition.validatorProp || null;
+        if (!definition.config) {
+            return null;
+        }
+        return definition.config.validatorProp || null;
     }
 }
 
