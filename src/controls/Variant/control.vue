@@ -59,7 +59,7 @@
         created()
         {
             const model = this.modelProxy;
-            if (model && model[this.variantProp] !== null) {
+            if (model && model[this.variantProp] != null) {
                 this.buildItems(model[this.variantProp]);
             }
         },
@@ -87,12 +87,7 @@
                 if (name === null) {
                     return null;
                 }
-                for (let i = 0, m = this.items.length; i < m; i++) {
-                    if (this.items[i].name === name) {
-                        return this.items[i];
-                    }
-                }
-                return null;
+                return this.items.find(item => item.name === name);
             },
             buildItems(name)
             {

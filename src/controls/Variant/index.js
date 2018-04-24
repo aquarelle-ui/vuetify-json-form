@@ -29,6 +29,10 @@ class Parser extends ControlParser
 
     getValidation(definition, form, data, validator)
     {
+        if (data.name == null) {
+            validator[data.config.variantField] = super.getValidation(definition, form, data, validator);
+            return null;
+        }
         return {
             [data.config.variantField]: super.getValidation(definition, form, data, validator)
         };
