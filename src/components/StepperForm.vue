@@ -364,7 +364,7 @@
             },
             onRouteLeave(func)
             {
-                if (this.processing) {
+                if (this.processing || !func(this.$refs.dialogs)) {
                     return false;
                 }
                 const fg = this.$refs.formGroup;

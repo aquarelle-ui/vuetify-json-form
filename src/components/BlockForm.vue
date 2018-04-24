@@ -13,6 +13,7 @@
                     :model="value"
                     :validator="$v.value"
                     :json-form-wrapper="me"
+                    ref="formGroup"
             ></json-form-group>
         </v-card-text>
         <v-card-actions>
@@ -142,10 +143,11 @@
             },
             onRouteLeave(func)
             {
-                if (this.processing) {
+                if (this.processing || !func(this.$refs.dialogs)) {
                     return false;
                 }
-                return func(this.$refs.dialogs);
+
+                return func(this.$refs.formGroup);
             }
         }
     };

@@ -4,7 +4,7 @@
             persistent
             lazy
             full-width
-            width="330px"
+            width="290px"
     >
         <v-layout row slot="activator">
             <v-icon class="date-time-icon ml-2 mr-3" @click.stop="timePick = false; showDialog = true">event</v-icon>

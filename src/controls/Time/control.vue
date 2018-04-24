@@ -4,7 +4,7 @@
             persistent
             lazy
             full-width
-            width="330px"
+            width="290px"
     >
         <v-text-field
                 slot="activator"
