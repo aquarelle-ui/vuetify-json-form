@@ -12,6 +12,7 @@
         </v-tab>
         <v-tabs-items>
             <v-tab-item
+                    class="px-1"
                     v-for="(item, key) in items"
                     :key="$uniqueObjectId(item, key)"
                     :id="tabPrefix + '-tab-' + (item.name || key)"
