@@ -30,7 +30,7 @@ class Parser extends ControlParser
         if (!Array.isArray(definition.items)) {
             return [];
         }
-        return definition.items.map(item => {
+        const items = definition.items.map(item => {
             item = {...item};
             const v = {};
             if (Array.isArray(item.items)) {
@@ -40,28 +40,24 @@ class Parser extends ControlParser
                 item.items = [];
             }
 
-            if (data.name === null) {
-                if (item.name) {
-                    if (!validator[item.name]) {
-                        validator[item.name] = {};
-                    }
-                    this._copyProps(v, validator[item.name]);
+            if (item.name) {
+                if (!data.validation[item.name]) {
+                    data.validation[item.name] = {};
                 }
-                else {
-                    this._copyProps(v, validator);
-                }
+                this._copyProps(v, data.validation[item.name]);
             }
             else {
-                if (item.name) {
-                    data.validation[item.name] = v;
-                }
-                else {
-                    this._copyProps(v, data.validation);
-                }
+                this._copyProps(v, data.validation);
             }
 
             return item;
         });
+
+        if (data.name == null) {
+            this._copyProps(data.validation, validator);
+        }
+
+        return items;
     }
 }
 
