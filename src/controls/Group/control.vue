@@ -8,6 +8,7 @@
                     :validator="validatorProxy"
                     :items="items"
                     :json-form-wrapper="jsonFormWrapper"
+                    ref="formGroup"
             >
             </json-form-group>
         </v-expansion-panel-content>
@@ -21,6 +22,7 @@
                 :validator="validatorProxy"
                 :items="items"
                 :json-form-wrapper="jsonFormWrapper"
+                ref="formGroup"
         >
         </json-form-group>
     </div>
@@ -30,6 +32,12 @@
 
     export default {
         name: 'group-control',
-        mixins: [JsonFormElementMixin]
+        mixins: [JsonFormElementMixin],
+        methods: {
+            onRouteLeave(func)
+            {
+                return func(this.$refs.formGroup);
+            }
+        }
     }
 </script>

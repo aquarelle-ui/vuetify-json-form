@@ -5,6 +5,7 @@
                            :model="modelProxy"
                            :validator="validatorProxy"
                            :json-form-wrapper="jsonFormWrapper"
+                           ref="formElement"
         >
         </json-form-element>
     </v-flex>
@@ -45,6 +46,10 @@
                         container[default_prefix + props] = true;
                     }
                 }
+            },
+            onRouteLeave(func)
+            {
+                return func(this.$refs.formElement);
             }
         }
     };

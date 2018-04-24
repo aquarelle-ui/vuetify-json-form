@@ -27,6 +27,7 @@
                          :validator="validatorProxy"
                          :items="currentItems"
                          :json-form-wrapper="jsonFormWrapper"
+                         ref="formGroup"
         >
         </json-form-group>
     </div>
@@ -39,7 +40,8 @@
         name: 'variant-control',
         mixins: [JsonFormElementMixin],
         watch: {
-            currentVariant(variant) {
+            currentVariant(variant)
+            {
                 const v = this.validatorProxy;
                 if (v && v[this.variantProp]) {
                     v[this.variantProp].$touch();
@@ -47,7 +49,8 @@
                 this.buildItems(variant);
             }
         },
-        data() {
+        data()
+        {
             return {
                 currentItems: null,
                 currentValidations: null,
@@ -111,6 +114,13 @@
                     this.currentItems = items;
                     this.currentValidations = validations;
                 });
+            },
+            onRouteLeave(func)
+            {
+                if (this.currentItems === null) {
+                    return true;
+                }
+                return func(this.$refs.formGroup);
             }
         },
         beforeDestroy()

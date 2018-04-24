@@ -17,12 +17,13 @@
                     :id="tabPrefix + '-tab-' + (item.name || key)"
             >
                 <json-form-group
-                                 :model="modelProxy"
-                                 :validator="validatorProxy"
+                        :model="modelProxy"
+                        :validator="validatorProxy"
 
-                                 :items="item.items"
-                                 :json-form-wrapper="jsonFormWrapper"
-                                 :name="item.name"
+                        :items="item.items"
+                        :json-form-wrapper="jsonFormWrapper"
+                        :name="item.name"
+                        ref="formGroup"
                 >
                 </json-form-group>
             </v-tab-item>
@@ -78,6 +79,10 @@
                 };
 
                 return f(tab, this.validatorProxy);
+            },
+            onRouteLeave(func)
+            {
+                return func(this.$refs.formGroup);
             }
         },
         created()

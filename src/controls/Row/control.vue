@@ -6,6 +6,7 @@
                                :model="modelProxy"
                                :validator="validatorProxy"
                                :json-form-wrapper="jsonFormWrapper"
+                               ref="formElement"
             >
             </json-form-element>
         </v-layout>
@@ -17,5 +18,11 @@
     export default {
         name: 'row-control',
         mixins: [JsonFormElementMixin],
+        methods: {
+            onRouteLeave(func)
+            {
+                return func(this.$refs.formElement);
+            }
+        }
     };
 </script>
