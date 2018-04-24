@@ -14,7 +14,7 @@ export default class extends ControlParser
         if (definition.config && definition.config.multiple) {
             return Array.isArray(definition.default) ? definition.default : [];
         }
-        return definition.default || undefined;
+        return definition.default == null ? (definition.nullable ? null : undefined) : definition.default;
     }
 
     getConfig(definition)

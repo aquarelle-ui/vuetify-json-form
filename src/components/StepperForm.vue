@@ -18,6 +18,7 @@
                             :validator="$v.dataValue[index]"
                             :name="step.name"
                             :json-form-wrapper="me"
+                            ref="formGroup"
                     ></json-form-group>
                     <v-btn color="primary"
                            :disabled="processing || isButtonDisabled(step, index)"
@@ -360,6 +361,17 @@
                 this.$emit('submit', this);
                 this.$emit('input', this.value);
                 this.loadingStep = 0;
+            },
+            onRouteLeave(func)
+            {
+                if (this.processing) {
+                    return false;
+                }
+                const fg = this.$refs.formGroup;
+                if (!fg || fg.length === 0 || !fg[this.currentStep - 1]) {
+                    return true;
+                }
+                return func(fg[this.currentStep - 1]);
             }
         }
     };

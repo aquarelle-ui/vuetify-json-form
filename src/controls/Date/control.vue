@@ -98,6 +98,14 @@
                     return null;
                 }
                 return (new Date(date)).toLocaleDateString(this.locale);
+            },
+            onRouteLeave(func)
+            {
+                if (!this.showDialog) {
+                    return true;
+                }
+                this.onCancel();
+                return false;
             }
         }
     }

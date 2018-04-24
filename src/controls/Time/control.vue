@@ -76,6 +76,14 @@
             {
                 this.$set(this.model, this.name, this.timeModel);
                 validate && this.validate();
+            },
+            onRouteLeave(func)
+            {
+                if (!this.showDialog) {
+                    return true;
+                }
+                this.onCancel();
+                return false;
             }
         }
     }

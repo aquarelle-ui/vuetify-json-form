@@ -5,7 +5,7 @@ class Parser extends ControlParser
 {
     getDefault(definition)
     {
-        return definition.hasOwnProperty('default') ? definition.default : undefined;
+        return definition.hasOwnProperty('default') ? definition.default : (definition.nullable ? null : undefined);
     }
 
     parse(definition, form, validator)

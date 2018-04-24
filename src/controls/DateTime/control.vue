@@ -207,6 +207,14 @@
                     return '';
                 }
                 return time.toString();
+            },
+            onRouteLeave(func)
+            {
+                if (!this.showDialog) {
+                    return true;
+                }
+                this.onCancel();
+                return false;
             }
         }
     }

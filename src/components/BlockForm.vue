@@ -140,6 +140,13 @@
                     this.$v.$touch();
                 }
             },
+            onRouteLeave(func)
+            {
+                if (this.processing) {
+                    return false;
+                }
+                return func(this.$refs.dialogs);
+            }
         }
     };
 </script>

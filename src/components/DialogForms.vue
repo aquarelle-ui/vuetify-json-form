@@ -33,6 +33,7 @@
                             :validator="$v.dialogs[index].model"
                             :name="dialog.name"
                             :json-form-wrapper="me"
+                            ref="formGroup"
                     ></json-form-group>
                 </v-card-text>
             </v-card>
@@ -164,17 +165,18 @@
                     this.popForm();
                 }
                 return true;
-            }
-        },
-        beforeRouteLeave(to, from, next)
-        {
-            const length = this.dialogs.length;
-            if (length > 0) {
+            },
+            onRouteLeave(func)
+            {
+                const length = this.dialogs.length;
+                if (length === 0) {
+                    return true;
+                }
+                if (!func(this.$refs.formGroup[length - 1])) {
+                    return false;
+                }
                 this.onCancel(this.dialogs[length - 1]);
-                next(false);
-            }
-            else {
-                next();
+                return false;
             }
         }
     };

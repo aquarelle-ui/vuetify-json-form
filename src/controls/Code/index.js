@@ -5,7 +5,7 @@ class Parser extends StringControlParser
 {
     getDefault(definition)
     {
-        return typeof definition.default === 'string' ? definition.default : '';
+        return typeof definition.default === 'string' ? definition.default : (definition.nullable ? null : '');
     }
 
     getValidation(definition, form, data, validator)
