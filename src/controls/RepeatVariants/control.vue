@@ -112,6 +112,9 @@
             {
                 const v = this.getVariantByName(val[this.config.variantField]);
                 let title = v.itemTitle || this.display.itemTitle;
+                if (typeof title === "function") {
+                    title = title(val);
+                }
                 if (!title) {
                     return null;
                 }

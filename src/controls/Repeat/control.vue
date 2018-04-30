@@ -94,6 +94,9 @@
             itemTitle(val)
             {
                 let title = this.display.itemTitle;
+                if (typeof title === "function") {
+                    title = title(val);
+                }
                 if (!title) {
                     return null;
                 }
