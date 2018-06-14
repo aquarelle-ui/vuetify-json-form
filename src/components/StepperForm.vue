@@ -182,9 +182,10 @@
                 const ds = this.dataSteps;
                 if (ds.length > 0) {
                     if (!ds[0].parsed) {
+                        this.$set(this, 'currentStep', 0);
                         this.$set(ds[0], 'touched', true);
                         this.parseStep(ds[0], () => {
-                            this.$set(this, 'currentStep', 1);
+                            this.$nextTick(() => this.$set(this, 'currentStep', 1));
                         });
                     }
                 }
