@@ -180,14 +180,24 @@
             setupStepper()
             {
                 const ds = this.dataSteps;
-                if (ds.length > 0) {
-                    if (!ds[0].parsed) {
-                        this.$set(ds[0], 'touched', true);
-                        this.parseStep(ds[0], () => {
-                            this.$set(this, 'currentStep', 1);
-                        });
-                    }
+                if (ds.length === 0 || ds[0].parsed) {
+                    return;
                 }
+
+                const p = () => {
+                    this.parseStep(ds[0], () => {
+                        this.$set(ds[0], 'touched', true);
+                        this.$nextTick(() => this.currentStep = 1);
+                    });
+                };
+
+                if (this.currentStep <= 0) {
+                    p();
+                    return;
+                }
+
+                this.currentStep = 0;
+                this.$nextTick(p);
             },
             pushUnparsedForm(options, model)
             {
