@@ -16,23 +16,28 @@ class Parser extends ControlParser
         return def;
     }
 
-    _copyProps(from, to)
-    {
-        for (let p in from) {
-            if (from.hasOwnProperty(p)) {
-                to[p] = from[p];
-            }
-        }
-    }
-
     getItems(definition, form, data, validator)
     {
         if (!Array.isArray(definition.items)) {
             return [];
         }
+
+        const validation = data.name == null ? validator : data.validation;
+
         const items = definition.items.map(item => {
             item = {...item};
-            const v = {};
+
+            let v = null;
+            if (item.name) {
+                if (!validation.hasOwnProperty(item.name)) {
+                    validation[item.name] = {};
+                }
+                v = validation[item.name];
+            }
+            else {
+                v = validation;
+            }
+
             if (Array.isArray(item.items)) {
                 item.items = form.parseControlList(item.items, v);
             }
@@ -40,22 +45,8 @@ class Parser extends ControlParser
                 item.items = [];
             }
 
-            if (item.name) {
-                if (!data.validation[item.name]) {
-                    data.validation[item.name] = {};
-                }
-                this._copyProps(v, data.validation[item.name]);
-            }
-            else {
-                this._copyProps(v, data.validation);
-            }
-
             return item;
         });
-
-        if (data.name == null) {
-            this._copyProps(data.validation, validator);
-        }
 
         return items;
     }
