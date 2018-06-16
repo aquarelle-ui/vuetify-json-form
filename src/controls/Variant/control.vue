@@ -92,7 +92,9 @@
             buildItems(name)
             {
                 if (name === null) {
-                    this.currentItems.splice(0, this.currentItems.length);
+                    if (this.currentItems) {
+                        this.currentItems.splice(0, this.currentItems.length);
+                    }
                     this.currentValidations = null;
                     this.$nextTick(() => {
                         this.currentItems = null;
