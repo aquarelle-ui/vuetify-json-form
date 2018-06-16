@@ -86,6 +86,17 @@
                 timeModel: '00:00'
             }
         },
+        watch: {
+            modelProxy(value)
+            {
+                if (!value) {
+                    this.dateFormatted = null;
+                    return;
+                }
+                [this.dateModel, this.timeModel] = value.split('T');
+                this.dateFormatted = this.formatDate(this.dateModel) + ' ' + this.formatTime(this.timeModel);
+            }
+        },
         computed: {
             locale()
             {
@@ -145,7 +156,7 @@
             }
             [this.dateModel, d] = d.toISOString().split('T');
             this.timeModel = d.split(':').slice(0, 2).join(':');
-            this.updateValue();
+            this.updateValue(false);
         },
         methods: {
             onSave()
@@ -185,14 +196,14 @@
                 };
                 return time;
             },
-            updateValue()
+            updateValue(validate = true)
             {
                 if (this.dateModel === null) {
                     this.dateModel = (new Date()).toISOString().split('T')[0];
                 }
                 this.$set(this.model, this.name, this.dateModel + 'T' + this.timeModel);
                 this.dateFormatted = this.formatDate(this.dateModel) + ' ' + this.formatTime(this.timeModel);
-                this.validate();
+                validate && this.validate();
             },
             formatDate(date)
             {

@@ -53,6 +53,17 @@
                 dateModel: null
             }
         },
+        watch: {
+            modelProxy(value)
+            {
+                if (!value) {
+                    this.dateFormatted = null;
+                    return;
+                }
+                this.dateModel = value;
+                this.dateFormatted = this.formatDate(this.dateModel);
+            }
+        },
         computed: {
             locale()
             {
