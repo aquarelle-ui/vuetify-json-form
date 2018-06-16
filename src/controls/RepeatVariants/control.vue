@@ -4,7 +4,7 @@
             <control-label :text="$intl.translate(display.title)" :has-error="allErrors.length > 0"
                            :required="config.required"></control-label>
             <v-spacer></v-spacer>
-            <v-menu offset-y :disabled="!canAddItem">
+            <v-menu offset-y :disabled="!canAddItem" max-height="426">
                 <v-btn :disabled="!canAddItem" small flat ripple slot="activator">
                     <v-icon>add</v-icon>
                     {{$intl.translate(display.addButton || {key: 'ui:common.add', text: 'Add'})}}
