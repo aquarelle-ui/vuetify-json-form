@@ -49,7 +49,7 @@
                 this.asyncValidator = fields
                     .then(fields => {
                         const validator = {};
-                        this.asyncFields = this.$jsonForm.parseControlList(fields, validator);
+                        this.asyncFields = this.$jsonForm.parseControlList(this.$clone(fields), validator);
                         return validator;
                     });
             },

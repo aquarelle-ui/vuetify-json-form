@@ -15,7 +15,6 @@ import "./style.css";
 export {default as VSelectFixed} from "./components/VSelectFixed";
 export {default as VRadioGroupFixed} from "./components/VRadioGroupFixed";
 
-export {default as AsyncGroupControl} from "./components/Form/AsyncGroupControl";
 
 export default function install(Vue) {
     Vue.use(JsonForm);
