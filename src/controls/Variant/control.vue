@@ -53,7 +53,7 @@
         {
             return {
                 currentItems: null,
-                currentValidations: null,
+                currentValidations: {},
             };
         },
         created()
@@ -89,28 +89,35 @@
                 }
                 return this.items.find(item => item.name === name);
             },
+            clearObject(obj)
+            {
+                for (let prop in obj) {
+                    if (obj.hasOwnProperty(prop)) {
+                        this.$delete(obj, prop);
+                    }
+                }
+                return obj;
+            },
             buildItems(name)
             {
                 if (name === null) {
-                    if (this.currentItems) {
-                        this.currentItems.splice(0, this.currentItems.length);
-                    }
-                    this.currentValidations = null;
-                    this.$nextTick(() => {
-                        this.currentItems = null;
-                    });
+                    this.currentItems = null;
+                    this.clearObject(this.currentValidations);
                     return;
                 }
 
                 const variant = this.getVariantByName(name);
 
-                const validations = {};
-                const items = this.$jsonForm.parseControlList(variant.items, validations);
+                this.currentValidations = this.clearObject(this.currentValidations);
 
-                this.$nextTick(() => {
-                    this.currentItems = items;
-                    this.currentValidations = validations;
-                });
+                const validations = {};
+                this.currentItems = this.$jsonForm.parseControlList(variant.items, validations);
+
+                for (let prop in validations) {
+                    if (validations.hasOwnProperty(prop)) {
+                        this.$set(this.currentValidations, prop, validations[prop]);
+                    }
+                }
             },
             onRouteLeave(func)
             {
@@ -123,6 +130,8 @@
         beforeDestroy()
         {
             this.$delete(this.modelProxy, this.variantProp);
+            this.currentItems = null;
+            this.clearObject(this.currentValidations);
         }
     }
 </script>
