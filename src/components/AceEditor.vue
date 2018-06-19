@@ -6,7 +6,7 @@
         width: 100%;
         min-height: 1px;
     }
-    .ace_gutter, .ace_scrollbar {
+    .ace-editor .ace_gutter, .ace-editor .ace_scrollbar {
         z-index: 2;
     }
 </style>
