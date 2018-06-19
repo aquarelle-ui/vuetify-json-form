@@ -37,6 +37,7 @@ export {default as RepeatVariantsControl} from "./RepeatVariants";
 export {default as VariantControl} from "./Variant";
 
 export {default as GroupControl} from "./Group";
+export {default as SwitchGroupControl} from "./SwitchGroup";
 export {default as AsyncGroupControl} from "./AsyncGroupControl";
 export {default as TabsControl} from "./Tabs";
 export {default as RowControl} from "./Row";
