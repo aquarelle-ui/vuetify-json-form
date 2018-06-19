@@ -6,6 +6,9 @@
         width: 100%;
         min-height: 1px;
     }
+    .ace_gutter, .ace_scrollbar {
+        z-index: 2;
+    }
 </style>
 <script>
     import ace from "brace";
