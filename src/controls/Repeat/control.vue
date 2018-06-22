@@ -31,7 +31,7 @@
                 </v-list-tile-action>
             </v-list-tile>
 
-            <v-list-tile class="sortable-empty-list-item" v-show="modelProxy.length === 0">
+            <v-list-tile class="sortable-empty-list-item" v-show="!modelProxy || modelProxy.length === 0">
                 <v-list-tile-content>
                     {{$intl.translate(display.placeholder || {key: 'ui:common.empty_list', text: 'No items'})}}
                 </v-list-tile-content>
@@ -127,6 +127,9 @@
                     items: this.items,
                     actions: {
                         submit: (original, copy) => {
+                            if (!Array.isArray(this.modelProxy)) {
+                                this.$set(this.model, this.name, []);
+                            }
                             this.modelProxy.push(copy);
                             this.validate();
                             return true;
