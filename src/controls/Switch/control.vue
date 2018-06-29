@@ -9,6 +9,7 @@
             :prepend-icon="$controlIcon(display.prependIcon)"
             :append-icon="$controlIcon(display.appendIcon)"
             :hint="$intl.translate(display.hint)"
+            persistent-hint
 
             :false-value="false"
             :true-value="true"
