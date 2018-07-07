@@ -30,7 +30,7 @@
         mixins: [JsonFormElementMixin],
         data() {
             return {
-                switchValue: false,
+                switchValue: this.model[this.name] != null,
                 lastModel: {}
             };
         },
