@@ -13,6 +13,7 @@
 <script>
     import ace from "brace";
     import 'brace/theme/chrome'
+    import 'brace/ext/searchbox'
 
     import 'brace/mode/html'
     import 'brace/mode/javascript'
