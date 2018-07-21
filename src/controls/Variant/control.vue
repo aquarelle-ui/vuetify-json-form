@@ -16,10 +16,13 @@
 
                 clearable
 
-                :items="items"
+                :items="selectItems"
                 item-text="title"
                 item-value="name"
                 item-avatar="icon"
+
+                :loading="loading"
+                :disabled="loading"
         >
         </v-select>
         <json-form-group v-if="currentItems !== null"
@@ -52,15 +55,30 @@
         data()
         {
             return {
+                loading: false,
+                selectItems: this.items,
                 currentItems: null,
                 currentValidations: {},
             };
         },
         created()
         {
-            const model = this.modelProxy;
-            if (model && model[this.variantProp] != null) {
-                this.buildItems(model[this.variantProp]);
+            const init = () => {
+                const model = this.modelProxy;
+                if (model && model[this.variantProp] != null) {
+                    this.buildItems(model[this.variantProp]);
+                }
+            };
+            if (typeof this.config.variantLoader === 'function') {
+                this.loading = true;
+                this.config.variantLoader(this)
+                    .then(items => {
+                        this.selectItems = items || [];
+                        init();
+                        this.loading = false;
+                    });
+            } else {
+                init();
             }
         },
         computed: {
@@ -87,7 +105,7 @@
                 if (name === null) {
                     return null;
                 }
-                return this.items.find(item => item.name === name);
+                return this.selectItems.find(item => item.name === name);
             },
             clearObject(obj)
             {
