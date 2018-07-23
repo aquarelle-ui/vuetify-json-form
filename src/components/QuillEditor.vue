@@ -61,20 +61,19 @@
     }
 </style>
 <style>
-
-    .text-left {
+    .text-align-left {
         text-align: left;
     }
 
-    .text-center {
+    .text-align-center {
         text-align: center;
     }
 
-    .text-right {
+    .text-align-right {
         text-align: right;
     }
 
-    .text-justify {
+    .text-align-justify {
         text-align: justify;
     }
 
@@ -114,43 +113,43 @@
         width: 112px !important;
     }
 
-    .text-black {
+    .text-color-black {
         color: #000000 !important;
     }
 
-    .text-dark {
+    .text-color-dark {
         color: #343a40 !important;
     }
 
-    .text-light {
+    .text-color-light {
         color: #f8f9fa !important;
     }
 
-    .text-white {
+    .text-color-white {
         color: #ffffff !important;
     }
 
-    .text-primary {
+    .text-color-primary {
         color: #007bff !important;
     }
 
-    .text-secondary {
+    .text-color-secondary {
         color: #868e96 !important;
     }
 
-    .text-info {
+    .text-color-info {
         color: #17a2b8 !important;
     }
 
-    .text-success {
+    .text-color-success {
         color: #28a745 !important;
     }
 
-    .text-warning {
+    .text-color-warning {
         color: #ffc107 !important;
     }
 
-    .text-danger {
+    .text-color-danger {
         color: #dc3545 !important;
     }
 
@@ -204,7 +203,7 @@
         color: white;
     }
 
-    .ql-picker-options .ql-picker-item:not([data-value]) {
+    .ql-color-picker .ql-picker-options .ql-picker-item:not([data-value]) {
         background-color: white !important;
         border: red 2px dashed;
     }
@@ -472,13 +471,13 @@
 
         // Text color
         setup('attributors/class/color', {
-            keyName: 'text',
+            keyName: 'text-color',
             whitelist: TEXT_COLORS
         });
 
         // Text align
         setup('attributors/class/align', {
-            keyName: 'text'
+            keyName: 'text-align'
         });
 
         // Strike format
