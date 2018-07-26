@@ -6,6 +6,7 @@
         width: 100%;
         min-height: 1px;
     }
+
     .ace-editor .ace_gutter, .ace-editor .ace_scrollbar {
         z-index: 2;
     }
@@ -68,7 +69,6 @@
                 }
             };
         },
-
         mounted()
         {
             const editor = this.editor = ace.edit(this.$el);
@@ -108,9 +108,29 @@
             theme(theme)
             {
                 const editor = this.editor;
-                if (editor) {
-                    this.editor.setTheme('ace/theme/' + theme);
+                editor && editor.setTheme('ace/theme/' + theme);
+            },
+            value(val)
+            {
+                const editor = this.editor;
+                if (!editor) {
+                    return;
                 }
+
+                const cursor = editor.selection.getCursor();
+                editor.setValue(val || '');
+                editor.clearSelection();
+                editor.gotoLine(cursor.row + 1, cursor.column);
+            },
+            lang(val)
+            {
+                const editor = this.editor;
+                editor && editor.getSession().setMode('ace/mode/' + val);
+            },
+            options(val)
+            {
+                const editor = this.editor;
+                editor && editor.setOptions(val);
             }
         }
     };
