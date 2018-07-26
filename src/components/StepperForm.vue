@@ -5,7 +5,7 @@
                 <v-stepper-step :key="$uniqueObjectId(step) + 'h'"
                                 :step="index + 1"
                                 :complete="step.complete"
-                                :editable="step.editable && step.touched || stepHasError(step, index)"
+                                :editable="step.editable && step.touched || stepHasError(step, index, true)"
                                 :rules="stepHasError(step, index) ? invalidStep : undefined">
                     {{$intl.translate(step.title)}}
                     <small v-if="!!step.description">{{$intl.translate(step.description)}}</small>
@@ -238,7 +238,7 @@
                 let next = null;
                 while (index < length) {
                     const dataStep = this.dataSteps[index];
-                    if (!dataStep.editable && dataStep.touched && !this.stepHasError(this.dataSteps[index], index)) {
+                    if (!dataStep.editable && dataStep.touched && !this.stepHasError(this.dataSteps[index], index, true)) {
                         // Do not enter a locked step
                         index++;
                         continue;
