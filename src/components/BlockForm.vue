@@ -1,5 +1,5 @@
 <template>
-    <v-card :style="heightStyle">
+    <v-card :style="heightStyle" :flat="flat">
         <v-card-title v-if="title !== null || subtitle !== null" primary-title>
             <div>
                 <div v-if="title !== null" class="headline">{{title}}</div>
@@ -65,6 +65,10 @@
                 default: false
             },
             processing: {
+                type: Boolean,
+                default: false
+            },
+            flat: {
                 type: Boolean,
                 default: false
             }
