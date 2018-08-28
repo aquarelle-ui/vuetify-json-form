@@ -1,8 +1,8 @@
 <template>
-    <div v-show="error !== null" class="input-group__details error--text">
-        <span class="input-group__messages input-group__error">
+    <div v-show="error !== null" class="v-messages error--text">
+        <div class="v-messages__message">
             {{error}}
-        </span>
+        </div>
     </div>
 </template>
 <script>

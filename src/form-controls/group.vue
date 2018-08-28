@@ -1,0 +1,50 @@
+<template>
+    <v-expansion-panel v-if="display.panel === true">
+        <v-expansion-panel-content :value="true">
+            <div slot="header">{{wrapper.translate(display.title)}}</div>
+            <json-form-group
+                    class="px-2"
+                    :model="modelProxy"
+                    :validator="validatorProxy"
+                    :items="items"
+                    :wrapper="wrapper"
+                    :path="path"
+                    :parent-validations-container="parentValidationsContainer"
+                    :validations-container="validationsContainer"
+                    ref="formGroup"
+            >
+            </json-form-group>
+        </v-expansion-panel-content>
+    </v-expansion-panel>
+    <div v-else>
+        <v-subheader v-if="!!display.title" class="mb-0">
+            <control-label :text="wrapper.translate(display.title)"></control-label>
+        </v-subheader>
+        <json-form-group
+                :model="modelProxy"
+                :validator="validatorProxy"
+                :items="items"
+                :wrapper="wrapper"
+                :path="path"
+                :parent-validations-container="parentValidationsContainer"
+                :validations-container="validationsContainer"
+                ref="formGroup"
+        >
+        </json-form-group>
+    </div>
+</template>
+<script>
+    import {JsonFormElementMixin, JsonFormGroup} from "@aquarelle/json-form";
+    import {ControlLabel} from "../components";
+
+    export default {
+        mixins: [JsonFormElementMixin],
+        components: {JsonFormGroup, ControlLabel},
+        methods: {
+            onRouteLeave(func)
+            {
+                return func(this.$refs.formGroup);
+            }
+        }
+    }
+</script>

@@ -15,38 +15,43 @@
                     <v-btn icon @click.native="onCancel(dialog)" dark>
                         <v-icon>close</v-icon>
                     </v-btn>
-                    <v-toolbar-title>{{$intl.translate(dialog.title, dialog.model)}}</v-toolbar-title>
+                    <v-toolbar-title>{{translate(dialog.title, dialog.model)}}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark flat
                                :disabled="$v.dialogs[index].$pending || ($v.dialogs[index].$dirty && $v.dialogs[index].$invalid)"
                                :loading="$v.dialogs[index].$pending"
                                @click.native="onSubmit(dialog)">
-                            {{$intl.translate(dialog.button, dialog.model)}}
+                            {{translate(dialog.button, dialog.model)}}
                         </v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <v-card-text>
-                    <json-form-group
-                            :items="dialog.form"
-                            :model="dialog.model"
-                            :validator="$v.dialogs[index].model"
-                            :name="dialog.name"
-                            :json-form-wrapper="me"
-                            ref="formGroup"
-                    ></json-form-group>
+                    <v-form @submit.prevent="onSubmit(dialog)">
+                        <json-form-group
+                                :items="dialog.form"
+                                :model="dialog.model"
+                                :validator="$v.dialogs[index].model"
+                                :name="dialog.name"
+                                :path="dialog.path"
+                                :wrapper="me"
+                                :validations-container="dialog.validator"
+                                :parent-validations-container="dialog.validator"
+                                ref="formGroup"
+                        ></json-form-group>
+                    </v-form>
                 </v-card-text>
             </v-card>
         </v-dialog>
     </div>
 </template>
 <script>
-    import {JsonFormGroup, validationMixin} from "@aquarelle/json-form";
+    import {JsonFormGroup, ValidationMixin} from "@aquarelle/json-form";
 
     export default {
         name: 'dialog-forms',
         components: {JsonFormGroup},
-        mixins: [validationMixin],
+        mixins: [ValidationMixin],
         props: {
             pushDelay: {
                 type: Number,
@@ -60,6 +65,9 @@
                 type: Array,
                 default: () => (['blue', 'indigo', 'deep-purple', 'purple'])
             },
+            translate: {type: Function, required: true},
+            parser: {type: Object, required: true},
+            options: {type: Object, default: () => ({})},
         },
         data()
         {
@@ -89,7 +97,7 @@
             {
                 form = {...form};
                 form.validator = {};
-                form.items = this.$jsonForm.parseControlList(form.items || [], form.validator);
+                form.items = this.parser.parseControlList(form.items || [], form.validator);
                 if (model !== undefined) {
                     form.model = model;
                 }
@@ -108,7 +116,9 @@
                     actions: options.actions || {},
 
                     title: options.title || null,
-                    button: options.button || 'Save'
+                    button: options.button || 'Save',
+
+                    path: options.path || []
                 };
                 this.dialogs.push(dialog);
                 // open a dialog

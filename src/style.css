@@ -5,3 +5,7 @@
 .sortable-ghost + .sortable-empty-list-item {
     display: none;
 }
+
+.v-menu__activator {
+    height: inherit !important;
+}

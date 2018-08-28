@@ -1,5 +1,5 @@
 <template>
-    <label v-show="text !== null" :class="{'error--text': hasError}">{{text}}<sup style="user-select: none" v-show="required">*</sup></label>
+    <label class="v-label" v-show="text != null && text !== ''" :class="{'error--text': hasError}">{{text}}<sup style="user-select: none" v-show="required">*</sup></label>
 </template>
 <script>
     export default {

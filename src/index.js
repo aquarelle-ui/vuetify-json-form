@@ -1,42 +1,36 @@
-import JsonForm from "@aquarelle/json-form";
-import * as elements from "./controls";
-import ControlIcon from "./components/ControlIcon.vue";
-import ControlLabel from "./components/ControlLabel.vue";
-import ErrorList from "./components/Error/List";
-import ErrorBlock from "./components/Error/Block";
-import DialogForms from "./components/DialogForms.vue";
-import StepperForm from "./components/StepperForm.vue";
-import BlockForm from "./components/BlockForm.vue";
-import AceEditor from "./components/AceEditor.vue";
-import QuillEditor from "./components/QuillEditor.vue";
+import {JsonForm} from "@aquarelle/json-form";
+
+import {default as controls} from "./controls";
+import {default as validators} from "./validators";
 
 import "./style.css";
 
-export {default as VSelectFixed} from "./components/VSelectFixed";
-export {default as VRadioGroupFixed} from "./components/VRadioGroupFixed";
+export * from "./form-controls"
+export * from "./form-parsers";
+export * from "./components";
 
-
-export default function install(Vue) {
+export function install(Vue) {
     Vue.use(JsonForm);
+
+    // controls
+    for (const name in controls) {
+        if (controls.hasOwnProperty(name)) {
+            JsonForm.addControl(name, controls[name]);
+        }
+    }
+    // validators
+    for (const name in validators) {
+        if (controls.hasOwnProperty(name)) {
+            JsonForm.validator.add(validators[name]);
+        }
+    }
+
+    // control icon
     Vue.prototype.$controlIcon = function (icon) {
         if (typeof icon !== 'string') {
             return undefined;
         }
         return icon.replace(':', '-');
     };
-
-    Vue.component(ControlLabel.name, ControlLabel);
-    Vue.component(ErrorList.name, ErrorList);
-    Vue.component(ErrorBlock.name, ErrorBlock);
-    Vue.component(ControlIcon.name, ControlIcon);
-    Vue.component(DialogForms.name, DialogForms);
-    Vue.component(StepperForm.name, StepperForm);
-    Vue.component(BlockForm.name, BlockForm);
-    Vue.component(AceEditor.name, AceEditor);
-    Vue.component(QuillEditor.name, QuillEditor);
-
-    Object.values(elements).forEach(component => {
-        Vue.use(component)
-    });
-};
+}
 

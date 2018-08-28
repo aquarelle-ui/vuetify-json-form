@@ -7,8 +7,8 @@
                                 :complete="step.complete"
                                 :editable="step.editable && step.touched || stepHasError(step, index, true)"
                                 :rules="stepHasError(step, index) ? invalidStep : undefined">
-                    {{$intl.translate(step.title)}}
-                    <small v-if="!!step.description">{{$intl.translate(step.description)}}</small>
+                    {{translate(step.title)}}
+                    <small v-if="!!step.description">{{translate(step.description)}}</small>
                 </v-stepper-step>
                 <v-stepper-content :key="$uniqueObjectId(step) + 'c'" :step="index + 1">
                     <json-form-group
@@ -17,20 +17,23 @@
                             :model="dataValue[index]"
                             :validator="$v.dataValue[index]"
                             :name="step.name"
-                            :json-form-wrapper="me"
+                            :wrapper="me"
+                            :path="step.name ? [step.name] : []"
+                            :parent-validations-container="step.validator"
+                            :validations-container="step.validator"
                             ref="formGroup"
                     ></json-form-group>
                     <v-btn color="primary"
                            :disabled="processing || isButtonDisabled(step, index)"
                            :loading="processing || isButtonLoading(step, index)"
                            @click.stop="nextStep(step, index)">
-                        {{$intl.translate(getButtonText(step, index))}}
+                        {{translate(getButtonText(step, index))}}
                     </v-btn>
                 </v-stepper-content>
             </template>
         </v-stepper>
         <!-- Dialogs -->
-        <dialog-forms ref="dialogs"></dialog-forms>
+        <dialog-forms ref="dialogs" :options="options" :translate="translate" :parser="parser"></dialog-forms>
     </v-form>
 </template>
 <style>
@@ -44,15 +47,15 @@
     }
 </style>
 <script>
-    import {JsonFormGroup, validationMixin} from "@aquarelle/json-form";
-    import DialogForms from "./DialogForms.vue";
+    import {JsonFormGroup, ValidationMixin, JsonFormOptionsMixin, JsonFormParserMixin} from "@aquarelle/json-form";
+    import DialogForms from "./DialogForms";
 
     const invalidStep = [() => false];
 
     export default {
         name: 'stepper-form',
         components: {DialogForms, JsonFormGroup},
-        mixins: [validationMixin],
+        mixins: [ValidationMixin, JsonFormParserMixin, JsonFormOptionsMixin],
         props: {
             steps: {
                 type: Array,
@@ -295,7 +298,7 @@
             {
                 if (validator === null) {
                     validator = {};
-                    items = this.$jsonForm.parseControlList(items, validator);
+                    items = this.parser.parseControlList(items, validator);
                 }
 
                 this.$set(step, 'validator', validator);

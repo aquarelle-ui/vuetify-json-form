@@ -1,9 +1,9 @@
 <template>
-    <v-list-tile v-show="error !== null" class="input-group__details error--text">
-        <v-list-tile-action class="input-group__messages input-group__error">
+    <div v-show="error !== null" class="v-messages error--text">
+        <div class="v-messages__message">
             {{error}}
-        </v-list-tile-action>
-    </v-list-tile>
+        </div>
+    </div>
 </template>
 <script>
     export default {
