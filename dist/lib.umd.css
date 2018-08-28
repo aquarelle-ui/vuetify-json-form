@@ -1,0 +1,15 @@
+.sortable-ghost {
+    outline: gold 2px dashed;
+}
+
+.sortable-ghost + .sortable-empty-list-item {
+    display: none;
+}
+
+.v-menu__activator {
+    height: inherit !important;
+}
+.stepper__content .list__tile__action .btn--icon{margin-top:8px
+}
+.stepper__content .json-form-group .btn{margin-top:8px
+}
