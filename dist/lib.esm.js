@@ -2481,7 +2481,7 @@ var script$c = {
     computed: {
         heightStyle()
         {
-            return this.fillHeight ? {'min-height': '100%'} : undefined;
+            return this.fillHeight ? {'height': '100%'} : undefined;
         }
     }
 };
@@ -2690,7 +2690,7 @@ var script$d = {
     computed: {
         heightStyle()
         {
-            return this.fillHeight ? {'min-height': '100%'} : undefined;
+            return this.fillHeight ? {'height': '100%'} : undefined;
         },
         dataSteps()
         {

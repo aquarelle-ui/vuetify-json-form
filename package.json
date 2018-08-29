@@ -1,6 +1,6 @@
 {
     "name": "@aquarelle/vuetify-json-form",
-    "version": "0.1.16",
+    "version": "0.1.17",
     "private": true,
     "main": "dist/lib.cjs.js",
     "module": "dist/lib.esm.js",
