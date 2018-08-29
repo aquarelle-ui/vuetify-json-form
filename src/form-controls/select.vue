@@ -22,7 +22,6 @@
 
             :value-comparator="$equals"
 
-            :autocomplete="!!display.autocomplete"
             :clearable="!!display.clearable"
 
             :box="display.appearance === 'box'"

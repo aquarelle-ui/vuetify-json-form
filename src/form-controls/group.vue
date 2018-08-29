@@ -1,6 +1,6 @@
 <template>
-    <v-expansion-panel v-if="display.panel === true">
-        <v-expansion-panel-content :value="true">
+    <v-expansion-panel expand v-if="display.panel === true">
+        <v-expansion-panel-content>
             <div slot="header">{{wrapper.translate(display.title)}}</div>
             <json-form-group
                     class="px-2"

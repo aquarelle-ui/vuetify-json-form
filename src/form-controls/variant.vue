@@ -12,7 +12,6 @@
 
                 :required="config.required"
 
-                :autocomplete="display.autocomplete"
 
                 clearable
 
