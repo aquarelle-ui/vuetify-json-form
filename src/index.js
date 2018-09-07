@@ -20,7 +20,7 @@ export function install(Vue) {
     }
     // validators
     for (const name in validators) {
-        if (controls.hasOwnProperty(name)) {
+        if (validators.hasOwnProperty(name)) {
             JsonForm.validator.add(validators[name]);
         }
     }
