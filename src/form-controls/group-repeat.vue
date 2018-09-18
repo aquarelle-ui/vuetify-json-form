@@ -87,7 +87,7 @@
                 const items = this.items;
                 const parser = this.wrapper.parser;
                 this.config.regions.map(region => {
-                    v[region.name] = {};
+                    v[region.name] = region.validation ? parser.validator.getMultiple(region.validation) : {};
 
                     if (!Array.isArray(model[region.name])) {
                         return;

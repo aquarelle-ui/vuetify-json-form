@@ -1,6 +1,6 @@
 {
     "name": "@aquarelle/vuetify-json-form",
-    "version": "0.1.19",
+    "version": "0.1.20",
     "private": true,
     "main": "dist/lib.cjs.js",
     "module": "dist/lib.esm.js",
@@ -10,7 +10,7 @@
     },
     "peerDependencies": {
         "vue": "^2.5.17",
-        "vuetify": "^1.1.14",
+        "vuetify": "^1.2.3",
         "vuedraggable": "^2.16.0"
     },
     "devDependencies": {

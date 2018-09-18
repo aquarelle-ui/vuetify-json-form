@@ -449,28 +449,13 @@ class GroupRepeatParser extends jsonForm.ControlParser
         const validation = super.getValidation(definition, form, data, validator);
 
         data.config.regions.map(region => {
-            if (!validation[region.name]) {
-                validation[region.name] = {};
-            }
-
-            let v = null;
-            if (typeof region.validation === 'object') {
-                v = form.validator.getMultiple(region.validation, false);
-            }
-            else {
-                v = {};
+            if (region.validation == null || typeof region.validation !== 'object') {
                 region.validation = {};
             }
+
             region.config = {};
 
             jsonForm.ControlParser.setConfigUsingValidation(region.config, region.validation, ['required', 'minItems', 'maxItems']);
-
-            if (validation.hasOwnProperty(region.name)) {
-                validation[region.name] = {...validation[region.name], ...v};
-            }
-            else {
-                validation[region.name] = v;
-            }
         });
 
         return validation;
@@ -531,30 +516,13 @@ class GroupRepeatVariantsParser extends jsonForm.ControlParser
         const validation = super.getValidation(definition, form, data, validator);
 
         data.config.regions.map(region => {
-            if (!validation[region.name]) {
-                validation[region.name] = {};
-            }
-
-            let v = null;
-            if (typeof region.validation === 'object') {
-                v = form.validator.getMultiple(region.validation, false);
-            }
-            else {
-                v = {};
+            if (region.validation == null || typeof region.validation !== 'object') {
                 region.validation = {};
             }
 
             region.config = {};
 
-            jsonForm.ControlParser.setConfigUsingValidation(region.config, region.validation,
-                ['required', 'minItems', 'maxItems']);
-
-            if (validation.hasOwnProperty(region.name)) {
-                validation[region.name] = {...validation[region.name], ...v};
-            }
-            else {
-                validation[region.name] = v;
-            }
+            jsonForm.ControlParser.setConfigUsingValidation(region.config, region.validation, ['required', 'minItems', 'maxItems']);
         });
 
         return validation;
@@ -6185,7 +6153,7 @@ var script$v = {
             const items = this.items;
             const parser = this.wrapper.parser;
             this.config.regions.map(region => {
-                v[region.name] = {};
+                v[region.name] = region.validation ? parser.validator.getMultiple(region.validation) : {};
 
                 if (!Array.isArray(model[region.name])) {
                     return;
@@ -6461,7 +6429,7 @@ var script$w = {
 
             const parser = this.wrapper.parser;
             this.config.regions.map(region => {
-                v[region.name] = {};
+                v[region.name] = region.validation ? parser.validator.getMultiple(region.validation) : {};
 
                 if (!Array.isArray(model[region.name])) {
                     return;
@@ -7051,7 +7019,7 @@ function install(Vue) {
     }
     // validators
     for (const name in validators) {
-        if (controls.hasOwnProperty(name)) {
+        if (validators.hasOwnProperty(name)) {
             jsonForm.JsonForm.validator.add(validators[name]);
         }
     }

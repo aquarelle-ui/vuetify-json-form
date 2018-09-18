@@ -30,28 +30,13 @@ export default class extends ControlParser
         const validation = super.getValidation(definition, form, data, validator);
 
         data.config.regions.map(region => {
-            if (!validation[region.name]) {
-                validation[region.name] = {};
-            }
-
-            let v = null;
-            if (typeof region.validation === 'object') {
-                v = form.validator.getMultiple(region.validation, false);
-            }
-            else {
-                v = {};
+            if (region.validation == null || typeof region.validation !== 'object') {
                 region.validation = {};
             }
+
             region.config = {};
 
             ControlParser.setConfigUsingValidation(region.config, region.validation, ['required', 'minItems', 'maxItems']);
-
-            if (validation.hasOwnProperty(region.name)) {
-                validation[region.name] = {...validation[region.name], ...v};
-            }
-            else {
-                validation[region.name] = v;
-            }
         });
 
         return validation;
