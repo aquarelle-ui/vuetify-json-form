@@ -100,7 +100,7 @@
         computed: {
             heightStyle()
             {
-                return this.fillHeight ? {'height': '100%'} : undefined;
+                return this.fillHeight ? {'min-height': '100%'} : undefined;
             }
         }
     };
