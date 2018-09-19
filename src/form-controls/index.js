@@ -6,6 +6,7 @@ export {default as TelControl} from "./tel";
 export {default as NumberControl} from "./number";
 export {default as PasswordControl} from "./password";
 export {default as UrlControl} from "./url";
+export {default as ColorControl} from "./color";
 export {default as IconControl} from "./icon";
 
 export {default as HiddenControl} from "./hidden";

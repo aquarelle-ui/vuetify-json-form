@@ -1,6 +1,3 @@
-export {default as TelParser} from "./tel";
-export {default as EmailParser} from "./email";
-export {default as UrlParser} from "./url";
 export {default as HiddenParser} from "./hidden";
 export {default as SwitchGroupParser} from "./switch-group";
 export {default as TabsParser} from "./tabs";

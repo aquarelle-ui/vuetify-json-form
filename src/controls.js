@@ -1,5 +1,6 @@
 import {
     StringControlParser,
+    ExtendedStringControlParser,
     NumberControlParser,
     ObjectControlParser,
     BooleanControlParser,
@@ -10,9 +11,6 @@ import {
     AsyncObjectControlParser
 } from "@aquarelle/json-form";
 import {
-    TelParser,
-    EmailParser,
-    UrlParser,
     HiddenParser,
     SwitchGroupParser,
     TabsParser,
@@ -36,6 +34,7 @@ import {
     TelControl,
     NumberControl,
     PasswordControl,
+    ColorControl,
     UrlControl,
     HiddenControl,
     SliderControl,
@@ -70,11 +69,14 @@ import {
 export default {
     'text': new StringControlParser(TextControl),
     'textarea': new StringControlParser(TextareaControl),
-    'tel': new TelParser(TelControl),
-    'email': new EmailParser(EmailControl),
+    'tel': new ExtendedStringControlParser(TelControl, {tel: true}),
+    'email': new ExtendedStringControlParser(EmailControl, {email: true}),
     'password': new StringControlParser(PasswordControl),
     'number': new NumberControlParser(NumberControl),
-    'url': new UrlParser(UrlControl),
+    'url': new ExtendedStringControlParser(UrlControl, {url: true}),
+    'ipv4': new ExtendedStringControlParser(TextControl, {ipv4: true}),
+    'ipv6': new ExtendedStringControlParser(TextControl, {ipv6: true}),
+    'color': new ExtendedStringControlParser(ColorControl, {color: true}),
     'hidden': new HiddenParser(HiddenControl),
     'uuid': new StringControlParser(UUIDControl),
 

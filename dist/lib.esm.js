@@ -1,61 +1,4 @@
-import { StringControlParser, ControlParser, ObjectControlParser, SelectionControlParser, ArrayControlParser, JsonFormElementMixin, JsonFormGroup, ValidationMixin, JsonFormMixin, JsonFormOptionsMixin, JsonFormParserMixin, JsonFormElement, NumberControlParser, BooleanControlParser, DateControlParser, TimeControlParser, DateTimeControlParser, AsyncObjectControlParser, ValidatorItem, JsonForm } from '@aquarelle/json-form';
-
-class TelParser extends StringControlParser
-{
-    parse(definition, form, validator)
-    {
-        if (!definition.validation) {
-            definition.validation = {};
-        }
-        if (!definition.validation.tel) {
-            definition.validation.tel = true;
-        }
-        else {
-            if (typeof definition.validation.tel === 'object') {
-                definition.validation.tel.value = true;
-            }
-        }
-        return super.parse(definition, form, validator);
-    }
-}
-
-class EmailParser extends StringControlParser
-{
-    parse(definition, form, validator)
-    {
-        if (!definition.validation) {
-            definition.validation = {};
-        }
-        if (!definition.validation.email) {
-            definition.validation.email = true;
-        }
-        else {
-            if (typeof definition.validation.email === 'object') {
-                definition.validation.email.value = true;
-            }
-        }
-        return super.parse(definition, form, validator);
-    }
-}
-
-class UrlParser extends StringControlParser
-{
-    parse(definition, form, validator)
-    {
-        if (!definition.validation) {
-            definition.validation = {};
-        }
-        if (!definition.validation.url) {
-            definition.validation.url = true;
-        }
-        else {
-            if (typeof definition.validation.url === 'object') {
-                definition.validation.url.value = true;
-            }
-        }
-        return super.parse(definition, form, validator);
-    }
-}
+import { ControlParser, ObjectControlParser, StringControlParser, SelectionControlParser, ArrayControlParser, JsonFormElementMixin, JsonFormGroup, ValidationMixin, JsonFormMixin, JsonFormOptionsMixin, JsonFormParserMixin, JsonFormElement, ExtendedStringControlParser, NumberControlParser, BooleanControlParser, DateControlParser, TimeControlParser, DateTimeControlParser, AsyncObjectControlParser, JsonForm } from '@aquarelle/json-form';
 
 class HiddenParser extends ControlParser
 {
@@ -664,73 +607,7 @@ var __vue_staticRenderFns__ = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__.styles || (__vue_create_injector__.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -742,7 +619,7 @@ var __vue_staticRenderFns__ = [];
     __vue_scope_id__,
     __vue_is_functional_template__,
     __vue_module_identifier__,
-    __vue_create_injector__,
+    undefined,
     undefined
   );
 
@@ -791,73 +668,7 @@ var __vue_staticRenderFns__$1 = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$1() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$1.styles || (__vue_create_injector__$1.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -869,7 +680,7 @@ var __vue_staticRenderFns__$1 = [];
     __vue_scope_id__$1,
     __vue_is_functional_template__$1,
     __vue_module_identifier__$1,
-    __vue_create_injector__$1,
+    undefined,
     undefined
   );
 
@@ -939,73 +750,7 @@ var __vue_staticRenderFns__$2 = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$2() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$2.styles || (__vue_create_injector__$2.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -1017,7 +762,7 @@ var __vue_staticRenderFns__$2 = [];
     __vue_scope_id__$2,
     __vue_is_functional_template__$2,
     __vue_module_identifier__$2,
-    __vue_create_injector__$2,
+    undefined,
     undefined
   );
 
@@ -1076,73 +821,7 @@ var __vue_staticRenderFns__$3 = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$3() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$3.styles || (__vue_create_injector__$3.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -1154,7 +833,7 @@ var __vue_staticRenderFns__$3 = [];
     __vue_scope_id__$3,
     __vue_is_functional_template__$3,
     __vue_module_identifier__$3,
-    __vue_create_injector__$3,
+    undefined,
     undefined
   );
 
@@ -1163,6 +842,16 @@ var UrlControl = {
     created()
     {
         this.inputType = 'url';
+    }
+};
+
+var ColorControl = {
+    extends: text,
+    created()
+    {
+        this.display.placeholder = '#000000';
+        this.config.maxLength = 7;
+        this.inputType = 'color';
     }
 };
 
@@ -1211,73 +900,7 @@ var __vue_staticRenderFns__$4 = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$4() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$4.styles || (__vue_create_injector__$4.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -1289,7 +912,7 @@ var __vue_staticRenderFns__$4 = [];
     __vue_scope_id__$4,
     __vue_is_functional_template__$4,
     __vue_module_identifier__$4,
-    __vue_create_injector__$4,
+    undefined,
     undefined
   );
 
@@ -1367,73 +990,7 @@ var __vue_staticRenderFns__$5 = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$5() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$5.styles || (__vue_create_injector__$5.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -1445,7 +1002,7 @@ var __vue_staticRenderFns__$5 = [];
     __vue_scope_id__$5,
     __vue_is_functional_template__$5,
     __vue_module_identifier__$5,
-    __vue_create_injector__$5,
+    undefined,
     undefined
   );
 
@@ -1494,73 +1051,7 @@ var __vue_staticRenderFns__$6 = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$6() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$6.styles || (__vue_create_injector__$6.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -1572,7 +1063,7 @@ var __vue_staticRenderFns__$6 = [];
     __vue_scope_id__$6,
     __vue_is_functional_template__$6,
     __vue_module_identifier__$6,
-    __vue_create_injector__$6,
+    undefined,
     undefined
   );
 
@@ -1628,73 +1119,7 @@ var __vue_staticRenderFns__$7 = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$7() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$7.styles || (__vue_create_injector__$7.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -1706,7 +1131,7 @@ var __vue_staticRenderFns__$7 = [];
     __vue_scope_id__$7,
     __vue_is_functional_template__$7,
     __vue_module_identifier__$7,
-    __vue_create_injector__$7,
+    undefined,
     undefined
   );
 
@@ -1767,73 +1192,7 @@ var __vue_staticRenderFns__$8 = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$8() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$8.styles || (__vue_create_injector__$8.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -1845,7 +1204,7 @@ var __vue_staticRenderFns__$8 = [];
     __vue_scope_id__$8,
     __vue_is_functional_template__$8,
     __vue_module_identifier__$8,
-    __vue_create_injector__$8,
+    undefined,
     undefined
   );
 
@@ -1903,73 +1262,7 @@ var __vue_staticRenderFns__$9 = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$9() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$9.styles || (__vue_create_injector__$9.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -1981,7 +1274,7 @@ var __vue_staticRenderFns__$9 = [];
     __vue_scope_id__$9,
     __vue_is_functional_template__$9,
     __vue_module_identifier__$9,
-    __vue_create_injector__$9,
+    undefined,
     undefined
   );
 
@@ -2039,73 +1332,7 @@ var __vue_staticRenderFns__$a = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$a() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$a.styles || (__vue_create_injector__$a.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -2117,7 +1344,7 @@ var __vue_staticRenderFns__$a = [];
     __vue_scope_id__$a,
     __vue_is_functional_template__$a,
     __vue_module_identifier__$a,
-    __vue_create_injector__$a,
+    undefined,
     undefined
   );
 
@@ -2305,73 +1532,7 @@ var __vue_staticRenderFns__$b = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$b() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$b.styles || (__vue_create_injector__$b.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -2383,7 +1544,7 @@ var __vue_staticRenderFns__$b = [];
     __vue_scope_id__$b,
     __vue_is_functional_template__$b,
     __vue_module_identifier__$b,
-    __vue_create_injector__$b,
+    undefined,
     undefined
   );
 
@@ -2493,73 +1654,7 @@ var __vue_staticRenderFns__$c = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$c() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$c.styles || (__vue_create_injector__$c.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -2571,7 +1666,7 @@ var __vue_staticRenderFns__$c = [];
     __vue_scope_id__$c,
     __vue_is_functional_template__$c,
     __vue_module_identifier__$c,
-    __vue_create_injector__$c,
+    undefined,
     undefined
   );
 
@@ -2954,73 +2049,7 @@ var __vue_staticRenderFns__$d = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$d() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$d.styles || (__vue_create_injector__$d.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -3032,7 +2061,7 @@ var __vue_staticRenderFns__$d = [];
     __vue_scope_id__$d,
     __vue_is_functional_template__$d,
     __vue_module_identifier__$d,
-    __vue_create_injector__$d,
+    undefined,
     undefined
   );
 
@@ -3082,73 +2111,7 @@ var __vue_staticRenderFns__$e = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$e() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$e.styles || (__vue_create_injector__$e.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -3160,7 +2123,7 @@ var __vue_staticRenderFns__$e = [];
     __vue_scope_id__$e,
     __vue_is_functional_template__$e,
     __vue_module_identifier__$e,
-    __vue_create_injector__$e,
+    undefined,
     undefined
   );
 
@@ -3209,73 +2172,7 @@ var __vue_staticRenderFns__$f = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$f() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$f.styles || (__vue_create_injector__$f.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -3287,7 +2184,7 @@ var __vue_staticRenderFns__$f = [];
     __vue_scope_id__$f,
     __vue_is_functional_template__$f,
     __vue_module_identifier__$f,
-    __vue_create_injector__$f,
+    undefined,
     undefined
   );
 
@@ -3345,73 +2242,7 @@ var __vue_staticRenderFns__$g = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$g() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$g.styles || (__vue_create_injector__$g.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -3423,7 +2254,7 @@ var __vue_staticRenderFns__$g = [];
     __vue_scope_id__$g,
     __vue_is_functional_template__$g,
     __vue_module_identifier__$g,
-    __vue_create_injector__$g,
+    undefined,
     undefined
   );
 
@@ -3540,73 +2371,7 @@ var __vue_staticRenderFns__$h = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$h() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$h.styles || (__vue_create_injector__$h.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -3618,7 +2383,7 @@ var __vue_staticRenderFns__$h = [];
     __vue_scope_id__$h,
     __vue_is_functional_template__$h,
     __vue_module_identifier__$h,
-    __vue_create_injector__$h,
+    undefined,
     undefined
   );
 
@@ -3673,73 +2438,7 @@ var __vue_staticRenderFns__$i = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$i() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$i.styles || (__vue_create_injector__$i.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -3751,7 +2450,7 @@ var __vue_staticRenderFns__$i = [];
     __vue_scope_id__$i,
     __vue_is_functional_template__$i,
     __vue_module_identifier__$i,
-    __vue_create_injector__$i,
+    undefined,
     undefined
   );
 
@@ -3826,73 +2525,7 @@ var __vue_staticRenderFns__$j = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$j() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$j.styles || (__vue_create_injector__$j.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -3904,7 +2537,7 @@ var __vue_staticRenderFns__$j = [];
     __vue_scope_id__$j,
     __vue_is_functional_template__$j,
     __vue_module_identifier__$j,
-    __vue_create_injector__$j,
+    undefined,
     undefined
   );
 
@@ -3990,73 +2623,7 @@ var __vue_staticRenderFns__$k = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$k() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$k.styles || (__vue_create_injector__$k.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -4068,7 +2635,7 @@ var __vue_staticRenderFns__$k = [];
     __vue_scope_id__$k,
     __vue_is_functional_template__$k,
     __vue_module_identifier__$k,
-    __vue_create_injector__$k,
+    undefined,
     undefined
   );
 
@@ -4124,73 +2691,7 @@ var __vue_staticRenderFns__$l = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$l() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$l.styles || (__vue_create_injector__$l.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -4202,7 +2703,7 @@ var __vue_staticRenderFns__$l = [];
     __vue_scope_id__$l,
     __vue_is_functional_template__$l,
     __vue_module_identifier__$l,
-    __vue_create_injector__$l,
+    undefined,
     undefined
   );
 
@@ -4258,73 +2759,7 @@ var __vue_staticRenderFns__$m = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$m() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$m.styles || (__vue_create_injector__$m.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -4336,7 +2771,7 @@ var __vue_staticRenderFns__$m = [];
     __vue_scope_id__$m,
     __vue_is_functional_template__$m,
     __vue_module_identifier__$m,
-    __vue_create_injector__$m,
+    undefined,
     undefined
   );
 
@@ -4449,73 +2884,7 @@ var __vue_staticRenderFns__$n = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$n() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$n.styles || (__vue_create_injector__$n.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -4527,7 +2896,7 @@ var __vue_staticRenderFns__$n = [];
     __vue_scope_id__$n,
     __vue_is_functional_template__$n,
     __vue_module_identifier__$n,
-    __vue_create_injector__$n,
+    undefined,
     undefined
   );
 
@@ -4641,73 +3010,7 @@ var __vue_staticRenderFns__$o = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$o() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$o.styles || (__vue_create_injector__$o.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -4719,7 +3022,7 @@ var __vue_staticRenderFns__$o = [];
     __vue_scope_id__$o,
     __vue_is_functional_template__$o,
     __vue_module_identifier__$o,
-    __vue_create_injector__$o,
+    undefined,
     undefined
   );
 
@@ -4816,73 +3119,7 @@ var __vue_staticRenderFns__$p = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$p() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$p.styles || (__vue_create_injector__$p.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -4894,7 +3131,7 @@ var __vue_staticRenderFns__$p = [];
     __vue_scope_id__$p,
     __vue_is_functional_template__$p,
     __vue_module_identifier__$p,
-    __vue_create_injector__$p,
+    undefined,
     undefined
   );
 
@@ -5066,73 +3303,7 @@ var __vue_staticRenderFns__$q = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$q() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$q.styles || (__vue_create_injector__$q.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -5144,7 +3315,7 @@ var __vue_staticRenderFns__$q = [];
     __vue_scope_id__$q,
     __vue_is_functional_template__$q,
     __vue_module_identifier__$q,
-    __vue_create_injector__$q,
+    undefined,
     undefined
   );
 
@@ -5244,73 +3415,7 @@ var __vue_staticRenderFns__$r = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$r() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$r.styles || (__vue_create_injector__$r.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -5322,7 +3427,7 @@ var __vue_staticRenderFns__$r = [];
     __vue_scope_id__$r,
     __vue_is_functional_template__$r,
     __vue_module_identifier__$r,
-    __vue_create_injector__$r,
+    undefined,
     undefined
   );
 
@@ -5549,73 +3654,7 @@ var __vue_staticRenderFns__$s = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$s() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$s.styles || (__vue_create_injector__$s.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -5627,7 +3666,7 @@ var __vue_staticRenderFns__$s = [];
     __vue_scope_id__$s,
     __vue_is_functional_template__$s,
     __vue_module_identifier__$s,
-    __vue_create_injector__$s,
+    undefined,
     undefined
   );
 
@@ -5786,73 +3825,7 @@ var __vue_staticRenderFns__$t = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$t() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$t.styles || (__vue_create_injector__$t.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -5864,7 +3837,7 @@ var __vue_staticRenderFns__$t = [];
     __vue_scope_id__$t,
     __vue_is_functional_template__$t,
     __vue_module_identifier__$t,
-    __vue_create_injector__$t,
+    undefined,
     undefined
   );
 
@@ -6037,73 +4010,7 @@ var __vue_staticRenderFns__$u = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$u() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$u.styles || (__vue_create_injector__$u.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -6115,7 +4022,7 @@ var __vue_staticRenderFns__$u = [];
     __vue_scope_id__$u,
     __vue_is_functional_template__$u,
     __vue_module_identifier__$u,
-    __vue_create_injector__$u,
+    undefined,
     undefined
   );
 
@@ -6314,73 +4221,7 @@ var __vue_staticRenderFns__$v = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$v() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$v.styles || (__vue_create_injector__$v.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -6392,7 +4233,7 @@ var __vue_staticRenderFns__$v = [];
     __vue_scope_id__$v,
     __vue_is_functional_template__$v,
     __vue_module_identifier__$v,
-    __vue_create_injector__$v,
+    undefined,
     undefined
   );
 
@@ -6602,73 +4443,7 @@ var __vue_staticRenderFns__$w = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$w() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$w.styles || (__vue_create_injector__$w.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -6680,7 +4455,7 @@ var __vue_staticRenderFns__$w = [];
     __vue_scope_id__$w,
     __vue_is_functional_template__$w,
     __vue_module_identifier__$w,
-    __vue_create_injector__$w,
+    undefined,
     undefined
   );
 
@@ -6839,73 +4614,7 @@ var __vue_staticRenderFns__$x = [];
     return component
   }
   /* style inject */
-  function __vue_create_injector__$x() {
-    const head = document.head || document.getElementsByTagName('head')[0];
-    const styles = __vue_create_injector__$x.styles || (__vue_create_injector__$x.styles = {});
-    const isOldIE =
-      typeof navigator !== 'undefined' &&
-      /msie [6-9]\\b/.test(navigator.userAgent.toLowerCase());
-
-    return function addStyle(id, css) {
-      if (document.querySelector('style[data-vue-ssr-id~="' + id + '"]')) return // SSR styles are present.
-
-      const group = isOldIE ? css.media || 'default' : id;
-      const style = styles[group] || (styles[group] = { ids: [], parts: [], element: undefined });
-
-      if (!style.ids.includes(id)) {
-        let code = css.source;
-        let index = style.ids.length;
-
-        style.ids.push(id);
-
-        if (css.map) {
-          // https://developer.chrome.com/devtools/docs/javascript-debugging
-          // this makes source maps inside style tags work properly in Chrome
-          code += '\n/*# sourceURL=' + css.map.sources[0] + ' */';
-          // http://stackoverflow.com/a/26603875
-          code +=
-            '\n/*# sourceMappingURL=data:application/json;base64,' +
-            btoa(unescape(encodeURIComponent(JSON.stringify(css.map)))) +
-            ' */';
-        }
-
-        if (isOldIE) {
-          style.element = style.element || document.querySelector('style[data-group=' + group + ']');
-        }
-
-        if (!style.element) {
-          const el = style.element = document.createElement('style');
-          el.type = 'text/css';
-
-          if (css.media) el.setAttribute('media', css.media);
-          if (isOldIE) {
-            el.setAttribute('data-group', group);
-            el.setAttribute('data-next-index', '0');
-          }
-
-          head.appendChild(el);
-        }
-
-        if (isOldIE) {
-          index = parseInt(style.element.getAttribute('data-next-index'));
-          style.element.setAttribute('data-next-index', index + 1);
-        }
-
-        if (style.element.styleSheet) {
-          style.parts.push(code);
-          style.element.styleSheet.cssText = style.parts
-            .filter(Boolean)
-            .join('\n');
-        } else {
-          const textNode = document.createTextNode(code);
-          const nodes = style.element.childNodes;
-          if (nodes[index]) style.element.removeChild(nodes[index]);
-          if (nodes.length) style.element.insertBefore(textNode, nodes[index]);
-          else style.element.appendChild(textNode);
-        }
-      }
-    }
-  }
+  
   /* style inject SSR */
   
 
@@ -6917,18 +4626,21 @@ var __vue_staticRenderFns__$x = [];
     __vue_scope_id__$x,
     __vue_is_functional_template__$x,
     __vue_module_identifier__$x,
-    __vue_create_injector__$x,
+    undefined,
     undefined
   );
 
 var controls = {
     'text': new StringControlParser(text),
     'textarea': new StringControlParser(TextareaControl),
-    'tel': new TelParser(TelControl),
-    'email': new EmailParser(EmailControl),
+    'tel': new ExtendedStringControlParser(TelControl, {tel: true}),
+    'email': new ExtendedStringControlParser(EmailControl, {email: true}),
     'password': new StringControlParser(PasswordControl),
     'number': new NumberControlParser(NumberControl),
-    'url': new UrlParser(UrlControl),
+    'url': new ExtendedStringControlParser(UrlControl, {url: true}),
+    'ipv4': new ExtendedStringControlParser(text, {ipv4: true}),
+    'ipv6': new ExtendedStringControlParser(text, {ipv6: true}),
+    'color': new ExtendedStringControlParser(ColorControl, {color: true}),
     'hidden': new HiddenParser(HiddenControl),
     'uuid': new StringControlParser(UUIDControl),
 
@@ -6967,42 +4679,9 @@ var controls = {
     'variant': new VariantParser(VariantControl),
 };
 
-const TEL_REGEX = /^[a-z0-9#*-.+() ]+$/i;
-const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-const URL_REGEX = /^(https?:\/\/)?((([a-zd]([a-zd-]*[a-zd])*).)+[a-z]{2,}|((d{1,3}.){3}d{1,3}))(:d+)?(\/[-a-zd%_.~+]*)*(\?[;&a-zd%_.~+=-]*)?(#[-a-zd_]*)?$/i;
+// import {ValidatorItem} from "@aquarelle/json-form";
 
-var validators = {
-    tel: new ValidatorItem("tel", p => p.value !== true ? null : v => {
-        if (typeof v !== 'string') {
-            return true;
-        }
-        if (v === '') {
-            return true;
-        }
-
-        return TEL_REGEX.test(v);
-    }, "Must be a valid phone number", "ui:validation.tel"),
-
-    email: new ValidatorItem("email", p => p.value !== true ? null : v => {
-        if (typeof v !== 'string') {
-            return true;
-        }
-        if (v === '') {
-            return true;
-        }
-        return EMAIL_REGEX.test(v);
-    }, "Must be a valid e-mail", "ui:validation.email"),
-
-    url: new ValidatorItem("url", p => p.value !== true ? null : v => {
-        if (typeof v !== 'string') {
-            return true;
-        }
-        if (v === '') {
-            return true;
-        }
-        return URL_REGEX.test(v);
-    }, "Must be a valid url", "ui:validation.url")
-};
+var validators = {};
 
 function install(Vue) {
     Vue.use(JsonForm);
@@ -7029,4 +4708,4 @@ function install(Vue) {
     };
 }
 
-export { install, text as TextControl, TextareaControl, EmailControl, TelControl, NumberControl, PasswordControl, UrlControl, IconControl, HiddenControl, UUIDControl, SliderControl, CheckboxControl, CheckboxMultiControl, SwitchControl, RadioControl, SelectControl, ComboboxControl, DescriptionControl, ColControl, RowControl, GroupControl, SwitchGroupControl, TabsControl, AsyncGroupControl, ComponentControl, DateControl, TimeControl, DateTimeControl, RepeatControl, RepeatVariantsControl, GroupRepeatControl, GroupRepeatVariantsControl, VariantControl, TelParser, EmailParser, UrlParser, HiddenParser, SwitchGroupParser, TabsParser, SelectParser, DisplayParser, DescriptionParser, IconParser, ComponentParser, ComboboxParser, ChipsParser, RepeatParser, RepeatVariantsParser, GroupRepeatParser, GroupRepeatVariantsParser, VariantParser, CheckboxMultiParser, ControlLabel, ControlIcon, BlockError, ListError, BlockForm, DialogForms, StepperForm };
+export { install, text as TextControl, TextareaControl, EmailControl, TelControl, NumberControl, PasswordControl, UrlControl, ColorControl, IconControl, HiddenControl, UUIDControl, SliderControl, CheckboxControl, CheckboxMultiControl, SwitchControl, RadioControl, SelectControl, ComboboxControl, DescriptionControl, ColControl, RowControl, GroupControl, SwitchGroupControl, TabsControl, AsyncGroupControl, ComponentControl, DateControl, TimeControl, DateTimeControl, RepeatControl, RepeatVariantsControl, GroupRepeatControl, GroupRepeatVariantsControl, VariantControl, HiddenParser, SwitchGroupParser, TabsParser, SelectParser, DisplayParser, DescriptionParser, IconParser, ComponentParser, ComboboxParser, ChipsParser, RepeatParser, RepeatVariantsParser, GroupRepeatParser, GroupRepeatVariantsParser, VariantParser, CheckboxMultiParser, ControlLabel, ControlIcon, BlockError, ListError, BlockForm, DialogForms, StepperForm };
