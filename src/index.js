@@ -30,7 +30,11 @@ export function install(Vue) {
         if (typeof icon !== 'string') {
             return undefined;
         }
-        return icon.replace(':', '-');
+        if (icon.indexOf(':') === -1) {
+            return icon;
+        }
+        icon = icon.split(':');
+        return icon[0] + ' fa-' + icon[1];
     };
 }
 
