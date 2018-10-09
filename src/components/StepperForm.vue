@@ -84,11 +84,6 @@
         <dialog-forms :options="options" :parser="parser" ref="formOverlay"></dialog-forms>
     </v-form>
 </template>
-<style>
-    .v-stepper__content > .v-stepper__wrapper > .json-form-group {
-        margin-left: 1px;
-    }
-</style>
 <script>
     import {JsonMultiStepFormMixin} from "@aquarelle/json-form";
     import DialogForms from "./DialogForms";

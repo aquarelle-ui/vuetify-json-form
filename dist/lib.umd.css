@@ -14,5 +14,7 @@
     padding-top: 0;
     padding-bottom: 0;
 }
-.v-stepper__content>.v-stepper__wrapper>.json-form-group{margin-left:1px
+
+.v-stepper__content > .v-stepper__wrapper > .json-form-group {
+    margin-left: 1px;
 }
