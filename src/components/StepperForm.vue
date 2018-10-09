@@ -28,6 +28,7 @@
                         <v-btn :disabled="processing || isButtonDisabled(step, index)"
                                :loading="processing || isButtonLoading(step, index)"
                                @click.stop="nextStep(step, index)"
+                               class="mt-4"
                                color="primary">
                             {{$intl.translate(getButtonText(step, index))}}
                         </v-btn>
