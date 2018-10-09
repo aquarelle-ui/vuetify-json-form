@@ -9,5 +9,10 @@
 .v-menu__activator {
     height: inherit !important;
 }
+
+.v-input__control input[type="color"] {
+    padding-top: 0;
+    padding-bottom: 0;
+}
 .v-stepper__content>.v-stepper__wrapper>.json-form-group{margin-left:1px
 }

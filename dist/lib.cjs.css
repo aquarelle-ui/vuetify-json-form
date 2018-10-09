@@ -9,3 +9,8 @@
 .v-menu__activator {
     height: inherit !important;
 }
+
+.v-input__control input[type="color"] {
+    padding-top: 0;
+    padding-bottom: 0;
+}
