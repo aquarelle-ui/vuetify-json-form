@@ -13,9 +13,9 @@
                 :error-messages="allErrors"
                 @input="($event === null) && handleClear()"
 
-                :label="wrapper.translate(display.title)"
-                :suffix="wrapper.translate(display.suffix)"
-                :prefix="wrapper.translate(display.prefix)"
+                :label="$intl.translate(display.title)"
+                :suffix="$intl.translate(display.suffix)"
+                :prefix="$intl.translate(display.prefix)"
                 :prepend-icon="$controlIcon(display.prependIcon)"
                 :append-icon="$controlIcon(display.appendIcon) || 'access_time'"
                 clearable

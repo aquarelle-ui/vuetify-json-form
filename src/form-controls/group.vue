@@ -1,7 +1,7 @@
 <template>
     <v-expansion-panel expand v-if="display.panel === true">
         <v-expansion-panel-content>
-            <div slot="header">{{wrapper.translate(display.title)}}</div>
+            <div slot="header">{{$intl.translate(display.title)}}</div>
             <json-form-group
                     class="px-2"
                     :model="modelProxy"
@@ -18,7 +18,7 @@
     </v-expansion-panel>
     <div v-else>
         <v-subheader v-if="!!display.title" class="mb-0">
-            <control-label :text="wrapper.translate(display.title)"></control-label>
+            <control-label :text="$intl.translate(display.title)"></control-label>
         </v-subheader>
         <json-form-group
                 :model="modelProxy"

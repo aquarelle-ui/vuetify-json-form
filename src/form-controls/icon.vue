@@ -6,14 +6,14 @@
             @blur="validate()"
             :error-messages="allErrors"
 
-            :label="wrapper.translate(display.title)"
+            :label="$intl.translate(display.title)"
 
-            :suffix="wrapper.translate(display.suffix)"
-            :prefix="wrapper.translate(display.prefix)"
+            :suffix="$intl.translate(display.suffix)"
+            :prefix="$intl.translate(display.prefix)"
             :prepend-icon="$controlIcon(display.prependIcon)"
             :append-icon="$controlIcon(model[name] || '')"
-            :hint="wrapper.translate(display.hint)"
-            :placeholder="wrapper.translate(display.placeholder)"
+            :hint="$intl.translate(display.hint)"
+            :placeholder="$intl.translate(display.placeholder)"
 
             :box="display.appearance === 'box'"
             :solo="display.appearance === 'solo'"

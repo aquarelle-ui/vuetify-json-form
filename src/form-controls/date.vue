@@ -13,10 +13,10 @@
                 :error-messages="allErrors"
                 @input="($event === null) && handleClear()"
 
-                :label="wrapper.translate(display.title)"
-                :suffix="wrapper.translate(display.suffix)"
-                :prefix="wrapper.translate(display.prefix)"
-                :hint="wrapper.translate(display.hint)"
+                :label="$intl.translate(display.title)"
+                :suffix="$intl.translate(display.suffix)"
+                :prefix="$intl.translate(display.prefix)"
+                :hint="$intl.translate(display.hint)"
                 persistent-hint
                 :prepend-icon="$controlIcon(display.prependIcon)"
                 :append-icon="$controlIcon(display.appendIcon) || 'event'"

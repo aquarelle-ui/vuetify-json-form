@@ -4,9 +4,9 @@
                 v-model="modelProxy[variantProp]"
                 :error-messages="getAllErrors(variantProp)"
 
-                :label="wrapper.translate(display.title)"
-                :hint="wrapper.translate(display.hint)"
-                :placeholder="wrapper.translate(display.placeholder)"
+                :label="$intl.translate(display.title)"
+                :hint="$intl.translate(display.hint)"
+                :placeholder="$intl.translate(display.placeholder)"
                 :prepend-icon="$controlIcon(display.prependIcon)"
                 :append-icon="$controlIcon(display.appendIcon)"
 

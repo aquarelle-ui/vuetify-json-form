@@ -1,66 +1,104 @@
 <template>
-    <v-form @submit.prevent="" :style="heightStyle">
-        <v-stepper :style="heightStyle" v-model="currentStep" vertical>
-            <template v-for="(step, index) in dataSteps">
-                <v-stepper-step :key="$uniqueObjectId(step) + 'h'"
-                                :step="index + 1"
-                                :complete="step.complete"
-                                :editable="step.editable && step.touched || stepHasError(step, index, true)"
-                                :rules="stepHasError(step, index) ? invalidStep : undefined">
-                    {{translate(step.title)}}
-                    <small v-if="!!step.description">{{translate(step.description)}}</small>
-                </v-stepper-step>
-                <v-stepper-content :key="$uniqueObjectId(step) + 'c'" :step="index + 1">
-                    <json-form-group
-                            v-if="step.parsed"
-                            :items="step.form"
-                            :model="dataValue[index]"
-                            :validator="$v.dataValue[index]"
-                            :name="step.name"
-                            :wrapper="me"
-                            :path="step.name ? [step.name] : []"
-                            :parent-validations-container="step.validator"
-                            :validations-container="step.validator"
-                            ref="formGroup"
-                    ></json-form-group>
-                    <v-btn color="primary"
-                           :disabled="processing || isButtonDisabled(step, index)"
-                           :loading="processing || isButtonLoading(step, index)"
-                           @click.stop="nextStep(step, index)">
-                        {{translate(getButtonText(step, index))}}
-                    </v-btn>
-                </v-stepper-content>
+    <v-form :style="heightStyle" @submit.prevent.stop="currentDataStep && nextStep(currentDataStep, currentStep - 1)">
+        <v-stepper :style="heightStyle" :vertical="vertical" v-if="showStepper" v-model="currentStep">
+            <template v-if="vertical">
+                <template v-for="(step, index) in dataSteps">
+                    <v-stepper-step :complete="step.complete"
+                                    :editable="step.editable && step.touched || stepHasError(step, index, true)"
+                                    :key="$uniqueObjectId(step) + 'h'"
+                                    :rules="stepHasError(step, index) ? invalidStep : undefined"
+                                    :step="index + 1">
+                        {{$uniqueObjectId(step)}}
+                        {{$intl.translate(step.title)}}
+                        <small v-if="!!step.description">{{$intl.translate(step.description)}}</small>
+                    </v-stepper-step>
+                    <v-stepper-content :key="$uniqueObjectId(step) + 'c'" :step="index + 1">
+                        <json-form-group
+                                :items="step.form"
+                                :model="dataValue[index]"
+                                :name="step.name"
+                                :parent-validations-container="step.validator"
+                                :path="step.name ? [step.name] : []"
+                                :validations-container="step.validator"
+                                :validator="$v.dataValue[index]"
+                                :wrapper="me"
+                                ref="formGroup"
+                                v-if="step.parsed"
+                        ></json-form-group>
+                        <v-btn :disabled="processing || isButtonDisabled(step, index)"
+                               :loading="processing || isButtonLoading(step, index)"
+                               @click.stop="nextStep(step, index)"
+                               color="primary">
+                            {{$intl.translate(getButtonText(step, index))}}
+                        </v-btn>
+                    </v-stepper-content>
+                </template>
+            </template>
+            <template v-else>
+                <v-stepper-header>
+                    <template v-for="(step, index) in dataSteps">
+                        <v-stepper-step :complete="step.complete"
+                                        :editable="step.editable && step.touched || stepHasError(step, index, true)"
+                                        :key="$uniqueObjectId(step) + 'h'"
+                                        :rules="stepHasError(step, index) ? invalidStep : undefined"
+                                        :step="index + 1">
+                            {{$uniqueObjectId(step)}}
+                            {{$intl.translate(step.title)}}
+                            <small v-if="!!step.description">{{$intl.translate(step.description)}}</small>
+                        </v-stepper-step>
+                        <v-divider :key="$uniqueObjectId(step) + 'd'" v-if="index !== dataSteps.length - 1"></v-divider>
+                    </template>
+                </v-stepper-header>
+                <v-stepper-items>
+                    <template v-for="(step, index) in dataSteps">
+                        <v-stepper-content :key="$uniqueObjectId(step) + 'c'" :step="index + 1">
+                            <json-form-group
+                                    :items="step.form"
+                                    :model="dataValue[index]"
+                                    :name="step.name"
+                                    :parent-validations-container="step.validator"
+                                    :path="step.name ? [step.name] : []"
+                                    :validations-container="step.validator"
+                                    :validator="$v.dataValue[index]"
+                                    :wrapper="me"
+                                    ref="formGroup"
+                                    v-if="step.parsed"
+                            ></json-form-group>
+                            <v-layout>
+                                <v-spacer></v-spacer>
+                                <v-btn :disabled="processing || isButtonDisabled(step, index)"
+                                       :loading="processing || isButtonLoading(step, index)"
+                                       @click.stop="nextStep(step, index)"
+                                       color="primary">
+                                    {{$intl.translate(getButtonText(step, index))}}
+                                </v-btn>
+                            </v-layout>
+                        </v-stepper-content>
+                    </template>
+                </v-stepper-items>
             </template>
         </v-stepper>
+        <input type="submit" v-show="false">
         <!-- Dialogs -->
-        <dialog-forms ref="dialogs" :options="options" :translate="translate" :parser="parser"></dialog-forms>
+        <dialog-forms :options="options" :parser="parser" ref="formOverlay"></dialog-forms>
     </v-form>
 </template>
 <style>
-    /* Fixed invalid stepper style */
-    .stepper__content .list__tile__action .btn--icon {
-        margin-top: 8px;
-    }
-
-    .stepper__content .json-form-group .btn {
-        margin-top: 8px;
+    .v-stepper__content > .v-stepper__wrapper > .json-form-group {
+        margin-left: 1px;
     }
 </style>
 <script>
-    import {JsonFormGroup, ValidationMixin, JsonFormOptionsMixin, JsonFormParserMixin} from "@aquarelle/json-form";
+    import {JsonMultiStepFormMixin} from "@aquarelle/json-form";
     import DialogForms from "./DialogForms";
 
     const invalidStep = [() => false];
 
     export default {
         name: 'stepper-form',
-        components: {DialogForms, JsonFormGroup},
-        mixins: [ValidationMixin, JsonFormParserMixin, JsonFormOptionsMixin],
+        components: {DialogForms},
+        mixins: [JsonMultiStepFormMixin],
         props: {
-            steps: {
-                type: Array,
-                required: true
-            },
             nextButtonText: {
                 type: [String, Object],
                 default: 'Next'
@@ -69,322 +107,79 @@
                 type: [String, Object],
                 default: 'Finish'
             },
-            value: {
-                type: [Object, Array],
-                default: () => ({})
-            },
             fillHeight: {
                 type: Boolean,
                 default: true
             },
-            processing: {
+            vertical: {
                 type: Boolean,
-                default: false
+                default: true
             }
         },
-        data()
-        {
+        data() {
             return {
                 me: this,
                 invalidStep: invalidStep,
-                currentStep: 0,
-                loadingStep: 0,
-                map: new WeakMap(),
-                mapTracker: 0
+                showStepper: true
             }
         },
-        validations()
-        {
-            const dataSteps = this.dataSteps;
-            // Use mapTracker to make map reactive
-            if (!this.steps || !dataSteps.length || this.mapTracker <= 0) {
-                return true;
+
+        computed: {
+            heightStyle() {
+                return this.fillHeight ? {'min-height': '100%'} : undefined;
             }
-            let v = {};
-            dataSteps.map((step, index) => {
-                if (!step.parsed || !step.validator) {
-                    v[index] = {};
-                }
-                else {
-                    if (step.name) {
-                        v[index] = {[step.name]: step.validator};
-                    }
-                    else {
-                        v[index] = step.validator;
-                    }
-                }
-            });
-            return {
-                dataValue: v
-            };
         },
         watch: {
-            steps()
-            {
-                this.setupStepper();
-            }
-        },
-        mounted()
-        {
-            this.setupStepper();
-        },
-        computed: {
-            heightStyle()
-            {
-                return this.fillHeight ? {'min-height': '100%'} : undefined;
-            },
-            dataSteps()
-            {
-                if (!this.steps) {
-                    return [];
-                }
-                return this.steps.map(step => {
-                    if (!this.map.has(step)) {
-                        const data = {
-                            parsed: false,
-                            editable: Boolean(step.editable),
-                            touched: false,
-                            complete: false,
-
-                            title: step.title || null,
-                            description: step.description || null,
-                            nextButton: step.nextButton || null,
-
-                            name: step.name || null,
-                            form: null,
-                            validator: null,
-                            items: step.items || [],
-                            callback: step.callback || null,
-
-                            model: step.model || null
-                        };
-
-                        this.map.set(step, data);
+            vertical() {
+                const copy = {};
+                const model = this.$clone(this.model);
+                this.dataSteps.map((step, index) => {
+                    if (!step.parsed || step.model == null) {
+                        return;
                     }
-                    return this.map.get(step);
+                    copy[index] = this.$clone(step.model);
                 });
-            },
-            dataValue()
-            {
-                // Use mapTracker to make map reactive
-                if (this.mapTracker <= 0) {
-                    return [];
-                }
-                const value = this.value;
-                return this.dataSteps.map(step => {
-                    if (!step.parsed) {
-                        return null;
+
+                const step = this.currentStep;
+
+                this.showStepper = false;
+
+                this.$nextTick(() => {
+                    for (const prop in model) {
+                        if (model.hasOwnProperty(prop)) {
+                            this.$set(this.model, prop, model[prop]);
+                        }
                     }
-                    return step.model !== null ? step.model : value;
+
+                    Object.keys(copy).map(index => {
+                        this.dataSteps[parseInt(index, 10)].model = copy[index];
+                    });
+
+                    this.$set(this, 'currentStep', step);
+
+                    this.showStepper = true;
                 });
             }
         },
         methods: {
-            setupStepper()
-            {
-                const ds = this.dataSteps;
-                if (ds.length === 0 || ds[0].parsed) {
-                    return;
-                }
-
-                const p = () => {
-                    this.parseStep(ds[0], () => {
-                        this.$set(ds[0], 'touched', true);
-                        this.$nextTick(() => this.currentStep = 1);
-                    });
-                };
-
-                if (this.currentStep <= 0) {
-                    p();
-                    return;
-                }
-
-                this.currentStep = 0;
-                this.$nextTick(p);
-            },
-            pushUnparsedForm(options, model)
-            {
-                this.$refs.dialogs.pushUnparsedForm(options, model);
-            },
-            pushForm(options)
-            {
-                this.$refs.dialogs.pushForm(options);
-            },
-            popForm()
-            {
-                this.$refs.dialogs.popForm();
-                if (this.$v) {
-                    this.$v.$touch();
-                }
-            },
-            getButtonText(step, index)
-            {
+            getButtonText(step, index) {
                 if (step.nextButton) {
                     return step.nextButton;
                 }
                 return index + 1 === this.dataSteps.length ? this.finishButtonText : this.nextButtonText;
             },
-            gotoNextStep(currentStep)
-            {
-                this.$set(currentStep, 'complete', true);
-
-                const length = this.dataSteps.length;
-
-                // check if is last step
-                if (this.currentStep === length) {
-                    this.submitSteps();
-                    return;
-                }
-
-                // check if the next step is editable
-                let index = this.currentStep;
-                let next = null;
-                while (index < length) {
-                    const dataStep = this.dataSteps[index];
-                    if (!dataStep.editable && dataStep.touched && !this.stepHasError(this.dataSteps[index], index, true)) {
-                        // Do not enter a locked step
-                        index++;
-                        continue;
-                    }
-                    next = dataStep;
-                    break;
-                }
-
-                if (next === null) {
-                    // goto last step
-                    index = this.dataSteps.length - 1;
-                    next = this.dataSteps[index];
-                }
-
-                if (!next.parsed) {
-                    this.parseStep(next, () => {
-                        this.loadingStep = 0;
-                        this.currentStep = index + 1;
-                        next.touched = true;
-                    });
-                    return;
-                }
-                this.loadingStep = 0;
-                this.currentStep = index + 1;
-                next.touched = true;
-            },
-            parseStep(step, callback)
-            {
-                if (typeof step.items === 'function') {
-                    let result = step.items(this.value, step, this);
-                    if (typeof result.then === 'function') {
-                        result.then((items, validator = null) => {
-                            this.setupStepForm(step, items, validator);
-                            this.markAsParsed(step);
-                            callback && callback(step);
-                        });
-                        return;
-                    }
-                    this.setupStepForm(step, result, null);
-                }
-                else {
-                    this.setupStepForm(step, step.items, null);
-                }
-                this.markAsParsed(step);
-                callback && callback(step);
-            },
-            markAsParsed(step, parsed = true)
-            {
-                this.$set(step, 'parsed', parsed);
-                // Makes map reactive
-                this.mapTracker++;
-            },
-            setupStepForm(step, items, validator = null)
-            {
-                if (validator === null) {
-                    validator = {};
-                    items = this.parser.parseControlList(items, validator);
-                }
-
-                this.$set(step, 'validator', validator);
-                this.$set(step, 'form', items);
-            },
-            nextStep(currentStep, index)
-            {
-                const v = this.$v.dataValue;
-                if (v && v[index]) {
-                    v[index].$touch();
-                    if (v[index].$pending || v[index].$invalid) {
-                        return;
-                    }
-                }
-                this.loadingStep = this.currentStep;
-                if (typeof currentStep.callback === 'function') {
-                    let result = currentStep.callback(this.value, currentStep, this);
-                    if (result === true) {
-                        this.gotoNextStep(currentStep);
-                    }
-                    else {
-                        if (result && typeof result.then === 'function') {
-                            // Promises
-                            result.then(() => {
-                                this.gotoNextStep(currentStep);
-                            });
-                        }
-                        else {
-                            this.loadingStep = 0;
-                        }
-                    }
-                }
-                else {
-                    this.gotoNextStep(currentStep);
-                }
-            },
-            stepHasError(step, index, dirty = false)
-            {
-                if (!step.parsed || !this.$v.dataValue) {
-                    return false;
-                }
-                const v = this.$v.dataValue;
-                if (!v[index] || (!dirty && !v[index].$dirty)) {
-                    return false;
-                }
-
-                return v[index].$invalid;
-            },
-            isButtonDisabled(step, index)
-            {
+            isButtonDisabled(step, index) {
                 if (this.isButtonLoading(step, index) || this.stepHasError(step, index)) {
                     return true;
                 }
 
                 return false;
             },
-            isButtonLoading(step, index)
-            {
+            isButtonLoading(step, index) {
                 if (this.loadingStep === index + 1) {
                     return true;
                 }
                 return step.parsed && this.$v.dataValue[index].$pending;
-            },
-            submitSteps()
-            {
-                this.$v.$touch();
-                if (this.$v.$invalid || this.$v.$pending) {
-                    return;
-                }
-                if (!this.dataSteps.every(step => step.parsed && step.complete)) {
-                    return;
-                }
-                this.$emit('submit', this);
-                this.$emit('input', this.value);
-                this.loadingStep = 0;
-            },
-            onRouteLeave(func)
-            {
-                if (this.processing || !func(this.$refs.dialogs)) {
-                    return false;
-                }
-                const fg = this.$refs.formGroup;
-                if (!fg || fg.length === 0 || !fg[this.currentStep - 1]) {
-                    return true;
-                }
-                return func(fg[this.currentStep - 1]);
             }
         }
     };

@@ -7,15 +7,15 @@
             @blur="validate()"
             :error-messages="allErrors"
 
-            :label="wrapper.translate(display.title)"
+            :label="$intl.translate(display.title)"
 
-            :suffix="wrapper.translate(display.suffix)"
-            :prefix="wrapper.translate(display.prefix)"
+            :suffix="$intl.translate(display.suffix)"
+            :prefix="$intl.translate(display.prefix)"
             :prepend-icon="$controlIcon(display.prependIcon)"
             :append-icon="$controlIcon(display.appendIcon)"
 
-            :hint="wrapper.translate(display.hint)"
-            :placeholder="wrapper.translate(display.placeholder)"
+            :hint="$intl.translate(display.hint)"
+            :placeholder="$intl.translate(display.placeholder)"
             :mask="display.mask"
 
             :clearable="display.clearable"

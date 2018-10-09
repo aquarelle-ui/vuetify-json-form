@@ -10,7 +10,7 @@ export default class extends StringControlParser
         if (!definition.validation.pattern) {
             definition.validation.pattern = {
                 value: '^(|([a-zA-Z0-9\\-\\_]+\\:[a-zA-Z0-9\\-\\_]+))$',
-                key: 'ui:validation.icon',
+                key: 'validation.icon',
                 text: 'Invalid icon format'
             };
         }

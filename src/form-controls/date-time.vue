@@ -13,9 +13,9 @@
                     @input="($event === null) && handleClear()"
                     :error-messages="allErrors"
 
-                    :label="wrapper.translate(display.title)"
-                    :suffix="wrapper.translate(display.suffix)"
-                    :prefix="wrapper.translate(display.prefix)"
+                    :label="$intl.translate(display.title)"
+                    :suffix="$intl.translate(display.suffix)"
+                    :prefix="$intl.translate(display.prefix)"
                     prepend-inner-icon="event"
                     append-icon="access_time"
 

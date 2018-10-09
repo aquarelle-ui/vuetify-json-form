@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="ro-RO">
+<head>
+    <meta charset="utf-8">
+
+    <title>Test form</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"
+          integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
+    <link type="text/css" rel="stylesheet" href="/dist/lib.umd.css"/>
+
+</head>
+<body>
+
+<div class="container" id="app1">
+
+    <v-app>
+        <v-content>
+            <v-container>
+
+                <button @click="$intl.language = 'ro'">Ro</button>
+                <button @click="$intl.language = 'en'">En</button>
+
+                <p>{{$intl.translate('validation.required')}}</p>
+
+
+                <!--
+                <block-form
+                        submit-button-text="Trimite"
+
+                        :items="steps[2].items"
+                        v-model="model"
+
+                        submit-button-icon="fab:github"
+                        submit-button-size="lg"
+                >
+
+
+                </block-form>
+                -->
+
+                <v-switch label="Vertical" v-model="vertical"></v-switch>
+
+
+
+                <stepper-form v-model="model" :items="steps" :vertical="vertical" next-button-icon="fas:chevron-right" finish-button-icon="fas:check">
+
+                </stepper-form>
+
+                <pre>{{model}}</pre>
+
+            </v-container>
+        </v-content>
+    </v-app>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+<script src="/node_modules/@aquarelle/intl/dist/lib.umd.js"></script>
+<script src="/node_modules/@aquarelle/json-form/dist/lib.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify/dist/vuetify.js"></script>
+
+<script src="/node_modules/sortablejs/Sortable.min.js"></script>
+<script src="/node_modules/vuedraggable/dist/vuedraggable.js"></script>
+
+<script src="https://unpkg.com/vue-i18n/dist/vue-i18n.js"></script>
+
+<script src="/dist/lib.umd.js"></script>
+
+<script>
+
+    Vue.use(Aquarelle.VuetifyJsonForm);
+
+    const app1 = new Vue({
+        el: '#app1',
+        intl: {
+            lang: 'en',
+            messages: {
+                en: {
+                    ui: {
+                        validation: {
+                            required: 'Mandatory'
+                        }
+                    }
+                },
+                ro: {
+                    ui: {
+                        validation: {
+                            required: 'Obligatoriu'
+                        }
+                    }
+                }
+            }
+        },
+        components: {
+            'block-form': Aquarelle.VuetifyJsonForm.BlockForm,
+            'stepper-form': Aquarelle.VuetifyJsonForm.StepperForm,
+        },
+        data: {
+            vertical: true,
+            steps: [
+                {
+                    title: 'Step 1',
+                    description: 'Do something with step 1',
+                    editable: true,
+                    items: [
+                        {
+                            control: 'text',
+                            name: 'txt',
+                            title: 'Text',
+                            validation: {
+                                required: true
+                            },
+                            display: {
+                                prependIcon: 'fab:github'
+                            }
+                        }
+                    ]
+                },
+                {
+                    title: 'Step 2',
+                    description: 'Step is now 2',
+                    icon: 'fab:github',
+                    editable: true,
+                    items: [
+                        {
+                            control: 'number',
+                            name: 'age',
+                            title: 'Age',
+                            validation: {
+                                required: true,
+                                minimum: 18
+                            }
+                        }
+                    ]
+                },
+                {
+                    title: 'Step 3',
+                    items: [
+                        {
+                            control: 'switch-group',
+                            name: 'activatu',
+                            display: {
+                                title: 'Avansat',
+                            },
+                            validation: {
+                                required: true
+                            },
+                            items: [
+                                {
+                                    control: 'number',
+                                    name: 'testnumber',
+                                    title: 'Number',
+                                    validation: {
+                                        required: true
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            control: 'group-repeat-variants',
+                            name: 'rep-v',
+                            display: {
+                                title: 'Repeat variants items',
+                                itemTitle: '{name}',
+                                hint: 'Drag & drop variants'
+                            },
+                            validation: {
+                                minItems: 1
+                            },
+                            config: {
+                                variantField: 'vname',
+                                regions: [
+                                    {
+                                        title: 'R1',
+                                        name: 'r1'
+                                    },
+                                    {
+                                        title: 'R2',
+                                        name: 'r2',
+                                        validation: {
+                                            minItems: 2
+                                        }
+                                    }
+                                ]
+                            },
+                            items: [
+                                {
+                                    title: 'V1',
+                                    name: 'v1',
+                                    items: [
+                                        {
+                                            control: 'text',
+                                            name: 'name',
+                                            title: 'Name'
+                                        },
+                                        {
+                                            control: 'repeat',
+                                            name: 'rep2',
+                                            display: {
+                                                title: 'Repeat items 2',
+                                                itemTitle: '{title}',
+                                                hint: 'Drag & drop 2'
+                                            },
+                                            default: [{title: 'aaa'}],
+                                            items: [
+                                                {
+                                                    control: 'text',
+                                                    name: 'title',
+                                                    title: 'Title',
+                                                    validation: {
+                                                        required: true
+                                                    }
+                                                },
+                                                {
+                                                    control: 'group-repeat',
+                                                    name: 'rep',
+                                                    display: {
+                                                        title: 'Repeat items',
+                                                        itemTitle: '{name} - {age}',
+                                                        hint: 'Drag & drop'
+                                                    },
+
+                                                    validation: {
+
+                                                    },
+                                                    config: {
+                                                        regions: [
+                                                            {
+                                                                title: 'R1',
+                                                                name: 'r1',
+                                                                validation: {
+                                                                    minItems: 1
+                                                                }
+                                                            },
+                                                            {
+                                                                title: 'R2',
+                                                                name: 'r2',
+                                                                validation: {
+                                                                    maxItems: 2
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    items: [
+                                                        {
+                                                            control: 'text',
+                                                            name: 'name',
+                                                            title: 'Name'
+                                                        },
+                                                        {
+                                                            control: 'number',
+                                                            name: 'age',
+                                                            title: 'Age',
+                                                            validation: {
+                                                                required: true,
+                                                                minimum: 5
+                                                            }
+                                                        },
+                                                        {
+                                                            control: 'repeat',
+                                                            name: 'rep2',
+                                                            display: {
+                                                                title: 'Repeat items 2',
+                                                                itemTitle: '{title}',
+                                                                hint: 'Drag & drop 2'
+                                                            },
+                                                            default: [{title: 'aaa'}],
+                                                            items: [
+                                                                {
+                                                                    control: 'text',
+                                                                    name: 'title',
+                                                                    title: 'Title',
+                                                                    validation: {
+                                                                        required: true
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    title: 'V2',
+                                    name: 'v2',
+                                    itemTitle: 'Age: {age}',
+                                    items: [
+                                        {
+                                            control: 'number',
+                                            name: 'age',
+                                            title: 'Age',
+                                            validation: {
+                                                required: true,
+                                                minimum: 5
+                                            }
+                                        },
+                                    ]
+                                },
+                            ]
+                        },
+                        {
+                            control: 'group-repeat',
+                            name: 'rep',
+                            display: {
+                                title: 'Repeat items',
+                                itemTitle: '{name} - {age}',
+                                hint: 'Drag & drop'
+                            },
+
+                            validation: {
+
+                            },
+                            config: {
+                                regions: [
+                                    {
+                                        title: 'R1',
+                                        name: 'r1',
+                                        validation: {
+                                            minItems: 1
+                                        }
+                                    },
+                                    {
+                                        title: 'R2',
+                                        name: 'r2',
+                                        validation: {
+                                            maxItems: 2
+                                        }
+                                    }
+                                ]
+                            },
+                            items: [
+                                {
+                                    control: 'text',
+                                    name: 'name',
+                                    title: 'Name'
+                                },
+                                {
+                                    control: 'number',
+                                    name: 'age',
+                                    title: 'Age',
+                                    validation: {
+                                        required: true,
+                                        minimum: 5
+                                    }
+                                },
+                                {
+                                    control: 'repeat',
+                                    name: 'rep2',
+                                    display: {
+                                        title: 'Repeat items 2',
+                                        itemTitle: '{title}',
+                                        hint: 'Drag & drop 2'
+                                    },
+                                    default: [{title: 'aaa'}],
+                                    items: [
+                                        {
+                                            control: 'text',
+                                            name: 'title',
+                                            title: 'Title',
+                                            validation: {
+                                                required: true
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            control: 'chips',
+                            name: 'combo',
+                            default: ["asd", "test"],
+                            display: {
+                                title: 'Chips',
+                                placeholder: 'Write and press Enter...'
+                                //clearable: true,
+                                //horizontal: true,
+                                //size: 'lg'
+                            },
+                            validation: {
+                                required: true,
+                                minItems: 2,
+                                maxItems: 50,
+                            },
+                            items: ["Example", "Example 2", "Abc", "Acd"]
+                        },
+
+                        {
+                            control: 'variant',
+                            name: 'variant',
+                            display: {
+                                title: 'Alege varianta buna',
+                                horizontal: true,
+                                clearable: true,
+                                placeholder: '[-]'
+                            },
+                            config: {
+                                variantField: 'type',
+                            },
+                            validation: {
+                                //required: true
+                            },
+                            items: [
+                                {
+                                    title: 'V1',
+                                    name: 'v1',
+                                    items: [
+                                        {
+                                            control: 'text',
+                                            name: 'x',
+                                            title: 'Field1',
+                                            display: {
+                                                clearable: true,
+                                                horizontal: true
+                                            },
+                                            validation: {
+                                                required: true
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    title: 'V2',
+                                    name: 'v2',
+                                    items: [
+                                        {
+                                            control: 'number',
+                                            name: 'y',
+                                            title: 'Field2',
+                                            display: {
+                                                horizontal: true
+                                            },
+                                            validation: {
+                                                required: true
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            control: 'tabs',
+                            name: 'grs',
+                            display: {
+
+                            },
+                            items: [
+                                {
+                                    title: 'Tab 1',
+                                    icon: 'fas fa-edit',
+                                    name: 't1',
+                                    items: [
+                                        {
+                                            control: 'date-time',
+                                            name: 'ora',
+                                            display: {
+                                                title: 'Hour',
+                                                horizontal: true,
+                                                clearable: true,
+                                                //appendIcon: 'fas fa-edit'
+                                            },
+                                            validation: {
+                                                required: true,
+                                                minDateTime: '2018-01-01T00:10',
+                                                maxDateTime: '2018-01-02T00:20',
+                                            }
+                                        },
+                                    ]
+                                },
+                                {
+                                    title: 'Tab 2',
+                                    name: 't2',
+                                    items: [
+                                        {
+                                            control: 'checkbox',
+                                            name: 'ok',
+                                            title: 'Accept',
+                                            display: {
+                                                horizontal: true,
+                                                hint: 'xxx'
+                                            },
+                                            validation: {
+                                                required: true
+                                            }
+                                        },
+                                    ]
+                                }
+                            ]
+                        },
+                        {
+                            control: 'radio',
+                            name: 'opt',
+                            display: {
+                                title: 'Alege',
+                                hint: 'Alege ce iti place',
+                                inline: true,
+                                horizontal: true,
+                                //size: 'lg',
+
+                                buttons: 'outline-primary'
+                            },
+                            items: [
+                                {title: 'Putin', value: 'a'},
+                                {title: 'Moderat', value: 2},
+                                {title: 'Mult', value: 222},
+                            ],
+                            config: {
+                                //multiple: true
+                            },
+                            validation: {
+                                required: true
+                            }
+                        },
+                        {
+                            control: 'async-group',
+                            //title: 'Campu',
+                            config: {
+                                loader() {
+                                    return new Promise(resolve => {
+                                        setTimeout(() => {
+                                            resolve([
+                                                {
+                                                    control: 'color',
+                                                    name: 'x',
+                                                    title: 'Dinamic',
+                                                    display: {
+                                                        clearable: true,
+                                                        horizontal: true
+                                                    },
+                                                    validation: {
+                                                        required: true,
+                                                        color: {
+                                                            allow: ['transparent']
+                                                        }
+                                                    }
+                                                }
+                                            ])
+                                        }, 1000);
+                                    });
+                                }
+                            }
+                        },
+                        {
+                            control: 'row',
+                            name: 'gr',
+                            display: {
+                                class: ['bg-dark', 'text-light', 'pt-3']
+                            },
+                            items: [
+                                {
+                                    control: 'col',
+                                    display: {
+                                        size: {
+                                            xs: 12,
+                                            md: 6
+                                        },
+                                        align: 'center',
+                                        class: ['px-1']
+                                    },
+                                    items: [
+                                        {
+                                            control: 'email',
+                                            name: 'email',
+                                            display: {
+                                                title: 'E-mail address',
+                                                horizontal: true,
+                                                placeholder: 'example2gmail.com',
+                                                appendIcon: 'fa fa-envelope',
+                                            },
+                                            validation: {
+                                                required: true
+                                            }
+                                        },
+                                    ]
+                                },
+                                {
+                                    control: 'col',
+                                    display: {
+                                        size: {
+                                            xs: 12,
+                                            md: 6,
+                                        },
+                                        class: ['px-1']
+                                    },
+                                    items: [
+                                        {
+                                            control: 'slider',
+                                            name: 'age',
+                                            default: 20,
+                                            display: {
+                                                title: 'Age',
+                                                horizontal: true
+                                            },
+                                            validation: {
+                                                required: true,
+                                                minimum: 18,
+                                                maximum: 99,
+                                                multipleOf: 0.2
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        },
+                    ],
+                }
+            ],
+            itemsInline: [
+                {
+                    control: 'row',
+                    items: [
+                        {
+                            control: 'col',
+                            items: [
+                                {
+                                    control: 'email',
+                                    name: 'mail',
+                                    display: {
+                                        placeholder: 'E-mail'
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            control: 'col',
+                            items: [
+                                {
+                                    control: 'password',
+                                    name: 'pass',
+                                    display: {
+                                        placeholder: 'Password'
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+            ],
+
+            model: {}
+        }
+    });
+
+</script>
+
+</body>

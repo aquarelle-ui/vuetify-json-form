@@ -8,7 +8,7 @@
         >
             <v-icon v-if="tabHasError(item)" color="red">error</v-icon>
             <v-icon v-else-if="item.icon">{{item.icon}}</v-icon>
-            {{wrapper.translate(item.title)}}
+            {{$intl.translate(item.title)}}
         </v-tab>
         <v-tabs-items class="mt-1">
             <v-tab-item

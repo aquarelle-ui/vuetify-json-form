@@ -6,17 +6,17 @@
         </v-subheader>
         <v-list v-for="region in config.regions" :key="region.name" subheader dense>
             <v-subheader>
-                <control-label :text="wrapper.translate(region.title)" :has-error="hasErrors(region.name)"
+                <control-label :text="$intl.translate(region.title)" :has-error="hasErrors(region.name)"
                                :required="region.config.required"></control-label>
                 <v-spacer></v-spacer>
                 <v-menu offset-y :disabled="!canAddItem(region)" max-height="426">
                     <v-btn :disabled="!canAddItem(region)" small flat ripple slot="activator">
                         <v-icon>add</v-icon>
-                        {{wrapper.translate(display.addButton || {key: 'ui:common.add', text: 'Add'})}}
+                        {{$intl.translate(display.addButton || {key: 'common.form.add', text: 'Add'})}}
                     </v-btn>
                     <v-list>
                         <v-list-tile v-for="variant in items" :key="variant.name" @click="addItem(region, variant)">
-                            <v-list-tile-title>{{wrapper.translate(variantTitle(variant))}}</v-list-tile-title>
+                            <v-list-tile-title>{{$intl.translate(variantTitle(variant))}}</v-list-tile-title>
                         </v-list-tile>
                     </v-list>
                 </v-menu>
@@ -38,7 +38,7 @@
                     <v-list-tile-content>
                         <v-list-tile-title>{{itemTitle(val)}}</v-list-tile-title>
                         <v-list-tile-sub-title>
-                            {{wrapper.translate(variantTitle(getVariantByName(val[config.variantField])))}}
+                            {{$intl.translate(variantTitle(getVariantByName(val[config.variantField])))}}
                         </v-list-tile-sub-title>
                     </v-list-tile-content>
 
@@ -52,7 +52,7 @@
 
             <v-list-tile class="sortable-empty-list-item" v-show="modelProxy[region.name].length === 0">
                 <v-list-tile-content>
-                    {{wrapper.translate(display.placeholder || {key: 'ui:common.empty_list', text: 'No items'})}}
+                    {{$intl.translate(display.placeholder || {key: 'common.form.empty_list', text: 'No items'})}}
                 </v-list-tile-content>
             </v-list-tile>
 
@@ -114,7 +114,7 @@
                 if (!this.display.title) {
                     return null;
                 }
-                return this.wrapper.translate(this.display.title) || null;
+                return this.$intl.translate(this.display.title) || null;
             }
         },
         methods: {
@@ -138,7 +138,7 @@
                 if (typeof title !== 'object') {
                     title = {key: null, text: title};
                 }
-                return this.wrapper.translate(title, val);
+                return this.$intl.translate(title, val);
             },
             canAddItem(region)
             {
@@ -175,8 +175,8 @@
             addItem(region, variant)
             {
                 this.wrapper.pushUnparsedForm({
-                    title: this.display.addTitle || {key: 'ui:common.addItemTitle', text: 'Create new item'},
-                    button: this.display.addSubmitButtom || {key: 'ui:common.addSubmitButton', text: 'Add'},
+                    title: this.display.addTitle || {key: 'common.form.addItemTitle', text: 'Create new item'},
+                    button: this.display.addSubmitButtom || {key: 'common.form.addSubmitButton', text: 'Add'},
                     model: {
                         [this.config.variantField]: variant.name
                     },
@@ -203,8 +203,8 @@
                 let index = this.modelProxy[region.name].indexOf(val);
                 const variant = this.getVariantByName(val[this.config.variantField]);
                 this.wrapper.pushUnparsedForm({
-                    title: this.display.editTitle || {key: 'ui:common.editItemTitle', text: 'Edit item'},
-                    button: this.display.editSubmitButtom || {key: 'ui:common.editSubmitButton', text: 'Save changes'},
+                    title: this.display.editTitle || {key: 'common.form.editItemTitle', text: 'Edit item'},
+                    button: this.display.editSubmitButtom || {key: 'common.form.editSubmitButton', text: 'Save changes'},
                     model: this.$clone(val),
                     items: variant.items,
                     actions: {

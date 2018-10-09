@@ -7,7 +7,7 @@
             </div>
         </v-card-title>
         <v-card-text>
-            <v-form @submit.prevent="">
+            <v-form @submit.prevent="doSubmit()">
                 <json-form-group
                         v-if="model !== null && items !== null"
                         :items="parsed.items"
@@ -19,6 +19,7 @@
                         :path="path"
                         ref="formGroup"
                 ></json-form-group>
+                <input v-show="false" type="submit">
             </v-form>
         </v-card-text>
         <v-card-actions>
@@ -33,16 +34,16 @@
             </slot>
         </v-card-actions>
         <!-- Dialogs -->
-        <dialog-forms ref="formOverlay" :options="options" :translate="translate" :parser="parser"></dialog-forms>
+        <dialog-forms ref="formOverlay" :options="options" :parser="parser"></dialog-forms>
     </v-card>
 </template>
 <script>
-    import {JsonFormGroup, JsonFormMixin} from "@aquarelle/json-form";
+    import {JsonFormMixin} from "@aquarelle/json-form";
     import DialogForms from "./DialogForms.vue";
 
     export default {
         name: 'block-form',
-        components: {JsonFormGroup, DialogForms},
+        components: {DialogForms},
         mixins: [JsonFormMixin],
         props: {
             title: {
@@ -79,11 +80,7 @@
                         this.$v.$reset();
                     },
                     submit: () => {
-                        const v = this.$v;
-                        v.$touch();
-                        if (!v.$invalid && !v.$pending) {
-                            this.$emit('submit', this.model);
-                        }
+                        return this.doSubmit();
                     },
                     invalid: () => {
                         return this.$v.$invalid;

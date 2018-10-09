@@ -15,14 +15,14 @@
                     <v-btn icon @click.native="onCancel(dialog)" dark>
                         <v-icon>close</v-icon>
                     </v-btn>
-                    <v-toolbar-title>{{translate(dialog.title, dialog.model)}}</v-toolbar-title>
+                    <v-toolbar-title>{{$intl.translate(dialog.title, dialog.model)}}</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark flat
                                :disabled="$v.dialogs[index].$pending || ($v.dialogs[index].$dirty && $v.dialogs[index].$invalid)"
                                :loading="$v.dialogs[index].$pending"
                                @click.native="onSubmit(dialog)">
-                            {{translate(dialog.button, dialog.model)}}
+                            {{$intl.translate(dialog.button, dialog.model)}}
                         </v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
@@ -39,6 +39,7 @@
                                 :parent-validations-container="dialog.validator"
                                 ref="formGroup"
                         ></json-form-group>
+                        <input v-show="false" type="submit">
                     </v-form>
                 </v-card-text>
             </v-card>
@@ -46,12 +47,12 @@
     </div>
 </template>
 <script>
-    import {JsonFormGroup, ValidationMixin} from "@aquarelle/json-form";
+    import {JsonFormGroup, ValidationMixin, JsonFormParserMixin} from "@aquarelle/json-form";
 
     export default {
         name: 'dialog-forms',
         components: {JsonFormGroup},
-        mixins: [ValidationMixin],
+        mixins: [ValidationMixin, JsonFormParserMixin],
         props: {
             pushDelay: {
                 type: Number,
@@ -65,8 +66,7 @@
                 type: Array,
                 default: () => (['blue', 'indigo', 'deep-purple', 'purple'])
             },
-            translate: {type: Function, required: true},
-            parser: {type: Object, required: true},
+            path: {type: Array, default: () => []},
             options: {type: Object, default: () => ({})},
         },
         data()

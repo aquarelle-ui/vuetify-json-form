@@ -5,12 +5,12 @@
             @blur="validate()"
             :error-messages="allErrors"
 
-            :label="wrapper.translate(display.title)"
+            :label="$intl.translate(display.title)"
             :color="display.color || undefined"
 
             :prepend-icon="$controlIcon(display.prependIcon)"
             :append-icon="$controlIcon(display.appendIcon)"
-            :hint="wrapper.translate(display.hint)"
+            :hint="$intl.translate(display.hint)"
             persistent-hint
             :ticks="!!display.ticks"
 

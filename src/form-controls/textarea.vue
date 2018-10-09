@@ -5,13 +5,13 @@
             @blur="validate()"
             :error-messages="allErrors"
 
-            :label="wrapper.translate(display.title)"
-            :hint="wrapper.translate(display.hint)"
-            :placeholder="wrapper.translate(display.placeholder)"
+            :label="$intl.translate(display.title)"
+            :hint="$intl.translate(display.hint)"
+            :placeholder="$intl.translate(display.placeholder)"
             :rows="display.rows"
 
-            :suffix="wrapper.translate(display.suffix)"
-            :prefix="wrapper.translate(display.prefix)"
+            :suffix="$intl.translate(display.suffix)"
+            :prefix="$intl.translate(display.prefix)"
             :prepend-icon="$controlIcon(display.prependIcon)"
             :append-icon="$controlIcon(display.appendIcon)"
 

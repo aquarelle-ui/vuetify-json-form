@@ -4,7 +4,7 @@
             :column="!display.inline"
             :row="!!display.inline"
 
-            :label="wrapper.translate(display.title)"
+            :label="$intl.translate(display.title)"
             :error-messages="allErrors"
             :value-comparator="$equals"
             :mandatory="!!config.required"
@@ -12,7 +12,7 @@
         <v-radio v-for="(item, index) in items"
                  :class="{'ml-1': index === 0 && !!display.inline}"
                  :key="index"
-                 :label="wrapper.translate(item.title)"
+                 :label="$intl.translate(item.title)"
                  :value="item.value"
                  :color="item.color || display.color || undefined"
         >

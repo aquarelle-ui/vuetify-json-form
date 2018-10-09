@@ -1,6 +1,6 @@
 <template>
     <div>
-        <control-label :text="wrapper.translate(display.title)" :has-error="allErrors.length > 0"
+        <control-label :text="$intl.translate(display.title)" :has-error="allErrors.length > 0"
                        :required="config.required"></control-label>
         <v-checkbox v-for="item in items" :key="$uniqueObjectId(item)"
                     class="mt-0"
@@ -9,9 +9,9 @@
                     multiple
 
                     :color="item.color || undefined"
-                    :label="wrapper.translate(item.title)"
+                    :label="$intl.translate(item.title)"
                     :prepend-icon="$controlIcon(item.icon)"
-                    :hint="wrapper.translate(item.description)"
+                    :hint="$intl.translate(item.description)"
                     persistent-hint
         ></v-checkbox>
         <block-error :error="allErrors.length > 0 ? allErrors[0] : undefined"></block-error>

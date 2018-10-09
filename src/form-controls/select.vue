@@ -4,10 +4,10 @@
             :error-messages="allErrors"
 
             :loading="translatedItems.length === 0"
-            :label="wrapper.translate(display.title)"
-            :hint="wrapper.translate(display.hint)"
+            :label="$intl.translate(display.title)"
+            :hint="$intl.translate(display.hint)"
             persistent-hint
-            :placeholder="wrapper.translate(display.placeholder)"
+            :placeholder="$intl.translate(display.placeholder)"
             :prepend-icon="$controlIcon(display.prependIcon)"
             :append-icon="$controlIcon(display.appendIcon)"
 
@@ -104,13 +104,13 @@
                 return items.map(item => {
                     if (!item.hasOwnProperty(this.valueProp)) {
                         if (item.hasOwnProperty('header')) {
-                            return {header: this.wrapper.translate(item.header)};
+                            return {header: this.$intl.translate(item.header)};
                         }
                         return item;
                     }
                     item = {...item};
-                    item[this.titleProp] = this.wrapper.translate(item[this.titleProp]);
-                    item[this.descriptionProp] = this.wrapper.translate(item[this.descriptionProp]);
+                    item[this.titleProp] = this.$intl.translate(item[this.titleProp]);
+                    item[this.descriptionProp] = this.$intl.translate(item[this.descriptionProp]);
                     if (item[this.iconProp]) {
                         item[this.iconProp] = this.$controlIcon(item[this.iconProp]);
                     }

@@ -1,12 +1,12 @@
 <template>
     <v-list subheader dense>
         <v-subheader>
-            <control-label :text="wrapper.translate(display.title)" :has-error="allErrors.length > 0"
+            <control-label :text="$intl.translate(display.title)" :has-error="allErrors.length > 0"
                            :required="config.required"></control-label>
             <v-spacer></v-spacer>
             <v-btn :disabled="!canAddItem" small flat ripple @click.stop="addItem()">
                 <v-icon>add</v-icon>
-                {{wrapper.translate(display.addButton || {key: 'ui:common.add', text: 'Add'})}}
+                {{$intl.translate(display.addButton || {key: 'common.form.add', text: 'Add'})}}
             </v-btn>
         </v-subheader>
 
@@ -33,7 +33,7 @@
 
             <v-list-tile class="sortable-empty-list-item" v-show="!modelProxy || modelProxy.length === 0">
                 <v-list-tile-content>
-                    {{wrapper.translate(display.placeholder || {key: 'ui:common.empty_list', text: 'No items'})}}
+                    {{$intl.translate(display.placeholder || {key: 'common.form.empty_list', text: 'No items'})}}
                 </v-list-tile-content>
             </v-list-tile>
         </draggable>
@@ -100,7 +100,7 @@
                 if (typeof title !== 'object') {
                     title = {key: null, text: title};
                 }
-                return this.wrapper.translate(title, val);
+                return this.$intl.translate(title, val);
             },
             itemHasError(index, dirty = false)
             {
@@ -118,8 +118,8 @@
             addItem()
             {
                 this.wrapper.pushUnparsedForm({
-                    title: this.display.addTitle || {key: 'ui:common.addItemTitle', text: 'Create new item'},
-                    button: this.display.addSubmitButtom || {key: 'ui:common.addSubmitButton', text: 'Add'},
+                    title: this.display.addTitle || {key: 'common.form.addItemTitle', text: 'Create new item'},
+                    button: this.display.addSubmitButtom || {key: 'common.form.addSubmitButton', text: 'Add'},
                     model: {},
                     items: this.items,
                     actions: {
@@ -146,8 +146,8 @@
             {
                 let index = this.modelProxy.indexOf(val);
                 this.wrapper.pushUnparsedForm({
-                    title: this.display.editTitle || {key: 'ui:common.editItemTitle', text: 'Edit item'},
-                    button: this.display.editSubmitButtom || {key: 'ui:common.editSubmitButton', text: 'Save changes'},
+                    title: this.display.editTitle || {key: 'common.form.editItemTitle', text: 'Edit item'},
+                    button: this.display.editSubmitButtom || {key: 'common.form.editSubmitButton', text: 'Save changes'},
                     model: this.$clone(val),
                     items: this.items,
                     actions: {

@@ -1,7 +1,7 @@
 <template>
     <v-alert :value="true" :outline="outline" :color="color" :icon="icon">
-        <div class="title" v-if="display.title != null" v-text="wrapper.translate(display.title)"></div>
-        <div v-if="display.text != null" v-html="wrapper.translate(display.text)"></div>
+        <div class="title" v-if="display.title != null" v-text="$intl.translate(display.title)"></div>
+        <div v-if="display.text != null" v-html="$intl.translate(display.text)"></div>
     </v-alert>
 </template>
 <script>

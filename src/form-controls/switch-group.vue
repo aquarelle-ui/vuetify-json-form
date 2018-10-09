@@ -4,10 +4,10 @@
                 v-model="switchValue"
 
                 :color="display.color || undefined"
-                :label="wrapper.translate(display.title)"
+                :label="$intl.translate(display.title)"
                 :prepend-icon="$controlIcon(display.prependIcon)"
                 :append-icon="$controlIcon(display.appendIcon)"
-                :hint="wrapper.translate(display.hint)"
+                :hint="$intl.translate(display.hint)"
                 persistent-hint
                 :error-messages="switchErrors"
 
