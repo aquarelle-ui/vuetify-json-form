@@ -1355,14 +1355,6 @@ var script$b = {
     components: {JsonFormGroup},
     mixins: [ValidationMixin, JsonFormParserMixin],
     props: {
-        pushDelay: {
-            type: Number,
-            default: 100
-        },
-        popDelay: {
-            type: Number,
-            default: 500
-        },
         colors: {
             type: Array,
             default: () => (['blue', 'indigo', 'deep-purple', 'purple'])
@@ -1373,9 +1365,60 @@ var script$b = {
     data()
     {
         return {
+            lastOverflow: 'auto',
+            height: 0,
+            actionsEnabled: true,
             me: this,
-            dialogs: []
+            currentDialogIndex: -1,
+            currentMethodPrefix: 'slide',
+            currentMethod: 'push',
+            dialogs: [],
+            modalShow: false
         };
+    },
+    watch: {
+        currentDialogIndex(val, old)
+        {
+            this.$nextTick(() => {
+                if (old === -1) {
+                    const el = document.documentElement;
+                    this.lastOverflow = el.style.overflowY || 'auto';
+                    el.style.overflowY = 'hidden';
+                    this.setHeight();
+                } else if (val === -1) {
+                    document.documentElement.style.overflowY = this.lastOverflow;
+                }
+                this.modalShow = val >= 0;
+                if (!this.modalShow) {
+                    this.clearForms();
+                }
+            });
+        },
+        '$vuetify.breakpoint.height'()
+        {
+            this.setHeight();
+        },
+        '$vuetify.breakpoint.width'()
+        {
+            this.setHeight();
+        }
+    },
+    computed: {
+        currentDialog()
+        {
+            if (this.currentDialogIndex < 0) {
+                return null;
+            }
+            return this.dialogs[this.currentDialogIndex] || null;
+        },
+        currentTitle()
+        {
+            const dialog = this.currentDialog;
+            if (dialog == null) {
+                return undefined;
+            }
+            return this.$intl.translate(dialog.title, dialog.model);
+        }
     },
     validations()
     {
@@ -1387,12 +1430,22 @@ var script$b = {
         return {dialogs: v};
     },
     methods: {
+        setHeight()
+        {
+            const toolbar = this.$refs.toolbar;
+            const th = toolbar ? toolbar.computedHeight : 0;
+            this.height = this.$vuetify.breakpoint.height - th;
+        },
         getColor(index)
         {
             if (this.colors.length === 0) {
                 return undefined;
             }
             return this.colors[index % this.colors.length];
+        },
+        clearForms()
+        {
+            this.dialogs.splice(0, this.dialogs.length);
         },
         pushUnparsedForm(form, model)
         {
@@ -1406,8 +1459,10 @@ var script$b = {
         },
         pushForm(options)
         {
+            if (!this.actionsEnabled) {
+                return;
+            }
             const dialog = {
-                active: false,
                 form: options.items || [],
                 validator: options.validator || {},
 
@@ -1417,33 +1472,34 @@ var script$b = {
                 actions: options.actions || {},
 
                 title: options.title || null,
-                button: options.button || 'Save',
+                button: options.button || null,
+                cancelButton: options.cancelButton || null,
 
                 path: options.path || []
             };
             this.dialogs.push(dialog);
-            // open a dialog
-            setTimeout(() => {
-                this.$v.dialogs[this.dialogs.length - 1].$reset();
-                dialog.active = true;
-            }, this.pushDelay);
+            this.currentMethod = 'push';
+            this.currentDialogIndex++;
         },
         popForm()
         {
-            const len = this.dialogs.length;
-            if (len === 0) {
+            if (this.currentDialogIndex < 0) {
                 return;
             }
-            const dialog = this.dialogs[len - 1];
-            dialog.active = false;
-            // TODO: use different timeout or fix vdialog to provide events
-            setTimeout(() => {
-                this.dialogs.pop();
-            }, this.popDelay);
+            this.currentMethod = 'pop';
+            this.currentDialogIndex--;
         },
-        clearForms()
+        beforeEnter()
         {
-            this.dialogs.splice(0, this.dialogs.length);
+            this.actionsEnabled = false;
+        },
+        afterLeave()
+        {
+            const last = this.dialogs.length - 1;
+            if (last > this.currentDialogIndex) {
+                this.dialogs.pop();
+            }
+            this.actionsEnabled = true;
         },
         onCancel(dialog)
         {
@@ -1494,9 +1550,8 @@ var script$b = {
 
 /* script */
             const __vue_script__$b = script$b;
-            
 /* template */
-var __vue_render__$b = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return (_vm.dialogs.length > 0)?_c('div',_vm._l((_vm.dialogs),function(dialog,index){return _c('v-dialog',{key:_vm.$uniqueObjectId(dialog, index),attrs:{"lazy":"","fullscreen":"","transition":"dialog-bottom-transition","overlay":false,"scrollable":""},model:{value:(dialog.active),callback:function ($$v) {_vm.$set(dialog, "active", $$v);},expression:"dialog.active"}},[_c('v-card',[_c('v-toolbar',{staticStyle:{"flex":"0 0 auto"},attrs:{"color":_vm.getColor(index),"dark":""}},[_c('v-btn',{attrs:{"icon":"","dark":""},nativeOn:{"click":function($event){_vm.onCancel(dialog);}}},[_c('v-icon',[_vm._v("close")])],1),_vm._v(" "),_c('v-toolbar-title',[_vm._v(_vm._s(_vm.$intl.translate(dialog.title, dialog.model)))]),_vm._v(" "),_c('v-spacer'),_vm._v(" "),_c('v-toolbar-items',[_c('v-btn',{attrs:{"dark":"","flat":"","disabled":_vm.$v.dialogs[index].$pending || (_vm.$v.dialogs[index].$dirty && _vm.$v.dialogs[index].$invalid),"loading":_vm.$v.dialogs[index].$pending},nativeOn:{"click":function($event){_vm.onSubmit(dialog);}}},[_vm._v("\n                        "+_vm._s(_vm.$intl.translate(dialog.button, dialog.model))+"\n                    ")])],1)],1),_vm._v(" "),_c('v-card-text',[_c('v-form',{on:{"submit":function($event){$event.preventDefault();_vm.onSubmit(dialog);}}},[_c('json-form-group',{ref:"formGroup",refInFor:true,attrs:{"items":dialog.form,"model":dialog.model,"validator":_vm.$v.dialogs[index].model,"name":dialog.name,"path":dialog.path,"wrapper":_vm.me,"validations-container":dialog.validator,"parent-validations-container":dialog.validator}}),_vm._v(" "),_c('input',{directives:[{name:"show",rawName:"v-show",value:(false),expression:"false"}],attrs:{"type":"submit"}})],1)],1)],1)],1)})):_vm._e()};
+var __vue_render__$b = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('v-dialog',{attrs:{"overlay":false,"persistent":"","lazy":"","scrollable":"","fullscreen":"","transition":"dialog-bottom-transition"},model:{value:(_vm.modalShow),callback:function ($$v) {_vm.modalShow=$$v;},expression:"modalShow"}},[(_vm.currentDialog != null)?_c('v-card',[_c('v-toolbar',{ref:"toolbar",staticStyle:{"flex":"0 0 auto"},attrs:{"color":_vm.getColor(_vm.currentDialogIndex),"dark":""}},[_c('v-btn',{attrs:{"icon":"","dark":""},nativeOn:{"click":function($event){_vm.actionsEnabled && _vm.onCancel(_vm.currentDialog);}}},[_c('v-icon',[_vm._v(_vm._s(_vm.currentDialogIndex === 0 ? 'close' : 'arrow_back'))])],1),_vm._v(" "),_c('v-toolbar-title',[_vm._v(_vm._s(_vm.currentTitle))]),_vm._v(" "),_c('v-spacer'),_vm._v(" "),_c('v-toolbar-items',[_c('v-btn',{attrs:{"dark":"","flat":"","disabled":_vm.$v.dialogs[_vm.currentDialogIndex].$pending,"loading":_vm.$v.dialogs[_vm.currentDialogIndex].$pending},nativeOn:{"click":function($event){_vm.actionsEnabled && _vm.onSubmit(_vm.currentDialog);}}},[_vm._v("\n                    "+_vm._s(_vm.$intl.translate(_vm.currentDialog.button, _vm.currentDialog.model))+"\n                    "),_c('v-icon',[_vm._v("check")])],1)],1)],1),_vm._v(" "),_c('v-card-text',{staticClass:"dialog-slider-wrapper",style:({height: _vm.height + 'px'})},[_c('transition-group',{staticClass:"dialog-slider",attrs:{"name":_vm.currentMethodPrefix + '-' + _vm.currentMethod,"tag":"div"},on:{"before-enter":function($event){_vm.beforeEnter();},"after-leave":function($event){_vm.afterLeave();}}},_vm._l((_vm.dialogs),function(dialog,index){return _c('div',{directives:[{name:"show",rawName:"v-show",value:(_vm.currentDialogIndex === index),expression:"currentDialogIndex === index"}],key:_vm.$uniqueObjectId(dialog, index),staticClass:"dialog-slide"},[_c('v-form',{attrs:{"novalidate":""},on:{"submit":function($event){$event.preventDefault();_vm.actionsEnabled && _vm.onSubmit(dialog);}}},[_c('json-form-group',{ref:"formGroup",refInFor:true,attrs:{"items":dialog.form,"model":dialog.model,"validator":_vm.$v.dialogs[index].model,"name":dialog.name,"path":dialog.path,"wrapper":_vm.me,"validations-container":dialog.validator,"parent-validations-container":dialog.validator}}),_vm._v(" "),_c('input',{directives:[{name:"show",rawName:"v-show",value:(false),expression:"false"}],attrs:{"type":"submit"}})],1)],1)}))],1)],1):_vm._e()],1)};
 var __vue_staticRenderFns__$b = [];
 
   /* style */

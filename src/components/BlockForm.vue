@@ -39,7 +39,7 @@
 </template>
 <script>
     import {JsonFormMixin} from "@aquarelle/json-form";
-    import DialogForms from "./DialogForms.vue";
+    import DialogForms from "./DialogForms";
 
     export default {
         name: 'block-form',
