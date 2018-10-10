@@ -16,13 +16,18 @@
                     :label="$intl.translate(display.title)"
                     :suffix="$intl.translate(display.suffix)"
                     :prefix="$intl.translate(display.prefix)"
-                    prepend-inner-icon="event"
-                    append-icon="access_time"
+
+                    :prepend-inner-icon="$controlIcon(display.prependIcon) || 'event'"
+                    :prepend-icon="$controlIcon(display.prependOuterIcon)"
+                    :append-icon="$controlIcon(display.appendIcon) || 'access_time'"
+                    :append-outer-icon="$controlIcon(display.appendOuterIcon)"
 
                     @click:prepend-inner="showDate()"
                     @click:append="showTime()"
 
                     clearable
+
+                    :color="display.color || undefined"
 
                     :box="display.appearance === 'box'"
                     :solo="display.appearance === 'solo'"

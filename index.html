@@ -78,6 +78,111 @@
 
     Vue.use(Aquarelle.VuetifyJsonForm);
 
+    const C = {};
+
+    C.text = [
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                title: 'Input title'
+            }
+        },
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                title: 'Input title',
+                placeholder: 'This is a placeholder'
+            }
+        },
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                title: 'Input title',
+                placeholder: 'Focus me to show hint',
+                hint: 'Good'
+            }
+        },
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                placeholder: 'example.com',
+                prefix: 'prefix://',
+            }
+        },
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                placeholder: 'sub-domain',
+                suffix: '.example.com',
+            }
+        },
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                title: 'Clearable',
+                clearable: true
+            }
+        },
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                title: 'Prepend icon',
+                prependIcon: 'fab:github'
+            }
+        },
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                title: 'Append icon',
+                appendIcon: 'settings'
+            }
+        },
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                title: 'Prepend outer icon',
+                prependOuterIcon: 'fas:envelope'
+            }
+        },
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                title: 'Append outer icon',
+                appendOuterIcon: 'edit'
+            }
+        },
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                title: 'Counter and max length',
+                counter: true
+            },
+            config: {
+                maxLength: 10
+            }
+        },
+        {
+            control: 'text',
+            name: 'data',
+            display: {
+                title: 'Purple field',
+                color: 'purple'
+            }
+        },
+
+    ];
+
     const app1 = new Vue({
         el: '#app1',
         intl: {
@@ -104,6 +209,9 @@
             'stepper-form': Aquarelle.VuetifyJsonForm.StepperForm,
         },
         data: {
+            ctrl: C,
+
+
             vertical: true,
             steps: [
                 {
@@ -456,7 +564,7 @@
                             items: [
                                 {
                                     title: 'Tab 1',
-                                    icon: 'fas fa-edit',
+                                    icon: 'fas:edit',
                                     name: 't1',
                                     items: [
                                         {
@@ -479,6 +587,7 @@
                                 {
                                     title: 'Tab 2',
                                     name: 't2',
+                                    icon: 'edit',
                                     items: [
                                         {
                                             control: 'checkbox',

@@ -2,7 +2,6 @@
     <v-text-field
             :type="visible ? 'text' : 'password'"
 
-            :append-icon="visible ? 'visibility_off' : 'visibility'"
             @click:append="toggle"
 
             v-model="model[name]"
@@ -13,7 +12,10 @@
 
             :suffix="$intl.translate(display.suffix)"
             :prefix="$intl.translate(display.prefix)"
-            :prepend-icon="$controlIcon(display.prependIcon)"
+            :prepend-inner-icon="$controlIcon(display.prependIcon)"
+            :prepend-icon="$controlIcon(display.prependOuterIcon)"
+            :append-outer-icon="$controlIcon(display.appendOuterIcon)"
+            :append-icon="visible ? 'visibility_off' : 'visibility'"
 
             :hint="$intl.translate(display.hint)"
             :placeholder="$intl.translate(display.placeholder)"
@@ -24,6 +26,8 @@
             :solo="display.appearance === 'solo'"
             :solo-inverted="display.appearance === 'solo-inverted'"
             :outline="display.appearance === 'outline'"
+
+            :color="display.color || undefined"
 
             :flat="!!display.flat"
 

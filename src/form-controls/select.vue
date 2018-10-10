@@ -8,8 +8,10 @@
             :hint="$intl.translate(display.hint)"
             persistent-hint
             :placeholder="$intl.translate(display.placeholder)"
-            :prepend-icon="$controlIcon(display.prependIcon)"
+            :prepend-inner-icon="$controlIcon(display.prependIcon)"
+            :prepend-icon="$controlIcon(display.prependOuterIcon)"
             :append-icon="$controlIcon(display.appendIcon)"
+            :append-outer-icon="$controlIcon(display.appendOuterIcon)"
 
             :multiple="config.multiple || false"
             :required="config.required"
@@ -23,6 +25,8 @@
             :value-comparator="$equals"
 
             :clearable="!!display.clearable"
+
+            :color="display.color || undefined"
 
             :box="display.appearance === 'box'"
             :solo="display.appearance === 'solo'"

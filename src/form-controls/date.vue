@@ -18,8 +18,11 @@
                 :prefix="$intl.translate(display.prefix)"
                 :hint="$intl.translate(display.hint)"
                 persistent-hint
-                :prepend-icon="$controlIcon(display.prependIcon)"
+
+                :prepend-inner-icon="$controlIcon(display.prependIcon)"
+                :prepend-icon="$controlIcon(display.prependOuterIcon)"
                 :append-icon="$controlIcon(display.appendIcon) || 'event'"
+                :append-outer-icon="$controlIcon(display.appendOuterIcon)"
 
                 clearable
 
@@ -27,6 +30,8 @@
                 :solo="display.appearance === 'solo'"
                 :solo-inverted="display.appearance === 'solo-inverted'"
                 :outline="display.appearance === 'outline'"
+
+                :color="display.color || undefined"
 
                 :flat="!!display.flat"
 

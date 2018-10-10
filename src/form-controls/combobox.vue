@@ -8,8 +8,10 @@
 
             :suffix="$intl.translate(display.suffix)"
             :prefix="$intl.translate(display.prefix)"
-            :prepend-icon="$controlIcon(display.prependIcon)"
+            :prepend-inner-icon="$controlIcon(display.prependIcon)"
+            :prepend-icon="$controlIcon(display.prependOuterIcon)"
             :append-icon="$controlIcon(display.appendIcon)"
+            :append-outer-icon="$controlIcon(display.appendOuterIcon)"
 
             :hint="$intl.translate(display.hint)"
             :placeholder="$intl.translate(display.placeholder)"
@@ -24,6 +26,7 @@
             :chips="Boolean(display.chips && config.multiple)"
             deletable-chips
 
+            :color="display.color || undefined"
 
             :items="items"
             :search-input.sync.trim="search"

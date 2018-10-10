@@ -10,12 +10,16 @@
 
             :suffix="$intl.translate(display.suffix)"
             :prefix="$intl.translate(display.prefix)"
-            :prepend-icon="$controlIcon(display.prependIcon)"
+            :prepend-inner-icon="$controlIcon(display.prependIcon)"
+            :prepend-icon="$controlIcon(display.prependOuterIcon)"
             :append-icon="$controlIcon(display.appendIcon)"
+            :append-outer-icon="$controlIcon(display.appendOuterIcon)"
 
             :hint="$intl.translate(display.hint)"
             :placeholder="$intl.translate(display.placeholder)"
             :mask="display.mask"
+
+            :color="display.color || undefined"
 
             :clearable="display.clearable"
 

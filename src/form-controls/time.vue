@@ -16,8 +16,11 @@
                 :label="$intl.translate(display.title)"
                 :suffix="$intl.translate(display.suffix)"
                 :prefix="$intl.translate(display.prefix)"
-                :prepend-icon="$controlIcon(display.prependIcon)"
+                :prepend-inner-icon="$controlIcon(display.prependIcon)"
+                :prepend-icon="$controlIcon(display.prependOuterIcon)"
                 :append-icon="$controlIcon(display.appendIcon) || 'access_time'"
+                :append-outer-icon="$controlIcon(display.appendOuterIcon)"
+
                 clearable
 
                 :box="display.appearance === 'box'"
@@ -28,6 +31,8 @@
                 :flat="!!display.flat"
 
                 :required="config.required"
+
+                :color="display.color || undefined"
         ></v-text-field>
         <v-time-picker v-model="timeModel"
                        :min="config.minTime"

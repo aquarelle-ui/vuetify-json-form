@@ -18,3 +18,11 @@
 .v-stepper__content > .v-stepper__wrapper > .json-form-group {
     margin-left: 1px;
 }
+
+.v-text-field__prefix {
+    width: auto !important;
+}
+
+.v-input--radio-group .v-radio {
+    margin-bottom: 8px;
+}

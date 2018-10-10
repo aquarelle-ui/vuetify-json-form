@@ -1,21 +1,32 @@
 <template>
-    <v-tabs>
-        <v-tabs-slider :color="display.color || undefined"></v-tabs-slider>
+    <v-tabs
+            :right="display.position === 'right'"
+            :centered="display.position === 'center'"
+            :fixed-tabs="display.position === 'fixed'"
+            :icons-and-text="!!display.verticalIcons"
+            :color="display.color || undefined"
+            :dark="display.dark || undefined"
+            :show-arrows="!!display.sliderArrows"
+    >
+        <v-tabs-slider :color="display.sliderColor || undefined"></v-tabs-slider>
         <v-tab
                 v-for="(item, key) in items"
                 :key="$uniqueObjectId(item, key)"
-                :href="'#' + tabPrefix + '-tab-' + (item.name || key)"
         >
+            <template v-if="display.verticalIcons">
+                {{$intl.translate(item.title)}}
+            </template>
             <v-icon v-if="tabHasError(item)" color="red">error</v-icon>
-            <v-icon v-else-if="item.icon">{{item.icon}}</v-icon>
-            {{$intl.translate(item.title)}}
+            <v-icon v-else-if="item.icon">{{$controlIcon(item.icon)}}</v-icon>
+            <template v-if="!display.verticalIcons">
+                {{$intl.translate(item.title)}}
+            </template>
         </v-tab>
         <v-tabs-items class="mt-1">
             <v-tab-item
                     class="px-1"
                     v-for="(item, key) in items"
                     :key="$uniqueObjectId(item, key)"
-                    :id="tabPrefix + '-tab-' + (item.name || key)"
             >
                 <json-form-group
                         :model="modelProxy"

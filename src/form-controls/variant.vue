@@ -7,8 +7,12 @@
                 :label="$intl.translate(display.title)"
                 :hint="$intl.translate(display.hint)"
                 :placeholder="$intl.translate(display.placeholder)"
-                :prepend-icon="$controlIcon(display.prependIcon)"
+                :prepend-inner-icon="$controlIcon(display.prependIcon)"
+                :prepend-icon="$controlIcon(display.prependOuterIcon)"
                 :append-icon="$controlIcon(display.appendIcon)"
+                :append-outer-icon="$controlIcon(display.appendOuterIcon)"
+
+                :color="display.color || undefined"
 
                 :required="config.required"
 

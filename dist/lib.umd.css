@@ -18,6 +18,14 @@
 .v-stepper__content > .v-stepper__wrapper > .json-form-group {
     margin-left: 1px;
 }
+
+.v-text-field__prefix {
+    width: auto !important;
+}
+
+.v-input--radio-group .v-radio {
+    margin-bottom: 8px;
+}
 .dialog-slider{overflow:hidden;position:relative;width:100%;height:100%
 }
 .dialog-slider .dialog-slide{position:absolute;overflow-y:auto;overflow-x:hidden;top:0;left:0;bottom:0;right:0

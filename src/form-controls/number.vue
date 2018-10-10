@@ -11,8 +11,10 @@
 
             :suffix="$intl.translate(display.suffix)"
             :prefix="$intl.translate(display.prefix)"
-            :prepend-icon="$controlIcon(display.prependIcon)"
+            :prepend-inner-icon="$controlIcon(display.prependIcon)"
+            :prepend-icon="$controlIcon(display.prependOuterIcon)"
             :append-icon="$controlIcon(display.appendIcon)"
+            :append-outer-icon="$controlIcon(display.appendOuterIcon)"
 
             :hint="$intl.translate(display.hint)"
             :placeholder="$intl.translate(display.placeholder)"
@@ -26,6 +28,8 @@
             :outline="display.appearance === 'outline'"
 
             :flat="!!display.flat"
+
+            :color="display.color || undefined"
 
             :counter="display.counter ? config.maxLength || false : false"
 
