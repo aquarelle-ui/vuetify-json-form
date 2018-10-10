@@ -87,16 +87,14 @@
                 if (this.config.locale) {
                     return this.config.locale;
                 }
-                const options = this.wrapper.options || {};
-                return options.language || 'en';
+                return this.$intl.language || 'en';
             },
             firstDayOfWeek()
             {
                 if (this.config.firstDayOfWeek) {
                     return this.config.firstDayOfWeek;
                 }
-                const options = this.wrapper.options || {};
-                return options.firstDayOfWeek || 0;
+                return this.$intl.firstDayOfWeek || 0;
             }
         },
         mounted()
