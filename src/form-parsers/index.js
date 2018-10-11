@@ -14,3 +14,4 @@ export {default as GroupRepeatParser} from "./group-repeat";
 export {default as GroupRepeatVariantsParser} from "./group-repeat-variants";
 export {default as VariantParser} from "./variant";
 export {default as CheckboxMultiParser} from "./checkbox-multi";
+export {default as RangeParser} from "./range";

@@ -253,6 +253,20 @@
                     title: 'Step 3',
                     items: [
                         {
+                            control: 'range',
+                            name: 'sld',
+                            display: {
+                                title: 'Asd',
+                                //labels: ['Bad', 'Fair', null, null, 'Good'],
+                                //prependIcon: 'volume_up',
+                            },
+                            validation: {
+                                minimum: 1,
+                                maximum: 5,
+                                multipleOf: 1
+                            }
+                        },
+                        {
                             control: 'switch-group',
                             name: 'activatu',
                             display: {

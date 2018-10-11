@@ -13,6 +13,7 @@ export {default as HiddenControl} from "./hidden";
 export {default as UUIDControl} from "./uuid";
 
 export {default as SliderControl} from "./slider";
+export {default as RangeControl} from "./range";
 
 export {default as CheckboxControl} from "./checkbox";
 export {default as CheckboxMultiControl} from "./checkbox-multi";

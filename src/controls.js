@@ -26,7 +26,7 @@ import {
     GroupRepeatParser,
     GroupRepeatVariantsParser,
     VariantParser,
-    CheckboxMultiParser
+    CheckboxMultiParser, RangeParser
 } from "./form-parsers";
 import {
     TextControl,
@@ -63,7 +63,7 @@ import {
     RepeatControl,
     RepeatVariantsControl,
     GroupRepeatControl,
-    GroupRepeatVariantsControl, VariantControl, CheckboxMultiControl,
+    GroupRepeatVariantsControl, VariantControl, CheckboxMultiControl, RangeControl,
 } from "./form-controls";
 
 export default {
@@ -92,6 +92,7 @@ export default {
     'display': new DisplayParser(SelectControl),
 
     'slider': new NumberControlParser(SliderControl),
+    'range': new RangeParser(RangeControl),
 
     'icon': new IconParser(IconControl),
 

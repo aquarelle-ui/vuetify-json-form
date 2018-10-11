@@ -1,5 +1,5 @@
 <template>
-    <v-slider
+    <v-range-slider
             v-model="model[name]"
             @input="formatValue($event)"
             @blur="validate()"
@@ -29,18 +29,30 @@
         <template slot="thumb-label" slot-scope="props">
             <span>{{ getTickLabel(props.value) }}</span>
         </template>
-    </v-slider>
+    </v-range-slider>
 </template>
 <script>
     import {JsonFormElementMixin} from "@aquarelle/json-form";
 
     export default {
-        name: 'slider-control',
+        name: 'range-control',
         mixins: [JsonFormElementMixin],
+        created()
+        {
+            const p = this.modelProxy;
+            if (p) {
+                if (p[0] < (this.config.minimum || 0)) {
+                    p[0] = this.config.minimum || 0;
+                }
+                if (p[1] > (this.config.maximum == null ? 100 : this.config.maximum)) {
+                    p[1] = this.config.maximum == null ? 100 : this.config.maximum;
+                }
+            }
+        },
         methods: {
             formatValue(val)
             {
-                this.$set(this.model, this.name, Number(val));
+                this.$set(this.model, this.name, [Number(val[0]), Number(val[1])]);
             },
             getTickLabel(value)
             {
