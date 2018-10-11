@@ -8,7 +8,8 @@ import {
     DateControlParser,
     TimeControlParser,
     DateTimeControlParser,
-    AsyncObjectControlParser
+    AsyncObjectControlParser,
+    FileControlParser
 } from "@aquarelle/json-form";
 import {
     HiddenParser,
@@ -63,7 +64,7 @@ import {
     RepeatControl,
     RepeatVariantsControl,
     GroupRepeatControl,
-    GroupRepeatVariantsControl, VariantControl, CheckboxMultiControl, RangeControl,
+    GroupRepeatVariantsControl, VariantControl, CheckboxMultiControl, RangeControl, FileControl,
 } from "./form-controls";
 
 export default {
@@ -93,6 +94,8 @@ export default {
 
     'slider': new NumberControlParser(SliderControl),
     'range': new RangeParser(RangeControl),
+
+    'file': new FileControlParser(FileControl),
 
     'icon': new IconParser(IconControl),
 

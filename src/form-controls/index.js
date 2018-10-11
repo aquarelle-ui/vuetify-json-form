@@ -15,6 +15,8 @@ export {default as UUIDControl} from "./uuid";
 export {default as SliderControl} from "./slider";
 export {default as RangeControl} from "./range";
 
+export {default as FileControl} from "./file";
+
 export {default as CheckboxControl} from "./checkbox";
 export {default as CheckboxMultiControl} from "./checkbox-multi";
 export {default as SwitchControl} from "./switch";

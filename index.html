@@ -253,6 +253,20 @@
                     title: 'Step 3',
                     items: [
                         {
+                            control: 'file',
+                            name: 'fff',
+                            title: 'Select some file',
+                            clearable: true,
+                            hint: 'Ok bine',
+                            config: {
+                                multiple: true
+                            },
+                            validation: {
+                                minItems: 2,
+                                maxItems: 3
+                            }
+                        },
+                        {
                             control: 'range',
                             name: 'sld',
                             display: {
@@ -573,7 +587,7 @@
                             control: 'tabs',
                             name: 'grs',
                             display: {
-
+                                dark: true
                             },
                             items: [
                                 {
