@@ -1375,7 +1375,7 @@ var script$9 = {
     props: {
         text: {type: String, required: false, default: null},
         hasError: {type: Boolean, required: false, default: false},
-        required: {type: Boolean, required: false, default: false}
+        required: {type: Boolean, required: false, default: false},
     }
 };
 
@@ -1383,7 +1383,7 @@ var script$9 = {
             const __vue_script__$9 = script$9;
             
 /* template */
-var __vue_render__$9 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{directives:[{name:"show",rawName:"v-show",value:(_vm.text != null && _vm.text !== ''),expression:"text != null && text !== ''"}],staticClass:"v-label",class:{'error--text': _vm.hasError}},[_vm._v(_vm._s(_vm.text)),_c('sup',{directives:[{name:"show",rawName:"v-show",value:(_vm.required),expression:"required"}],staticStyle:{"user-select":"none"}},[_vm._v("*")])])};
+var __vue_render__$9 = function () {var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('label',{directives:[{name:"show",rawName:"v-show",value:(_vm.text != null && _vm.text !== ''),expression:"text != null && text !== ''"}],class:_vm.$mergeClasses({'v-label': true, 'error--text': _vm.hasError}, _vm.$attrs.class)},[_vm._v(_vm._s(_vm.text)),_c('sup',{directives:[{name:"show",rawName:"v-show",value:(_vm.required),expression:"required"}],staticStyle:{"user-select":"none"}},[_vm._v("*")])])};
 var __vue_staticRenderFns__$9 = [];
 
   /* style */
