@@ -1,5 +1,5 @@
 <template>
-    <div v-show="error !== null" class="v-messages error--text">
+    <div v-show="error !== null" class="v-messages error--text" v-bind="$attrs">
         <div class="v-messages__message">
             {{error}}
         </div>
