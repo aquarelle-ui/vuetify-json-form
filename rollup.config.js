@@ -1,4 +1,3 @@
-import resolve from 'rollup-plugin-node-resolve';
 import importResolver from "rollup-plugin-import-resolver";
 import VuePlugin from 'rollup-plugin-vue'
 import css from 'rollup-plugin-css-only'
@@ -16,8 +15,17 @@ const GLOBALS = {
 };
 const EXTERNAL = Object.keys(GLOBALS);
 
-const resolver = importResolver({extensions: ['.js', '.vue']});
-const vuePlugin = VuePlugin({css: false, template: {isProduction: true}});
+const resolver = importResolver({
+    extensions: ['.mjs', '.js', '.vue'],
+});
+
+const vuePlugin = VuePlugin({
+    css: false,
+    template: {isProduction: true},
+    normalizer: '~vue-runtime-helpers/dist/normalize-component.mjs',
+    styleInjector: '~vue-runtime-helpers/dist/inject-style/browser.mjs',
+    styleInjectorSSR: '~vue-runtime-helpers/dist/inject-style/server.mjs',
+});
 
 export default [
     {
@@ -29,7 +37,7 @@ export default [
             globals: GLOBALS
         },
         external: EXTERNAL,
-        plugins: [resolve(), resolver, css(), vuePlugin, terser()]
+        plugins: [resolver, css(), vuePlugin, terser()]
     },
     {
         input: MAIN,

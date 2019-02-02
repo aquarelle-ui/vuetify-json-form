@@ -58,6 +58,7 @@
             },
             path: {type: Array, default: () => []},
             options: {type: Object, default: () => ({})},
+            hideTimeout: {type: Number, default: 200}
         },
         data()
         {
@@ -183,6 +184,16 @@
                 if (this.currentDialogIndex < 0) {
                     return;
                 }
+
+                if (this.currentDialogIndex === 0 && this.hideTimeout > 0) {
+                    this.modalShow = false;
+                    setTimeout(() => {
+                        this.currentMethod = 'pop';
+                        this.currentDialogIndex--;
+                    }, this.hideTimeout);
+                    return;
+                }
+
                 this.currentMethod = 'pop';
                 this.currentDialogIndex--;
             },

@@ -25,4 +25,4 @@
 
 .v-input--radio-group .v-radio {
     margin-bottom: 8px;
-}
+}.dialog-slider{overflow:hidden;position:relative;width:100%;height:100%}.dialog-slider .dialog-slide{position:absolute;overflow-y:auto;overflow-x:hidden;top:0;left:0;bottom:0;right:0}.slide-pop-enter-active,.slide-pop-leave-active,.slide-push-enter-active,.slide-push-leave-active{transition:all .75s}.slide-push-enter{transform:translate(100%,0) scale(1)}.slide-push-leave-to{transform:translate(-100%,0) scale(0)}.slide-pop-enter{transform:translate(-100%,0) scale(1)}.slide-pop-leave-to{transform:translate(200%,0) scale(0)}
