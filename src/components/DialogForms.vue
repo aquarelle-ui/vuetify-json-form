@@ -2,7 +2,7 @@
     <v-dialog v-model="modalShow" :overlay="false" persistent lazy scrollable fullscreen
               transition="dialog-bottom-transition">
         <v-card v-if="currentDialog != null">
-            <v-toolbar ref="toolbar" :color="getColor(currentDialogIndex)" style="flex: 0 0 auto;" dark>
+            <v-toolbar ref="toolbar" color="secondary" style="flex: 0 0 auto;" dark>
                 <v-btn icon @click.native="actionsEnabled && onCancel(currentDialog)" dark>
                     <v-icon>{{currentDialogIndex === 0 ? 'close' : 'arrow_back'}}</v-icon>
                 </v-btn>
@@ -52,10 +52,6 @@
         components: {JsonFormGroup},
         mixins: [ValidationMixin, JsonFormParserMixin],
         props: {
-            colors: {
-                type: Array,
-                default: () => (['blue', 'indigo', 'deep-purple', 'purple'])
-            },
             path: {type: Array, default: () => []},
             options: {type: Object, default: () => ({})},
             hideTimeout: {type: Number, default: 200}
@@ -133,13 +129,6 @@
                 const toolbar = this.$refs.toolbar;
                 const th = toolbar ? toolbar.computedHeight : 0;
                 this.height = this.$vuetify.breakpoint.height - th;
-            },
-            getColor(index)
-            {
-                if (this.colors.length === 0) {
-                    return undefined;
-                }
-                return this.colors[index % this.colors.length];
             },
             clearForms()
             {

@@ -1,6 +1,6 @@
 {
     "name": "@aquarelle/vuetify-json-form",
-    "version": "0.1.23",
+    "version": "0.1.24",
     "private": true,
     "main": "dist/lib.cjs.js",
     "module": "dist/lib.esm.js",
@@ -9,7 +9,7 @@
         "@aquarelle/json-form": "https://github.com/aquarelle-ui/json-form.git"
     },
     "peerDependencies": {
-        "vue": "^2.5.22"
+        "vue": "^2.6.4"
     },
     "devDependencies": {
         "rollup": "^1.1.2",
@@ -17,9 +17,9 @@
         "rollup-plugin-terser": "^4.0.3",
         "rollup-plugin-css-only": "^1.0.0",
         "rollup-plugin-vue": "^4.6.2",
-        "vue-template-compiler": "^2.5.22",
+        "vue-template-compiler": "^2.6.4",
         "vuedraggable": "^2.17.0",
-        "vuetify": "^1.4.4"
+        "vuetify": "^1.5.0"
     },
     "scripts": {
         "build": "rollup -c --environment BUILD:production",

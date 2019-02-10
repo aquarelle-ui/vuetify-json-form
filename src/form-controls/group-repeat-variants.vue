@@ -9,7 +9,7 @@
                 <control-label :text="$intl.translate(region.title)" :has-error="hasErrors(region.name)"
                                :required="region.config.required"></control-label>
                 <v-spacer></v-spacer>
-                <v-menu offset-y offset-x :disabled="!canAddItem(region)" max-height="426">
+                <v-menu offset-y bottom :disabled="!canAddItem(region)" max-height="426">
                     <v-btn :disabled="!canAddItem(region)" small flat ripple slot="activator">
                         <v-icon>add</v-icon>
                         {{$intl.translate(display.addButton || {key: 'common.form.add', text: 'Add'})}}
