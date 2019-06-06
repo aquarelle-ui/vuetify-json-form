@@ -10,7 +10,7 @@
             </v-btn>
         </v-subheader>
 
-        <draggable :list="modelProxy" :options="dragOptions">
+        <draggable :list="modelProxy" v-bind="dragOptions">
             <v-list-tile v-for="(val, index) in modelProxy" :key="$uniqueObjectId(val, index)"
                          @click="editItem(val)">
 

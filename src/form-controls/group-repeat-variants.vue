@@ -22,7 +22,7 @@
                 </v-menu>
             </v-subheader>
 
-            <draggable style="min-height: 2px" :list="modelProxy[region.name]" :options="dragOptions">
+            <draggable style="min-height: 2px" :list="modelProxy[region.name]" v-bind="dragOptions">
                 <v-list-tile
                         v-for="(val, index) in modelProxy[region.name]"
                         :key="$uniqueObjectId(val, index)"
